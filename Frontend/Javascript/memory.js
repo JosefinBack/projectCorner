@@ -2,10 +2,10 @@
 let memoryContainer = document.getElementById("memoryContainer")
 
 let allPicsMemory = [
-    "../Bilder/george.jpg",
-    "../Bilder/greta.jpg",
-    "../Bilder/mom.jpg",
-    "../Bilder/dad.jpg"
+    "Bilder/george.jpg",
+    "Bilder/greta.jpg",
+    "Bilder/mom.jpg",
+    "Bilder/dad.jpg"
 ]
 
 //skapa par av alla bilder
