@@ -1,0 +1,42 @@
+body {
+    margin: 0px;
+    max-width: 1440px;
+    height: 100vh;
+}
+
+#headerFront {
+    height: 120px;
+    width: 100vw;
+    background-color: green;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menyButton {
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    border: 1px solid black;
+    border-radius: 5px;
+
+    width: 100px;
+    padding: 20px;
+
+}
+
+.menyButton:hover {
+    text-decoration: underline;
+}
+
+.menyButton:active {
+    color: white;
+}
+
+#topMenu {
+    display: flex;
+    gap: 50px;
+}
