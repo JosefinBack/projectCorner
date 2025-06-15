@@ -14,7 +14,6 @@ h1 {
     height: 150px;
     background-size: cover;
     background-position: center;
-    border: 1px solid black;
     display: inline-block;
     margin: 5px;
 }
@@ -25,11 +24,74 @@ h1 {
     gap: 20px;
     max-width: 700px;
     margin: 0 auto;
+    padding: 10px;
 }
 
 #memoryWrapper {
+    display: hidden;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.card-front {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* din baksida */
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background-size: cover;
+    background-position: center;
+}
+
+
+/* nytt spel-knapp */
+.button {
+    width: 100px;
+    height: 40px;
+    background-color: lightblue;
+    border: 0.5px solid black;
+    border-radius: 5px;
+    margin: 15px 0px 30px;
+    cursor: pointer;
+
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+#button:active {
+    text-decoration: underline;
+    color: white;
+    box-shadow: 2px 2px rgb(0, 0, 0, 0.5);
+}
+
+#newGame {
+    display: none;
 }
 
 /* header */
