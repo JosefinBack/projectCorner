@@ -1,4 +1,4 @@
-import { serveDir } from "https://deno.land/std@0.224.0/http/file_server.ts";
+// import { serveDir } from "https://deno.land/std@0.224.0/http/file_server.ts";
 
 async function handler(request) {
     const url = new URL(request.url);
@@ -16,13 +16,13 @@ async function handler(request) {
     }
 
     // Serva statiska filer
-    const response = await serveDir(request, {
-        fsRoot: "./Frontend", // <-- justera till din mapp
-        urlRoot: "",
-        showDirListing: false,
-    });
+    // const response = await serveDir(request, {
+    //     fsRoot: "./Frontend", // <-- justera till din mapp
+    //     urlRoot: "",
+    //     showDirListing: false,
+    // });
 
-    return response;
+    // return response;
 }
 
 Deno.serve(handler);
