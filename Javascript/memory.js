@@ -37,7 +37,7 @@ memoryPaw.addEventListener("click", function () {
     for (let i = 0; i < 4 && pawCopy.length > 0; i++) {
         const index = Math.floor(Math.random() * pawCopy.length);
         picked.push(pawCopy[index]);
-        pawCopy.slice(index, 1);
+        pawCopy.splice(index, 1);
     };
 
     currentTheme = picked;
@@ -159,7 +159,3 @@ function memoryCards() {
     }
 
 }
-
-
-//functionsanrop
-

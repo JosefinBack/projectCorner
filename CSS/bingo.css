@@ -1,0 +1,11 @@
+#bingoWrapper {
+    border: 1px solid black;
+}
+
+#bingoBoard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-rows: repeat(auto-fit, auto);
+    max-width: 900px;
+    height: 500px;
+}
