@@ -67,10 +67,6 @@ newGameButton.addEventListener("click", function () {
     }, 500);
 });
 
-chooseTheme.classList.add("button");
-chooseTheme.textContent = "Byta tema på memory";
-memoryWrapper.appendChild(chooseTheme);
-
 let allPicsMemoryGreta = [
     "../Bilder/george.jpg",
     "../Bilder/greta.jpg",
