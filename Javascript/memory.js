@@ -15,7 +15,16 @@ memoryGreta.addEventListener("click", function () {
     flippedCards = [];
     lockBoard = false;
 
-    currentTheme = allPicsMemoryGreta;
+    let pigCopy = [...allPicsMemoryGreta];
+    let picked = [];
+
+    for (let i = 0; i < 4 && pigCopy.length > 0; i++) {
+        const index = Math.floor(Math.random() * pigCopy.length);
+        picked.push(pigCopy[index]);
+        pigCopy.splice(index, 1);
+    }
+
+    currentTheme = picked;
     memoryWrapper.style.display = "flex";
     memoryContainer.style.border = "1px solid black";
     newGameButton.style.display = "flex";
@@ -71,7 +80,11 @@ let allPicsMemoryGreta = [
     "../Bilder/george.jpg",
     "../Bilder/greta.jpg",
     "../Bilder/mom.jpg",
-    "../Bilder/dad.jpg"
+    "../Bilder/dad.jpg",
+    "../Bilder/grandpa-pig.png",
+    "../Bilder/granny.jpg",
+    "../Bilder/bunny.png",
+    "../Bilder/cat.jpg"
 ]
 
 let allPicsMemoryPawPatrol = [
