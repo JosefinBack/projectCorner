@@ -151,6 +151,7 @@ h1 {
 #pig {
     height: 200px;
     width: 200px;
+    cursor: pointer;
 
     background-image: url(../Bilder/house.jpg);
     background-size: cover;
@@ -161,6 +162,7 @@ h1 {
 #paw {
     height: 200px;
     width: 200px;
+    cursor: pointer;
 
     background-image: url(../Bilder/paw.png);
     background-size: cover;
