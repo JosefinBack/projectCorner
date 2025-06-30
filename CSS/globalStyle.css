@@ -2,6 +2,8 @@ body {
     margin: 0px;
     max-width: 1440px;
     height: 100vh;
+    font-family: 'Cormorant Garamond, serif;
+
 }
 
 h1 {
@@ -9,39 +11,70 @@ h1 {
 }
 
 /* header */
-
-.menyButton {
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
-    color: black;
-    text-decoration: none;
-    border: 1px solid black;
-    border-radius: 5px;
-
-    width: 100px;
-    padding: 20px;
-}
-
-.menyButton:hover {
-    text-decoration: underline;
-}
-
-.menyButton:active {
-    color: white;
-}
-
 #topMenu {
     display: flex;
-    gap: 50px;
+    gap: 20px;
+    justify-content: end;
+    padding: 20px 40px;
+}
+
+.menyButton,
+.dropbtn {
+    font-size: 18px;
+    color: #7E6651;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #7E6651;
+    border-radius: 25px;
+    background: #A8BCA1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.menyButton:hover,
+.dropbtn:hover {
+    background: #A8BCA1;
+    color: #F9F5F0;
+}
+
+/* Dropdown-behållare */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown-innehåll */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #F9F5F0;
+    min-width: 160px;
+    border: 1px solid #7E6651;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 5;
+}
+
+.dropdown-content a {
+    color: #7E6651;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #A8BCA1;
+    color: #F9F5F0;
+}
+
+/* Visa dropdown vid hover */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
 
 #headerFront {
     height: 350px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     position: relative;
 
     background-image: url("../Bilder/corner5.png");
@@ -61,37 +94,94 @@ h1 {
     padding: 10px
 }
 
+/* ipad-view */
+@media (max-width: 1100px) {
+    #headerFront {
+        height: 300px;
+        width: 100%;
+        position: relative;
+
+        background-image: url("../Bilder/corner5.png");
+        background-size: 1100px 300px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #topMenu {
+        display: flex;
+        gap: 20px;
+        justify-content: end;
+        padding: 30px 40px;
+    }
+}
+
 /* Mobilvy */
 @media (max-width: 900px) {
     #menuToggle {
-        display: block;
+        display: inline-block;
+        cursor: pointer;
+        background: #F9F5F0;
+        border: 1px solid #7E6651;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-family: 'Cormorant Garamond', serif;
     }
 
     #topMenu {
         display: none;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
         position: absolute;
-        top: 80px;
-        left: 2px;
-        width: 160px;
+        top: 40px;
+        width: 150px;
         padding: 10px;
         gap: 10px;
-        border: 1px solid black;
-        background-color: white;
+        border: 1px solid #7E6651;
+        background-color: #F9F5F0;
+        border-radius: 10px;
+        z-index: 5;
     }
 
     #topMenu.show {
         display: flex;
     }
 
-    .menyButton {
-        padding: 10px 20px;
-        text-align: left;
+    .dropdown {
+        width: 100%;
     }
+
+    .dropdown-content {
+        position: static;
+        background: none;
+        border: none;
+        box-shadow: none;
+        display: none;
+        width: 100%;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown-content a {
+        padding-left: 20px;
+        display: block;
+    }
+
+    #headerFront {
+        height: 200px;
+        width: 100%;
+        position: relative;
+
+        background-image: url("../Bilder/corner5.png");
+        background-size: 900px 200px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
 }
 
-/* Desktop: visa meny som vanligt */
+/* Desktop: visa meny som vanligt
 @media (min-width: 901px) {
     #topMenu {
         display: flex !important;
@@ -100,4 +190,4 @@ h1 {
     #menuToggle {
         display: none;
     }
-}
+} */
