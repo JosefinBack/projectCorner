@@ -4,6 +4,7 @@ let newGameButton = document.getElementById("newGame");
 let memoryGreta = document.getElementById("pig");
 let memoryPaw = document.getElementById("paw");
 let memorySpidy = document.getElementById("spidy");
+let memoryPettson = document.getElementById("pettson");
 
 // === Alla teman ===
 let allPicsMemoryGreta = [
@@ -35,7 +36,17 @@ let allPicsSpidy = [
     "../Bilder/spidy1.jpg",
     "../Bilder/spidy2.jpg",
     "../Bilder/spidy.jpg",
-]
+];
+
+let allPicsPettson = [
+    "../Bilder/pettson1.jpg",
+    "../Bilder/pettson2.jpg",
+    "../Bilder/pettson3.jpg",
+    "../Bilder/pettson4.jpg",
+    "../Bilder/pettson5.jpg",
+    "../Bilder/pettson6.jpg",
+    "../Bilder/pettson7.jpg",
+];
 
 // === Speldata ===
 let currentThemeImages = [];
@@ -93,6 +104,12 @@ memorySpidy.addEventListener("click", function () {
     currentThemeImages = allPicsSpidy;
     startNewGame();
 });
+
+memoryPettson.addEventListener("click", function () {
+    currentBackImage = "../Bilder/pettsonBakgrund.jpg";
+    currentThemeImages = allPicsPettson;
+    startNewGame();
+})
 
 // === Event listener för Nytt spel ===
 newGameButton.addEventListener("click", function () {

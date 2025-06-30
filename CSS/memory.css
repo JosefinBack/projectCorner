@@ -180,6 +180,17 @@
     background-repeat: no-repeat;
 }
 
+#pettson {
+    height: 200px;
+    width: 200px;
+    cursor: pointer;
+
+    background-image: url(../Bilder/pettson1.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 @media (max-width: 800px) {
     #memoryContainer {
         grid-template-columns: repeat(3, 1fr);
