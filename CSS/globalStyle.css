@@ -174,7 +174,7 @@ h1 {
         position: relative;
 
         background-image: url("../Bilder/corner5.png");
-        background-size: 900px 200px;
+        background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
