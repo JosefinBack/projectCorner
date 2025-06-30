@@ -110,7 +110,28 @@
 
 #newGame {
     display: none;
+    /* visas först när spelet startat */
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(135deg, #f9c5d1, #fbc2eb);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
 }
+
+#newGame:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+#newGame:active {
+    transform: scale(0.98);
+}
+
 
 .textToMemoryButtons {
     text-align: center;

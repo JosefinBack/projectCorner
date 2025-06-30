@@ -166,6 +166,7 @@ function memoryCards() {
                 if (img1 === img2) {
                     card1.classList.add("matched");
                     card2.classList.add("matched");
+                    new Audio("../Ljud/win.wav").play();
                     flippedCards = [];
                     lockBoard = false;
                 } else {
