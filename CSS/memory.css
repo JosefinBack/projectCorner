@@ -148,6 +148,16 @@
     background-repeat: no-repeat;
 }
 
+#spidy {
+    height: 200px;
+    width: 200px;
+    cursor: pointer;
+
+    background-image: url(../Bilder/marvelSpidy.jpg);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
 @media (max-width: 800px) {
     #memoryContainer {

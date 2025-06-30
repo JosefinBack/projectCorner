@@ -1,81 +1,11 @@
+// === HTML-element ===
 let memoryContainer = document.getElementById("memoryContainer");
 let newGameButton = document.getElementById("newGame");
 let memoryGreta = document.getElementById("pig");
 let memoryPaw = document.getElementById("paw");
-let chooseTheme = document.createElement("div");
-let currentTheme = [];
-let currentBackImage;
+let memorySpidy = document.getElementById("spidy");
 
-memoryGreta.addEventListener("click", function () {
-    let memoryWrapper = document.getElementById("memoryWrapper");
-    let memoryContainer = document.getElementById("memoryContainer");
-    currentBackImage = "../Bilder/house.jpg";
-
-    memoryContainer.innerHTML = "";
-    flippedCards = [];
-    lockBoard = false;
-
-    let pigCopy = [...allPicsMemoryGreta];
-    let picked = [];
-
-    for (let i = 0; i < 4 && pigCopy.length > 0; i++) {
-        const index = Math.floor(Math.random() * pigCopy.length);
-        picked.push(pigCopy[index]);
-        pigCopy.splice(index, 1);
-    }
-
-    currentTheme = picked;
-    memoryWrapper.style.display = "flex";
-    memoryContainer.style.border = "1px solid black";
-    newGameButton.style.display = "flex";
-    memoryCards();
-});
-
-memoryPaw.addEventListener("click", function () {
-    let memoryWrapper = document.getElementById("memoryWrapper");
-    let memoryContainer = document.getElementById("memoryContainer");
-    currentBackImage = "../Bilder/paw.png";
-
-    memoryContainer.innerHTML = "";
-    flippedCards = [];
-    lockBoard = false;
-
-    let pawCopy = [...allPicsMemoryPawPatrol];
-    let picked = [];
-
-    for (let i = 0; i < 4 && pawCopy.length > 0; i++) {
-        const index = Math.floor(Math.random() * pawCopy.length);
-        picked.push(pawCopy[index]);
-        pawCopy.splice(index, 1);
-    };
-
-    currentTheme = picked;
-    memoryWrapper.style.display = "flex";
-    memoryContainer.style.border = "1px solid black";
-    newGameButton.style.display = "flex";
-    memoryCards();
-});
-
-newGameButton.addEventListener("click", function () {
-    let allCards = document.querySelectorAll(".card");
-
-    // Låt korten stå uppvända i 1 sekund (visuellt)
-    setTimeout(() => {
-        for (let memoryCard of allCards) {
-            memoryCard.classList.remove("flipped");  // detta triggar flip-animationen tillbaka
-        }
-
-        // Efter ytterligare 0.5 sekunder, rensa spelplan och starta nytt spel
-        setTimeout(() => {
-            memoryContainer.innerHTML = ``;
-            flippedCards = [];     // nollställ tidigare klickade kort
-            lockBoard = false;
-            memoryCards();         // skapa nytt spel
-        }, 500); // matcha animationens varaktighet (0.5s i CSS)
-
-    }, 500);
-});
-
+// === Alla teman ===
 let allPicsMemoryGreta = [
     "../Bilder/george.jpg",
     "../Bilder/greta.jpg",
@@ -85,7 +15,7 @@ let allPicsMemoryGreta = [
     "../Bilder/granny.jpg",
     "../Bilder/bunny.png",
     "../Bilder/cat.jpg"
-]
+];
 
 let allPicsMemoryPawPatrol = [
     "../Bilder/chase.jpg",
@@ -96,53 +26,132 @@ let allPicsMemoryPawPatrol = [
     "../Bilder/sky.jpg",
     "../Bilder/tracker.png",
     "../Bilder/zuma.jpg"
+];
+
+let allPicsSpidy = [
+    "../Bilder/gwen.jpg",
+    "../Bilder/hulk.jpg",
+    "../Bilder/friends.jpg",
+    "../Bilder/spidy1.jpg",
+    "../Bilder/spidy2.jpg",
+    "../Bilder/spidy.jpg",
 ]
 
+// === Speldata ===
+let currentThemeImages = [];
+let currentTheme = [];
+let currentBackImage = "";
+let flippedCards = [];
+let lockBoard = false;
+
+// === Funktion: Slumpa bilder ===
+function pickRandomImages(imageArray, count) {
+    let copy = [...imageArray];
+    let picked = [];
+
+    for (let i = 0; i < count && copy.length > 0; i++) {
+        const index = Math.floor(Math.random() * copy.length);
+        picked.push(copy[index]);
+        copy.splice(index, 1);
+    }
+
+    return picked;
+}
+
+// === Funktion: Starta nytt spel ===
+function startNewGame() {
+    let memoryWrapper = document.getElementById("memoryWrapper");
+
+    memoryContainer.innerHTML = "";
+    flippedCards = [];
+    lockBoard = false;
+
+    currentTheme = pickRandomImages(currentThemeImages, 4);
+
+    memoryWrapper.style.display = "flex";
+    memoryContainer.style.border = "1px solid black";
+    newGameButton.style.display = "flex";
+
+    memoryCards();
+}
+
+// === Event listeners för teman ===
+memoryGreta.addEventListener("click", function () {
+    currentBackImage = "../Bilder/house.jpg";
+    currentThemeImages = allPicsMemoryGreta;
+    startNewGame();
+});
+
+memoryPaw.addEventListener("click", function () {
+    currentBackImage = "../Bilder/paw.png";
+    currentThemeImages = allPicsMemoryPawPatrol;
+    startNewGame();
+});
+
+memorySpidy.addEventListener("click", function () {
+    currentBackImage = "../Bilder/spidyLogo.png";
+    currentThemeImages = allPicsSpidy;
+    startNewGame();
+});
+
+// === Event listener för Nytt spel ===
+newGameButton.addEventListener("click", function () {
+    let allCards = document.querySelectorAll(".card");
+
+    // Vänta kort innan spelplanen nollställs
+    setTimeout(() => {
+        for (let memoryCard of allCards) {
+            memoryCard.classList.remove("flipped");
+        }
+
+        setTimeout(() => {
+            startNewGame();
+        }, 500);
+
+    }, 500);
+});
+
+// === Funktion: Bygg korten ===
 function memoryCards() {
-    //skapa par av alla bilder
+    // Skapa par
     let memoryPairs = [];
     for (let i = 0; i < currentTheme.length; i++) {
         memoryPairs.push(currentTheme[i]);
         memoryPairs.push(currentTheme[i]);
     }
 
-    //blanda alla kort
+    // Blanda
     let shuffledPics = [];
     while (memoryPairs.length > 0) {
         const index = Math.floor(Math.random() * memoryPairs.length);
-        const pickedCard = memoryPairs[index];
-        shuffledPics.push(pickedCard);
+        shuffledPics.push(memoryPairs[index]);
         memoryPairs.splice(index, 1);
     }
 
+    // Skapa kort
     for (let i = 0; i < shuffledPics.length; i++) {
         let card = document.createElement("div");
         card.classList.add("card");
-        let backImage = currentBackImage;
         card.innerHTML = `
-            <div class = "card-inner"> 
-                <div class="card-front" style="background-image: url('${backImage}');"></div>
-                <div class="card-back" style="background-image: url(${shuffledPics[i]});"></div>
-        </div>
+            <div class="card-inner"> 
+                <div class="card-front" style="background-image: url('${currentBackImage}');"></div>
+                <div class="card-back" style="background-image: url('${shuffledPics[i]}');"></div>
+            </div>
         `;
         card.dataset.image = shuffledPics[i];
         memoryContainer.appendChild(card);
     }
 
-
-    //vänd på korten
-    let flippedCards = [];
-    let lockBoard = false;
-
+    // Lägg till klickhantering
     let allCards = document.querySelectorAll(".card");
 
     for (let i = 0; i < allCards.length; i++) {
         let card = allCards[i];
 
         card.addEventListener("click", function () {
-            if (lockBoard ||
-                card.classList.contains("matched") ||
-                card.classList.contains("flipped")) { return; }
+            if (lockBoard || card.classList.contains("matched") || card.classList.contains("flipped")) {
+                return;
+            }
 
             card.classList.add("flipped");
             flippedCards.push(card);
@@ -170,5 +179,4 @@ function memoryCards() {
             }
         });
     }
-
 }
