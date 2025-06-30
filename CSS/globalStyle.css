@@ -37,14 +37,17 @@ h1 {
 }
 
 #headerFront {
-    height: 80px;
+    height: 350px;
     width: 100%;
-    background-color: green;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
     position: relative;
+
+    background-image: url("../Bilder/corner5.png");
+    background-size: 1400px 400px;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 #menuToggle {

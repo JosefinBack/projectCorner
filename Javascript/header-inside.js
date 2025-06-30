@@ -1,4 +1,4 @@
-document.getElementById("header").innerHTML = `
+document.getElementById("headerFront").innerHTML = `
   <header id="headerFront">
     <div id="menuToggle">MENY</div>
     <nav id="topMenu">
