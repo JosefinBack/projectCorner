@@ -28,4 +28,21 @@ document.addEventListener("DOMContentLoaded", function () {
       menu.classList.toggle("show");
     });
   }
+
+  const projektBtn = document.querySelector(".dropdown .menyButton");
+  const dropdownContent = document.querySelector(".dropdown-content");
+
+  if (projektBtn && dropdownContent) {
+    projektBtn.addEventListener("click", function (event) {
+      event.stopPropagation(); // Förhindra att klicket stängs av något annat
+      dropdownContent.classList.toggle("show");
+    });
+
+    // Stäng dropdown när man klickar utanför
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".dropdown")) {
+        dropdownContent.classList.remove("show");
+      }
+    });
+  }
 });

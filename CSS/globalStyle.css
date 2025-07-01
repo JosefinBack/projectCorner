@@ -38,6 +38,7 @@ main {
 .menyButton {
     font-size: 18px;
     font-weight: bold;
+    text-align: center;
     color: #7E6651;
     text-decoration: none;
     padding: 8px 16px;
@@ -84,8 +85,7 @@ main {
     color: #F9F5F0;
 }
 
-/* Visa dropdown vid hover */
-.dropdown:hover .dropdown-content {
+.dropdown-content.show {
     display: block;
 }
 
@@ -183,6 +183,11 @@ main {
         padding-left: 20px;
         display: block;
     }
+
+    .menyButton {
+        width: 60px;
+    }
+
 
     #headerFront {
         height: 200px;
