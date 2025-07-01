@@ -1,9 +1,15 @@
+@font-face {
+    font-family: Garamond;
+    src: url("../Font/CormorantGaramond-VariableFont_wght.ttf");
+}
+
 body {
     margin: 0px;
     max-width: 1440px;
     height: 100vh;
-    font-family: 'Cormorant Garamond, serif;
-
+    font-family: Garamond;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 h1 {
@@ -18,9 +24,9 @@ h1 {
     padding: 20px 40px;
 }
 
-.menyButton,
-.dropbtn {
+.menyButton {
     font-size: 18px;
+    font-weight: bold;
     color: #7E6651;
     text-decoration: none;
     padding: 8px 16px;
@@ -31,8 +37,7 @@ h1 {
     transition: all 0.3s ease;
 }
 
-.menyButton:hover,
-.dropbtn:hover {
+.menyButton:hover {
     background: #A8BCA1;
     color: #F9F5F0;
 }
@@ -46,6 +51,7 @@ h1 {
 /* Dropdown-innehåll */
 .dropdown-content {
     display: none;
+    font-weight: bold;
     position: absolute;
     background-color: #F9F5F0;
     min-width: 160px;

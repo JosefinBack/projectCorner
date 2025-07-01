@@ -5,7 +5,7 @@ document.getElementById("headerFront").innerHTML = `
       <a class="menyButton" href="index.html">Hem</a>
 
       <div class="dropdown">
-        <button class="dropbtn">Projekt</button>
+        <div class="menyButton">Projekt</div>
         <div class="dropdown-content">
           <a href="HTML/projekt1.html">Projekt 1</a>
           <a href="HTML/projekt2.html">Projekt 2</a>
