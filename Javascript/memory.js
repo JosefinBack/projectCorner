@@ -5,6 +5,7 @@ let memoryGreta = document.getElementById("pig");
 let memoryPaw = document.getElementById("paw");
 let memorySpidy = document.getElementById("spidy");
 let memoryPettson = document.getElementById("pettson");
+let main = document.querySelector("main");
 
 // === Alla teman ===
 let allPicsMemoryGreta = [
@@ -82,7 +83,7 @@ function startNewGame() {
     memoryWrapper.style.display = "flex";
     memoryContainer.style.border = "1px solid black";
     newGameButton.style.display = "flex";
-
+    main.appendChild(memoryWrapper);
     memoryCards();
 }
 
