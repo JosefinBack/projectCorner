@@ -3,10 +3,17 @@ document.getElementById("headerFront").innerHTML = `
     <div id="menuToggle">MENY</div>
     <nav id="topMenu">
       <a class="menyButton" href="index.html">Hem</a>
-      <a class="menyButton" href="HTML/projekt1.html">Projekt 1</a>
-      <a class="menyButton" href="HTML/projekt2.html">Projekt 2</a>
-      <a class="menyButton" href="HTML/projekt3.html">Projekt 3</a>
-      <a class="menyButton" href="HTML/memory.html">Memory</a>
+
+      <div class="dropdown">
+        <button class="dropbtn">Projekt</button>
+        <div class="dropdown-content">
+          <a href="HTML/projekt1.html">Projekt 1</a>
+          <a href="HTML/projekt2.html">Projekt 2</a>
+          <a href="HTML/projekt3.html">Projekt 3</a>
+          <a href="HTML/memory.html">Memory</a>
+        </div>
+      </div>
+
       <a class="menyButton" href="HTML/about.html">Om mig</a>
     </nav>
   </header>
