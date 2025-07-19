@@ -1,11 +1,43 @@
 #bingoWrapper {
     border: 1px solid black;
+    display: flex;
+    justify-content: center;
 }
 
 #bingoBoard {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    grid-template-rows: repeat(auto-fit, auto);
-    max-width: 900px;
-    height: 500px;
+    grid-template-columns: repeat(5, 150px);
+    grid-template-rows: repeat(4, 150px);
+    width: fit-content;
+    gap: 15px;
+    padding: 20px;
+
+    border: 1px solid black;
+
+}
+
+.bingoCell {
+    background-color: aquamarine;
+    width: 150px;
+    height: 150px;
+    border: 1px solid black;
+}
+
+#shuffleButton {
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid black;
+    display: inline-block;
+    background-color: white;
+    font-size: 20px;
+}
+
+#shuffleButton:hover {
+    box-shadow: 10px 10px 10px black;
+}
+
+
+#shuffleButton:active {
+    font-size: 18px;
+    padding: 18px;
 }
