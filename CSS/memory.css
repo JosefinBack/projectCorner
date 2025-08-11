@@ -88,7 +88,7 @@
     /* visas först när spelet startat */
     padding: 15px 30px;
     font-size: 1.2rem;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Comic Sans MS', sans-serif;
     background: linear-gradient(135deg, #f9c5d1, #fbc2eb);
     color: white;
     border: none;
@@ -166,6 +166,19 @@
     background-repeat: no-repeat;
 }
 
+#bluey {
+    height: 200px;
+    width: 200px;
+    cursor: pointer;
+
+    background-image: url(../Bilder/blueyBackground.png);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
 @media (max-width: 800px) {
     #memoryContainer {
         grid-template-columns: repeat(4, 1fr);
@@ -181,7 +194,8 @@
     #pig,
     #paw,
     #spidy,
-    #pettson {
+    #pettson,
+    #bluey {
         width: 80px;
         height: 80px;
         margin-left: auto;
@@ -201,9 +215,9 @@
         justify-content: center;
     }
 
-    .button {
+    #newGame {
+        font-size: 14px;
         width: 80px;
         height: 35px;
-        font-size: 14px;
     }
 }
