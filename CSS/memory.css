@@ -179,7 +179,9 @@
     }
 
     #pig,
-    #paw {
+    #paw,
+    #spidy,
+    #pettson {
         width: 120px;
         height: 120px;
     }
@@ -189,7 +191,6 @@
     }
 
     #buttonToMemory {
-        flex-direction: column;
         gap: 10px;
         align-items: center;
     }
