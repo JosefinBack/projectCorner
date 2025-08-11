@@ -51,7 +51,6 @@ let allPicsPettson = [
 ];
 
 let allPicsBluey = [
-    "../Bilder/bluey.png",
     "../Bilder/bluey2.png",
     "../Bilder/bluey3.jpg",
     "../Bilder/bluey4.jpg",
