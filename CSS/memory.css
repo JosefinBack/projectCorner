@@ -24,7 +24,6 @@
     display: none;
     flex-direction: column;
     align-items: center;
-
 }
 
 .card-inner {
@@ -89,7 +88,7 @@
     padding: 15px 30px;
     font-size: 1.2rem;
     font-family: 'Comic Sans MS', sans-serif;
-    background: linear-gradient(135deg, #f9c5d1, #fbc2eb);
+    background: #A8BCA1;
     color: white;
     border: none;
     border-radius: 50px;
@@ -119,6 +118,7 @@
     display: flex;
     gap: 80px;
     justify-content: center;
+    padding: 20px;
 }
 
 /* Knapp för att välja tema på memory */
@@ -175,6 +175,29 @@
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+
+@media (max-width: 1200px) {
+    #buttonToMemory {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto;
+        gap: 10px;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    #pig,
+    #paw,
+    #spidy,
+    #pettson,
+    #bluey {
+        width: 180px;
+        height: 180px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 
