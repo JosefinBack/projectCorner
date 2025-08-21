@@ -139,7 +139,7 @@ h1 {
     width: 200px;
     cursor: pointer;
 
-    background-image: url(../Bilder/house.jpg);
+    background-image: url(../Bilder/greta/house.jpg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -150,7 +150,7 @@ h1 {
     width: 200px;
     cursor: pointer;
 
-    background-image: url(../Bilder/paw.png);
+    background-image: url(../Bilder/paw/paw.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -161,7 +161,7 @@ h1 {
     width: 200px;
     cursor: pointer;
 
-    background-image: url(../Bilder/marvelSpidy.jpg);
+    background-image: url(../Bilder/spidy/marvelSpidy.jpg);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -172,7 +172,7 @@ h1 {
     width: 200px;
     cursor: pointer;
 
-    background-image: url(../Bilder/pettson1.jpg);
+    background-image: url(../Bilder/pettson/pettson1.jpg);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
@@ -183,7 +183,7 @@ h1 {
     width: 200px;
     cursor: pointer;
 
-    background-image: url(../Bilder/blueyBackground.png);
+    background-image: url(../Bilder/bluey/blueyBackground.png);
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;

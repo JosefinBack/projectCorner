@@ -11,7 +11,7 @@
 }
 
 #bingoBoard {
-    display: grid;
+    display: none;
     grid-template-columns: repeat(5, 150px);
     grid-template-rows: repeat(4, 150px);
     width: fit-content;

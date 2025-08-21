@@ -14,16 +14,14 @@ const listOfActivites = [
     "Grow a cowplant",
     "Take a selfie with Bella Goth",
     "Grow and harvets a Deth flower",
-    "Wtite and publish a playful book",
+    "Write and publish a playful book",
     "Play with the gaming mat",
     "Make 3 other Sims flirty at once",
-    "Have WooHoo in a shower",
     "Drink essence from a Cowplant",
     "Make §1000 from a side hustle",
     "Plant and grow any tree",
     "Scare of a burgler by fighting",
     "Convince a Sim to leave their spouse",
-    "WooHoo the Grim Raper",
     "Win 5 different fights",
     "Craft a dinning table and 4 chairs",
     "Find free food from a BBQ",
@@ -33,10 +31,44 @@ const listOfActivites = [
     "Fight with Katarina Caliente",
     "Trim the bonsai tree into every shape",
     "Write and publish a song",
+    "Catch a treefish",
+    "Train a pat to learn all 8 skills",
+    "Befriend a flock of birds",
+    "Host a gold dinner party",
+    "Complete a Henford-onBagley errand",
+    "Transform into a Occult Sim",
+    "Break into a sim's house",
+    "Shower in the rain",
+    "WooHoo in a dumpster",
+    "Gift a homegrown lilly",
+    "Complete any aspiration",
+    "Mix 10 drinks",
+    "Spend §10,000 on a renovation",
+    "Plant and grow any tree",
+    "Death by drowning",
+    "Death by fire",
+    "Death by anger",
+    "Death by freezing",
+    "Death by meteorite",
+    "Death by Cowplant",
+    "Death by old age",
+    "Death by flies",
+    "Death by hunger",
+    "WooHoo the Grim Raper",
+    "Have WooHoo in a shower",
+    "WooHoo in space",
+    "Woohoo in a tent",
+    "WooHoo in a pile of leaves",
+    "WooHoo in a hot tub",
+    "Have WooHoo in a sauna",
+    "Have WooHoo in a the lighthouse",
+    "WooHoo in the Money vault",
+    "Woohoo with a ghost",
 ]
 
 const bingoBoard = document.getElementById("bingoBoard");
 const shuffleButton = document.getElementById("shuffleButton");
+
 
 function newBoard() {
     const activity = [...listOfActivites];
@@ -56,7 +88,35 @@ function newBoard() {
 
         if (div2.textContent.includes("song")) {
             const img = document.createElement("img");
-            img.src = "../Bilder/plumbob.jpg";
+            img.src = "../Bilder/sims/plumbob.jpg";
+            img.style.height = "80px";
+            div1.appendChild(img);
+        }
+
+        if (div2.textContent.includes("§")) {
+            const img = document.createElement("img");
+            img.src = "../Bilder/sims/simolion.jpg";
+            img.style.height = "80px";
+            div1.appendChild(img);
+        }
+
+        if (div2.textContent.includes("Death")) {
+            const img = document.createElement("img");
+            img.src = "../Bilder/sims/ghost.jpg";
+            img.style.height = "80px";
+            div1.appendChild(img);
+        }
+
+        if (div2.textContent.includes("WooHoo") || div2.textContent.toLowerCase().startsWith("woohoo")) {
+            const img = document.createElement("img");
+            img.src = "../Bilder/sims/heart.jpg";
+            img.style.height = "80px";
+            div1.appendChild(img);
+        }
+
+        if (div2.textContent.includes("cowplant")) {
+            const img = document.createElement("img");
+            img.src = "../Bilder/sims/cowplant.jpg";
             img.style.height = "80px";
             div1.appendChild(img);
         }
@@ -69,7 +129,8 @@ function newBoard() {
 
 shuffleButton.addEventListener("click", function () {
     newBoard();
+    bingoBoard.style.display = "grid";
 });
 
 
-newBoard();
+

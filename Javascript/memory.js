@@ -15,60 +15,60 @@ let pairEight = document.getElementById("pairEight");
 
 // === Alla teman ===
 let allPicsMemoryGreta = [
-    "../Bilder/george.jpg",
-    "../Bilder/greta.jpg",
-    "../Bilder/mom.jpg",
-    "../Bilder/dad.jpg",
-    "../Bilder/grandpa-pig.png",
-    "../Bilder/granny.jpg",
-    "../Bilder/bunny.png",
-    "../Bilder/cat.jpg"
+    "../Bilder/greta/george.jpg",
+    "../Bilder/greta/greta.jpg",
+    "../Bilder/greta/mom.jpg",
+    "../Bilder/greta/dad.jpg",
+    "../Bilder/greta/grandpa-pig.png",
+    "../Bilder/greta/granny.jpg",
+    "../Bilder/greta/bunny.png",
+    "../Bilder/greta/cat.jpg"
 ];
 
 let allPicsMemoryPawPatrol = [
-    "../Bilder/chase.jpg",
-    "../Bilder/everest.jpg",
-    "../Bilder/marshall.jpg",
-    "../Bilder/rocky.jpg",
-    "../Bilder/rubble.jpg",
-    "../Bilder/sky.jpg",
-    "../Bilder/tracker.png",
-    "../Bilder/zuma.jpg"
+    "../Bilder/paw/chase.jpg",
+    "../Bilder/paw/everest.jpg",
+    "../Bilder/paw/marshall.jpg",
+    "../Bilder/paw/rocky.jpg",
+    "../Bilder/paw/rubble.jpg",
+    "../Bilder/paw/sky.jpg",
+    "../Bilder/paw/tracker.png",
+    "../Bilder/paw/zuma.jpg"
 ];
 
 let allPicsSpidy = [
-    "../Bilder/gwen.jpg",
-    "../Bilder/hulk.jpg",
-    "../Bilder/friends.jpg",
-    "../Bilder/spidy1.jpg",
-    "../Bilder/spidy2.jpg",
-    "../Bilder/spidy.jpg",
-    "../Bilder/spidy3.jpg",
-    "../Bilder/hulk1.jpg",
+    "../Bilder/spidy/gwen.jpg",
+    "../Bilder/spidy/hulk.jpg",
+    "../Bilder/spidy/friends.jpg",
+    "../Bilder/spidy/spidy1.jpg",
+    "../Bilder/spidy/spidy2.jpg",
+    "../Bilder/spidy/spidy.jpg",
+    "../Bilder/spidy/spidy3.jpg",
+    "../Bilder/spidy/hulk1.jpg",
 ];
 
 let allPicsPettson = [
-    "../Bilder/pettson1.jpg",
-    "../Bilder/pettson2.jpg",
-    "../Bilder/pettson3.jpg",
-    "../Bilder/pettson4.jpg",
-    "../Bilder/pettson5.jpg",
-    "../Bilder/pettson6.jpg",
-    "../Bilder/pettson7.jpg",
-    "../Bilder/findus.jpg",
+    "../Bilder/pettson/pettson1.jpg",
+    "../Bilder/pettson/pettson2.jpg",
+    "../Bilder/pettson/pettson3.jpg",
+    "../Bilder/pettson/pettson4.jpg",
+    "../Bilder/pettson/pettson5.jpg",
+    "../Bilder/pettson/pettson6.jpg",
+    "../Bilder/pettson/pettson7.jpg",
+    "../Bilder/pettson/findus.jpg",
 ];
 
 let allPicsBluey = [
-    "../Bilder/bluey2.png",
-    "../Bilder/bluey3.jpg",
-    "../Bilder/bluey4.jpg",
-    "../Bilder/bluey5.png",
-    "../Bilder/bluey6.jpg",
-    "../Bilder/bluey7.jpg",
-    "../Bilder/bluey8.png",
-    "../Bilder/bluey9.png",
-    "../Bilder/bluey10.png",
-    "../Bilder/bluey11.png",
+    "../Bilder/bluey/bluey2.png",
+    "../Bilder/bluey/bluey3.jpg",
+    "../Bilder/bluey/bluey4.jpg",
+    "../Bilder/bluey/bluey5.png",
+    "../Bilder/bluey/bluey6.jpg",
+    "../Bilder/bluey/bluey7.jpg",
+    "../Bilder/bluey/bluey8.png",
+    "../Bilder/bluey/bluey9.png",
+    "../Bilder/bluey/bluey10.png",
+    "../Bilder/bluey/bluey11.png",
 ]
 
 // === Speldata ===
@@ -135,31 +135,31 @@ pairEight.addEventListener("click", function () {
 
 // === Event listeners för teman ===
 memoryGreta.addEventListener("click", function () {
-    currentBackImage = "../Bilder/house.jpg";
+    currentBackImage = "../Bilder/greta/house.jpg";
     currentThemeImages = allPicsMemoryGreta;
     startNewGame();
 });
 
 memoryPaw.addEventListener("click", function () {
-    currentBackImage = "../Bilder/paw.png";
+    currentBackImage = "../Bilder/paw/paw.png";
     currentThemeImages = allPicsMemoryPawPatrol;
     startNewGame();
 });
 
 memorySpidy.addEventListener("click", function () {
-    currentBackImage = "../Bilder/spidyLogo.png";
+    currentBackImage = "../Bilder/spidy/spidyLogo.png";
     currentThemeImages = allPicsSpidy;
     startNewGame();
 });
 
 memoryPettson.addEventListener("click", function () {
-    currentBackImage = "../Bilder/pettsonBakgrund.jpg";
+    currentBackImage = "../Bilder/pettson/pettsonBakgrund.jpg";
     currentThemeImages = allPicsPettson;
     startNewGame();
 });
 
 memoryBluey.addEventListener("click", function () {
-    currentBackImage = "../Bilder/BlueyLogo.jpg";
+    currentBackImage = "../Bilder/bluey/BlueyLogo.jpg";
     currentThemeImages = allPicsBluey;
     startNewGame();
     numbers.style.display = "flex";
