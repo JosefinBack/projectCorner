@@ -7,6 +7,11 @@ let memorySpidy = document.getElementById("spidy");
 let memoryPettson = document.getElementById("pettson");
 let memoryBluey = document.getElementById("bluey");
 let main = document.querySelector("main");
+let numbers = document.getElementById("numbers");
+let pairFour = document.getElementById("pairFour");
+let pairSix = document.getElementById("pairSix");
+let pairEight = document.getElementById("pairEight");
+
 
 // === Alla teman ===
 let allPicsMemoryGreta = [
@@ -38,6 +43,8 @@ let allPicsSpidy = [
     "../Bilder/spidy1.jpg",
     "../Bilder/spidy2.jpg",
     "../Bilder/spidy.jpg",
+    "../Bilder/spidy3.jpg",
+    "../Bilder/hulk1.jpg",
 ];
 
 let allPicsPettson = [
@@ -48,6 +55,7 @@ let allPicsPettson = [
     "../Bilder/pettson5.jpg",
     "../Bilder/pettson6.jpg",
     "../Bilder/pettson7.jpg",
+    "../Bilder/findus.jpg",
 ];
 
 let allPicsBluey = [
@@ -69,6 +77,7 @@ let currentTheme = [];
 let currentBackImage = "";
 let flippedCards = [];
 let lockBoard = false;
+let pairCount = 4;
 
 // === Funktion: Slumpa bilder ===
 function pickRandomImages(imageArray, count) {
@@ -92,14 +101,37 @@ function startNewGame() {
     flippedCards = [];
     lockBoard = false;
 
-    currentTheme = pickRandomImages(currentThemeImages, 4);
+    currentTheme = pickRandomImages(currentThemeImages, pairCount);
 
     memoryWrapper.style.display = "flex";
     memoryContainer.style.border = "1px solid black";
     newGameButton.style.display = "flex";
+    numbers.style.display = "flex";
     main.appendChild(memoryWrapper);
     memoryCards();
 }
+
+// === Funktion: välj antal par ===
+pairFour.addEventListener("click", function () {
+    pairCount = 4;
+    if (currentThemeImages.length) {
+        startNewGame();
+    }
+});
+
+pairSix.addEventListener("click", function () {
+    pairCount = 6;
+    if (currentThemeImages.length) {
+        startNewGame();
+    }
+});
+
+pairEight.addEventListener("click", function () {
+    pairCount = 8;
+    if (currentThemeImages.length) {
+        startNewGame();
+    }
+});
 
 // === Event listeners för teman ===
 memoryGreta.addEventListener("click", function () {
@@ -130,6 +162,7 @@ memoryBluey.addEventListener("click", function () {
     currentBackImage = "../Bilder/BlueyLogo.jpg";
     currentThemeImages = allPicsBluey;
     startNewGame();
+    numbers.style.display = "flex";
 });
 
 // === Event listener för Nytt spel ===
