@@ -69,17 +69,42 @@ const listOfActivites = [
 const bingoBoard = document.getElementById("bingoBoard");
 const shuffleButton = document.getElementById("shuffleButton");
 
+const ROWS = 5;
+const COLS = 5;
+const completedLines = new Set(); // minne för redan utlösta bingos
+
+
+bingoBoard.addEventListener("click", (e) => {
+    // Hitta närmaste klickade element som är en bingoruta,
+    // funkar även om man klickar på barn-element (div1/div2/img)
+    const cell = e.target.closest(".bingoCell");
+    if (!cell || !bingoBoard.contains(cell)) return;
+
+    cell.classList.toggle("done");
+
+    const row = cell.dataset.row;
+    const col = cell.dataset.col;
+    checkBingo(row, col);
+});
+
 
 function newBoard() {
+    completedLines.clear();
     const activity = [...listOfActivites];
     bingoBoard.innerHTML = "";
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < ROWS * COLS; i++) {
         const cell = document.createElement("div");
         const div1 = document.createElement("div");
         const div2 = document.createElement("div");
 
         cell.classList.add("bingoCell");
+
+        const row = Math.floor(i / COLS);
+        const col = i % COLS;
+        cell.dataset.row = String(row);
+        cell.dataset.col = String(col);
+
 
         let index = Math.floor(Math.random() * activity.length);
         let context = activity[index];
@@ -132,5 +157,72 @@ shuffleButton.addEventListener("click", function () {
     bingoBoard.style.display = "grid";
 });
 
+function checkBingo(row, col) {
+    const cells = document.querySelectorAll(".bingoCell");
+    const rNum = Number(row);
+    const cNum = Number(col);
 
+    // === Rad ===
+    let rowFull = true;
+    for (let i = 0; i < cells.length; i++) {
+        if (Number(cells[i].dataset.row) === rNum) {
+            if (!cells[i].classList.contains("done")) rowFull = false;
+        }
+    }
+    if (rowFull) {
+        const key = `R${rNum}`;
+        if (!completedLines.has(key)) {
+            completedLines.add(key);
+            alert("BINGO på rad!");
+        }
+    }
 
+    // === Kolumn ===
+    let colFull = true;
+    for (let i = 0; i < cells.length; i++) {
+        if (Number(cells[i].dataset.col) === cNum) {
+            if (!cells[i].classList.contains("done")) colFull = false;
+        }
+    }
+    if (colFull) {
+        const key = `C${cNum}`;
+        if (!completedLines.has(key)) {
+            completedLines.add(key);
+            alert("BINGO på kolumn!");
+        }
+    }
+
+    // === Diagonaler (alltid 5x5) — kolla bara om klicken ligger på diagonalen ===
+    // Huvuddiagonal: r == c
+    if (rNum === cNum) {
+        let d1Full = true;
+        for (let i = 0; i < ROWS; i++) {
+            const el = document.querySelector(`.bingoCell[data-row="${i}"][data-col="${i}"]`);
+            if (!el.classList.contains("done")) d1Full = false;
+        }
+        if (d1Full) {
+            const key = `D0`;
+            if (!completedLines.has(key)) {
+                completedLines.add(key);
+                alert("BINGO på diagonal!");
+            }
+        }
+    }
+
+    // Motdiagonal: r + c == COLS - 1 (dvs 4)
+    if (rNum + cNum === COLS - 1) {
+        let d2Full = true;
+        for (let i = 0; i < ROWS; i++) {
+            const j = COLS - 1 - i;
+            const el = document.querySelector(`.bingoCell[data-row="${i}"][data-col="${j}"]`);
+            if (!el.classList.contains("done")) d2Full = false;
+        }
+        if (d2Full) {
+            const key = `D1`;
+            if (!completedLines.has(key)) {
+                completedLines.add(key);
+                alert("BINGO på diagonal!");
+            }
+        }
+    }
+}

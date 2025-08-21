@@ -31,6 +31,7 @@
     font-weight: bold;
     font-size: 18px;
     text-align: center;
+    cursor: pointer;
 }
 
 #shuffleButton {
@@ -49,4 +50,8 @@
 
 #shuffleButton:active {
     font-size: 24px;
+}
+
+.done {
+    background-color: #1e9428;
 }
