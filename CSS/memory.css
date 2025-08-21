@@ -1,4 +1,9 @@
 /* memory */
+h1 {
+    font-size: 60px;
+    font-style: italic;
+}
+
 .card {
     width: 150px;
     height: 150px;
@@ -186,6 +191,11 @@
 
 
 @media (max-width: 1200px) {
+
+    h1 {
+        font-size: 40px;
+    }
+
     #buttonToMemory {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
