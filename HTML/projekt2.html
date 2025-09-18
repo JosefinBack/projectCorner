@@ -6,15 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../CSS/globalStyle.css">
+    <link rel="stylesheet" href="../CSS/books.css">
 </head>
 
 <body>
     <div id="headerFront"></div>
-    <h1>Projekt 2</h1>
+    <h1>Digital reading journal</h1>
+    <h2>Track your readingjourney</h2>
+
+    <button id="addBook">Add a book</button>
+
+    <main>
+        <container id="createBook">
+            <p>The title of the book</p><input type="text" id="bookTitle">
+
+            <div class="box">
+                <p>The authour</p><input type="text" id="author">
+                <p>Genre</p><input type="text" id="genre">
+            </div>
+
+            <p>Pages</p><input type="text" id="pages">
+
+            <p>The date when I startet the book:</p><input type="text" id="startdate">
+            <p>The date when I finished the book:</p><input type="text" id="donedate">
+
+            <p>Book type</p><input type="radio" id="fysical" value="fysical">
+            <label for="fysical">Fysical book</label>
+            <input type="radio" id="e-book" value="e-book">
+            <label for="e-book">E-book</label>
+            <input type="radio" id="audiobook" value="audiobook">
+            <label for="audiobook">Audiobook</label>
+        </container>
+    </main>
 
     <script src="../Javascript/header-inside.js" defer></script>
-
-
+    <script src="../Javascript/books.js" defer></script>
 </body>
 
 </html>

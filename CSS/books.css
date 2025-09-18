@@ -1,0 +1,41 @@
+h2 {
+    text-align: center;
+}
+
+#addBook {
+    padding: 10px;
+    background-color: lightpink;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
+#createBook {
+    margin: 40px;
+    padding: 20px;
+    width: 500px;
+    height: 500px;
+    border: solid 1px black;
+    overflow: scroll;
+    background-color: white;
+}
+
+
+.box {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+}
+
+#createBook input[type="text"] {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #d1d5db;
+    height: 23px;
+}
+
+#bookTitle {
+    width: 100%;
+}
