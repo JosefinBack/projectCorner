@@ -12,30 +12,111 @@
 <body>
     <div id="headerFront"></div>
     <h1>Digital reading journal</h1>
-    <h2>Track your readingjourney</h2>
+    <h2>Track your reading journey</h2>
 
     <button id="addBook">Add a book</button>
 
     <main>
         <container id="createBook">
-            <p>The title of the book</p><input type="text" id="bookTitle">
+            <div id="containerwrap">
+                <div id="boxTwo">
+                    <div id="pic">
 
-            <div class="box">
-                <p>The authour</p><input type="text" id="author">
-                <p>Genre</p><input type="text" id="genre">
+                    </div>
+                </div>
+                <div id="boxOne">
+                    <div class="bigBox">
+                        <p>Title</p><input type="text" id="bookTitle">
+                    </div>
+
+                    <div class="bigBox">
+                        <p>Authour</p><input type="text" id="author">
+                        <p>Genre</p><input type="text" id="genre">
+                    </div>
+
+                    <div class="bigBox">
+                        <p>Pages</p><input type="text" id="pages">
+                        <p>Start date:</p><input type="text" id="startdate">
+                        <p>Finish date:</p><input type="text" id="finishdate">
+                    </div>
+
+                    <div id="typeOfBook">
+                        <div>
+                            <p>Book type</p>
+                        </div>
+                        <div class="bigBox">
+                            <div class="booktype">
+                                <input type="radio" id="fysical" value="fysical" name="booktype">
+                                <label for="fysical">Fysical book</label>
+                            </div>
+                            <div class="booktype">
+                                <input type="radio" id="e-book" value="e-book" name="booktype">
+                                <label for="e-book">E-book</label>
+                            </div>
+                            <div class="booktype">
+                                <input type="radio" id="audiobook" value="audiobook" name="booktype">
+                                <label for="audiobook">Audiobook</label>
+                            </div>
+                            <div class="booktype">
+                                <input type="radio" id="mix" value="mix" name="booktype">
+                                <label for="mix">A mix</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="boxThree">
+                        <div id="ratingBox">
+                            <p class="boxThreeHeadline">Rating</p>
+                            <div class="rating">
+                                <p>Story:</p>
+                                <div class="stars" data-category="story">
+                                    ★ ★ ★ ★ ★
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Characters:</p>
+                                <div class="stars" data-category="characters">
+                                    ★ ★ ★ ★ ★
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Wright style:</p>
+                                <div class="stars" data-category="style">
+                                    ★ ★ ★ ★ ★
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Entertaning:</p>
+                                <div class="stars" data-category="fun">
+                                    ★ ★ ★ ★ ★
+                                </div>
+                            </div>
+
+                            <div class="rating">
+                                <p>Finishing:</p>
+                                <div class="stars" data-category="ending">
+                                    ★ ★ ★ ★ ★
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="quotes">
+                            <p class="boxThreeHeadline">Favorite quotes</p>
+                            <input type="text" id="quotes">
+                            <input type="text" id="quotes">
+                            <input type="text" id="quotes">
+                            <input type="text" id="quotes">
+                            <input type="text" id="quotes">
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <p>Pages</p><input type="text" id="pages">
-
-            <p>The date when I startet the book:</p><input type="text" id="startdate">
-            <p>The date when I finished the book:</p><input type="text" id="donedate">
-
-            <p>Book type</p><input type="radio" id="fysical" value="fysical">
-            <label for="fysical">Fysical book</label>
-            <input type="radio" id="e-book" value="e-book">
-            <label for="e-book">E-book</label>
-            <input type="radio" id="audiobook" value="audiobook">
-            <label for="audiobook">Audiobook</label>
+            <div>
+                <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
+                    placeholder="Skriv en kort sammanfattning..."></textarea>
+            </div>
         </container>
     </main>
 
