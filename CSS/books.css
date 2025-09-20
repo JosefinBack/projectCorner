@@ -13,6 +13,8 @@ main {
 }
 
 #createBook {
+    display: none;
+
     margin: 40px;
     padding: 20px;
     max-width: 900px;
@@ -48,6 +50,7 @@ main {
 
 #boxThree {
     display: flex;
+    margin-top: 15px;
 }
 
 #boxThree p {
@@ -102,7 +105,7 @@ main {
 
 #pic {
     width: 250px;
-    height: 390px;
+    height: 350px;
     background-color: aqua;
     border: 1px solid black;
 }
@@ -132,6 +135,23 @@ main {
 #ratingBox {
     width: 50%;
     border-right: 1px solid #d1d5db;
+}
+
+#ratingBook {
+    font-size: 30px;
+}
+
+.ratingBook {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.ratingBook p {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 2px;
 }
 
 #quotes {
