@@ -1,28 +1,56 @@
-// import { serveDir } from "https://deno.land/std@0.224.0/http/file_server.ts";
+// server.js
 
-async function handler(request) {
-    const url = new URL(request.url);
+// Öppna databasen (Deno KV)
+const database = await Deno.openKv();
 
-    const headerCORS = new Headers();
-    headerCORS.append("Access-Control-Allow-Origin", "*");
-    headerCORS.append("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-    headerCORS.append("Access-Control-Allow-Headers", "Content-Type");
+// Funktion som hanterar alla inkommande requests
+async function handleRequest(req) {
+    const url = new URL(req.url);
 
-    if (request.method === "OPTIONS") {
-        return new Response(null, {
-            status: 204,
-            headers: headerCORS
-        });
+    // Standard-headers (CORS + JSON)
+    const headers = {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+    };
+
+    // Svara på OPTIONS-förfrågningar (CORS)
+    if (req.method === "OPTIONS") {
+        return new Response(null, { headers: headers });
     }
 
-    // Serva statiska filer
-    // const response = await serveDir(request, {
-    //     fsRoot: "./Frontend", // <-- justera till din mapp
-    //     urlRoot: "",
-    //     showDirListing: false,
-    // });
+    // Hämta alla böcker
+    if (req.method === "GET" && url.pathname === "/books") {
+        let res = await database.get(["allBooks"]);
+        let books = res.value || []; // om inget finns ännu → tom array
+        return new Response(JSON.stringify(books), { headers: headers });
+    }
 
-    // return response;
+    // Spara en ny bok
+    if (req.method === "POST" && url.pathname === "/books") {
+        const book = await req.json();
+        book.id = crypto.randomUUID();
+
+        // Hämta befintliga böcker
+        let res = await database.get(["allBooks"]);
+        let books = res.value || [];
+
+        // Lägg till nya boken
+        books.push(book);
+
+        // Spara tillbaka hela listan
+        await database.set(["allBooks"], books);
+
+        return new Response(JSON.stringify(book), { status: 201, headers: headers });
+    }
+
+    // Om ingen route matchar
+    return new Response(
+        JSON.stringify({ error: "Not found" }),
+        { status: 404, headers: headers }
+    );
 }
 
-Deno.serve(handler);
+// Starta servern med en vanlig funktion
+Deno.serve(handleRequest);

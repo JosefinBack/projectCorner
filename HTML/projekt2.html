@@ -17,9 +17,16 @@
     <button id="addBook">Add a book</button>
 
     <main>
-        <container id="createBook">
+        <div id="createBook">
             <div id="containerwrap">
                 <div id="boxTwo">
+                    <!-- knapp för att ladda upp bild -->
+                    <button type="button" onclick="document.getElementById('cover').click()">
+                        Upload pic here
+                    </button>
+
+                    <!-- det riktiga file-inputfältet (gömt) -->
+                    <input type="file" id="cover" accept="image/*" style="display:none;">
                     <div id="pic">
                     </div>
                     <div class="ratingBook">
@@ -148,7 +155,7 @@
             </div>
 
             <button id="close">Close</button>
-        </container>
+        </div>
     </main>
 
     <script src="../Javascript/header-inside.js" defer></script>
