@@ -72,7 +72,7 @@ closeLoginButton.addEventListener("click", function () {
 
 
 //Register and log in
-const BASE_URL = "https://projectcorner-h1fqnscs8ng0.josefinback.deno.net";
+const BASE_URL = "https://josefinbck-projectcorn-23.deno.dev";
 let currentUser = null;
 
 // --- REGISTER ---
