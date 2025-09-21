@@ -78,5 +78,7 @@ async function handleRequest(req) {
     );
 }
 
-// ✅ Starta servern
-Deno.serve(handleRequest);
+export default {
+    fetch: handleRequest,
+};
+
