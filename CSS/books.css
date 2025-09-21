@@ -159,3 +159,17 @@ main {
     flex-direction: column;
     width: 50%;
 }
+
+
+/* logga in och registrera användare */
+#registration {
+    display: none;
+}
+
+#logInDiv {
+    display: none;
+}
+
+#app {
+    display: none;
+}

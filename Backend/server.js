@@ -20,6 +20,32 @@ async function handleRequest(req) {
         return new Response(null, { headers: headers });
     }
 
+
+    // Registrera ny användare
+    if (req.method === "POST" && url.pathname === "/register") {
+        let user = await req.json();
+        let existing = await database.get(["users", user.username]);
+        if (existing.value) {
+            return new Response(JSON.stringify({ error: "Username already taken" }), { status: 400, headers });
+        }
+        await database.set(["users", user.username], user);
+        return new Response(JSON.stringify({ success: true }), { headers });
+    }
+
+    // Logga in
+    if (req.method === "POST" && url.pathname === "/login") {
+        let user = await req.json();
+        let stored = await database.get(["users", user.username]);
+        if (!stored.value) {
+            return new Response(JSON.stringify({ error: "User does not exist" }), { status: 401, headers });
+        }
+        if (stored.value.password !== user.password) {
+            return new Response(JSON.stringify({ error: "Wrong password" }), { status: 401, headers });
+        }
+        return new Response(JSON.stringify({ success: true }), { headers });
+    }
+
+
     // Hämta alla böcker
     if (req.method === "GET" && url.pathname === "/books") {
         let res = await database.get(["allBooks"]);
@@ -50,6 +76,7 @@ async function handleRequest(req) {
         JSON.stringify({ error: "Not found" }),
         { status: 404, headers: headers }
     );
+
 }
 
 // Starta servern med en vanlig funktion

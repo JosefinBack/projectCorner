@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Books</title>
     <link rel="stylesheet" href="../CSS/globalStyle.css">
     <link rel="stylesheet" href="../CSS/books.css">
 </head>
@@ -15,6 +15,32 @@
     <h2>Track your reading journey</h2>
 
     <button id="addBook">Add a book</button>
+    <button id="logInButton">Log in</button>
+    <button id="register">Register</button>
+
+    <div id="registration">
+        <h3>Register</h3>
+        <input id="regUser" placeholder="username">
+        <input id="regPass" placeholder="password" type="password">
+        <p id="registerMessage"></p>
+        <button id="newUser">Create a new user</button>
+        <button id="closeReg">Close</button>
+    </div>
+
+    <div id="logInDiv">
+        <h3>Log in</h3>
+        <input id="loginUser" placeholder="username">
+        <input id="loginPass" placeholder="password" type="password">
+        <p id="loginMessage"></p>
+        <button id="loginBtn">Log in</button>
+        <button id="closeLogIn">Close</button>
+    </div>
+
+    <div id="app">
+        <h2>Welcome <span id="who"></span></h2>
+        <button id="logoutBtn">Log out</button>
+    </div>
+
 
     <main>
         <div id="createBook">
