@@ -111,6 +111,7 @@ loginBtn.addEventListener("click", async function () {
         loginDiv.style.display = "none";
         loginBtn.style.display = "none";
         registerButton.style.display = "none";
+        loginButton.style.display = "none";
 
         // här kan du nu anropa loadBooks() för att hämta användarens böcker
     } else {
@@ -124,9 +125,10 @@ logoutBtn.addEventListener("click", function () {
     currentUser = null;
     who.textContent = "";
     main.innerHTML = "";
+    loginMessage.innerHTML = "";
     appDiv.style.display = "none";   // göm appen
-    loginDiv.style.display = "block"; // visa login igen
-    regDiv.style.display = "block"; // visa register igen
+    loginButton.style.display = "block"; // visa login igen
+    registerButton.style.display = "block"; // visa register igen
 });
 
 

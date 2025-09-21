@@ -64,12 +64,16 @@ async function handleRequest(req) {
     if (req.method === "POST" && url.pathname.startsWith("/books/")) {
         let username = url.pathname.split("/")[2];
         let book = await req.json();
+
+        // Om boken inte redan har ett id → skapa ett slumpmässigt id
         if (!book.id) {
-            book.id = crypto.randomUUID();
+            book.id = Math.floor(Math.random() * 1000000000).toString();
         }
+
         await database.set(["books", username, book.id], book);
         return new Response(JSON.stringify(book), { headers });
     }
+
 
     // --- FALLBACK ---
     return new Response(
