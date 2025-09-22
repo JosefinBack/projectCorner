@@ -22,7 +22,6 @@ let closeBook = document.getElementById("close");
 let starContainers = document.getElementsByClassName("stars");
 let createBook = document.getElementById("createBook");
 let main = document.querySelector("main");
-let author = document.getElementById("author");
 let coverInput = document.getElementById("cover");
 let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
@@ -132,68 +131,133 @@ logoutBtn.addEventListener("click", function () {
 });
 
 
-//create a book
+//Skapa en bok
 addBook.addEventListener("click", function () {
     createABook();
 });
 
 
-closeBook.addEventListener("click", function () {
+closeBook.addEventListener("click", async function () {
     closeCreateBook();
-    let authorName = author.value;
 
+    // Hämta fält
+    let bookTitle = document.getElementById("bookTitle");
+    let bookGenre = document.getElementById("genre");
+    let authorName = document.getElementById("author");
+    let bookPages = document.getElementById("pages");
+    let bookStart = document.getElementById("startdate");
+    let bookFinish = document.getElementById("finishdate");
+
+    // Boktyp (radio)
+    let bookType = null;
+    let selected = document.querySelector('input[name="booktype"]:checked');
+    if (selected) {
+        bookType = selected.value;
+    }
+
+    // Bild
+    let img = picDiv.querySelector("img");
+    let imgSrc = img ? img.src : null;
+
+    // Rating
+    let ratings = {};
+    let starGroups = document.querySelectorAll("#ratingBox .stars");
+    for (let i = 0; i < starGroups.length; i++) {
+        let group = starGroups[i];
+        let category = group.dataset.category;
+        let filledStars = group.querySelectorAll(".filled").length;
+        ratings[category] = filledStars;
+    }
+
+    // Citat
+    let quotes = [];
+    let quoteInputs = document.querySelectorAll("#quotes .quote");
+    for (let i = 0; i < quoteInputs.length; i++) {
+        let val = quoteInputs[i].value.trim();
+        if (val !== "") {
+            quotes.push(val);
+        }
+    }
+
+    // Bygg bokobjekt
+    let book = {
+        pic: imgSrc,
+        title: bookTitle.value,
+        genre: bookGenre.value,
+        author: authorName.value,
+        pages: bookPages.value,
+        start: bookStart.value,
+        finish: bookFinish.value,
+        type: bookType,
+        ratings: ratings,
+        quotes: quotes,
+    };
+
+    // Skicka till servern
+    let res = await fetch(BASE_URL + "/books/" + currentUser, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(book),
+    });
+    let savedBook = await res.json();
+
+    // Skapa en div i main
     let div = document.createElement("div");
-    div.style.height = "auto";
     div.style.width = "150px";
+    div.style.margin = "10px";
+    div.style.padding = "10px";
+    div.style.border = "1px solid #ccc";
     div.style.display = "flex";
     div.style.flexDirection = "column";
     div.style.alignItems = "center";
-    div.style.backgroundColor = "white";
-    div.style.padding = "10px";
-    div.style.border = "1px solid #ccc";
-    div.style.margin = "10px";
 
+    // Spara id på diven
+    div.dataset.id = savedBook.id;
 
-    //Lägg till rating
-    // Hämta rating från formuläret
-    let stars = document.querySelectorAll("#ratingBook span");
-    let rating = 0;
-    for (let i = 0; i < stars.length; i++) {
-        if (stars[i].classList.contains("filled")) {
-            rating++;
-        }
-    }
-    let ratingDiv = document.createElement("div");
-    ratingDiv.classList.add("stars");
-    for (let i = 1; i <= 5; i++) {
-        let star = document.createElement("span");
-        star.textContent = "★";
-        if (i <= rating) {
-            star.classList.add("filled");
-        }
-        ratingDiv.appendChild(star);
+    // Klick → öppna redigering
+    div.addEventListener("click", function () {
+        openBookForEdit(savedBook.id);
+    });
+
+    // Lägg till bild
+    if (imgSrc) {
+        let imgEl = document.createElement("img");
+        imgEl.src = imgSrc;
+        imgEl.style.width = "100px";
+        imgEl.style.height = "150px";
+        div.appendChild(imgEl);
     }
 
-    //Lägg till bilden
-    let img = picDiv.querySelector("img");
-    if (img) {
-        let imgCopy = img.cloneNode(true);   // kopiera bilden
-        imgCopy.style.width = "100px";       // ändra storleken
-        imgCopy.style.height = "150px";
-        div.appendChild(imgCopy);
-    }
-
-    //Lägg till author
+    // Lägg till titel och författare
     let text = document.createElement("p");
-    text.textContent = authorName;
-
+    text.textContent = savedBook.title + " – " + savedBook.author;
     div.appendChild(text);
-    div.appendChild(ratingDiv);
+
+    // Lägg till main
     main.appendChild(div);
 
-    author.value = "";
+    // Återställ formuläret
+    bookTitle.value = "";
+    bookGenre.value = "";
+    authorName.value = "";
+    bookPages.value = "";
+    bookStart.value = "";
+    bookFinish.value = "";
     picDiv.innerHTML = "";
+    for (let i = 0; i < quoteInputs.length; i++) {
+        quoteInputs[i].value = "";
+    }
+
+    let allStarGroups = document.querySelectorAll(".stars");
+    for (let j = 0; j < allStarGroups.length; j++) {
+        let group = allStarGroups[j];
+        let stars = group.querySelectorAll("span");
+        for (let k = 0; k < stars.length; k++) {
+            stars[k].classList.remove("filled");
+        }
+    }
 });
+
 
 
 //färga stjärnorna 
