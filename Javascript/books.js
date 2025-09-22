@@ -256,6 +256,11 @@ closeBook.addEventListener("click", async function () {
             stars[k].classList.remove("filled");
         }
     }
+
+    if (!currentUser) {
+        alert("You must be logged in to save a book!");
+        return;
+    }
 });
 
 
