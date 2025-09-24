@@ -13,7 +13,7 @@ main {
 }
 
 #createBook {
-    display: none;
+    /* display: none; */
 
     margin: 40px;
     padding: 20px;
