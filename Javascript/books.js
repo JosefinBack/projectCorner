@@ -112,8 +112,8 @@ loginBtn.addEventListener("click", async function () {
     }
 
     appLogout.style.display = "block";
-    loginBtn.style.display = "none";
-    registerBtn.style.display = "none";
+    openLoginBtn.style.display = "none";
+    openRegisterBtn.style.display = "none";
 });
 
 
