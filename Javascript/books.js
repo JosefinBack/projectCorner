@@ -18,6 +18,7 @@ let registerDiv = document.getElementById("registration");
 let loginBtn = document.getElementById("loginBtn");         // inne i login-formuläret
 let registerBtn = document.getElementById("newUser");       // inne i register-formuläret
 let logoutBtn = document.getElementById("logoutBtn");       // logga ut-knappen
+let appLogout = document.getElementById("app");
 
 let currentUser = null;
 
@@ -72,10 +73,12 @@ async function openBookForEdit(bookId) {
 // öppna/stäng login/register
 openLoginBtn.addEventListener("click", function () {
     loginDiv.style.display = "block";
+    registerDiv.style.display = "none";
 });
 
 openRegisterBtn.addEventListener("click", function () {
     registerDiv.style.display = "block";
+    loginDiv.style.display = "none";
 });
 
 closeLoginBtn.addEventListener("click", function () {
@@ -107,6 +110,8 @@ loginBtn.addEventListener("click", async function () {
     } else {
         document.getElementById("loginMessage").textContent = data.error || "Invalid login";
     }
+
+    appLogout.style.display = "block";
 });
 
 
