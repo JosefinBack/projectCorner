@@ -160,7 +160,7 @@ addBook.addEventListener("click", function () {
         alert("You must log in first!");
         return;
     } else {
-        createABook();
+        showCreateBook();
     }
 });
 
