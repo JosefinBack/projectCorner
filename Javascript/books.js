@@ -198,12 +198,31 @@ closeBook.addEventListener("click", async function () {
     };
 
     // Skicka till servern
+    // let res = await fetch(BASE_URL + "/books/" + currentUser, {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify(book),
+    // });
+    // let savedBook = await res.json();
+
+
     let res = await fetch(BASE_URL + "/books/" + currentUser, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(book),
     });
-    let savedBook = await res.json();
+
+    console.log("Response status:", res.status);
+    let textTest = await res.text();
+    console.log("Raw response:", textTest);
+
+    let savedBook;
+    try {
+        savedBook = JSON.parse(textTest);
+    } catch (e) {
+        console.error("Kunde inte parsa JSON:", e);
+        return;
+    }
 
     // Skapa en div i main
     let div = document.createElement("div");
