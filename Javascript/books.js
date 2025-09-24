@@ -1,3 +1,6 @@
+console.log("books.js laddades!");
+
+
 document.addEventListener("DOMContentLoaded", () => {
     // ---------------- Variabler ----------------
     const addBook = document.getElementById("addBook");
