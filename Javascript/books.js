@@ -138,6 +138,10 @@ addBook.addEventListener("click", function () {
 
 
 closeBook.addEventListener("click", async function () {
+    if (!currentUser) {
+        alert("You must be logged in to save a book!");
+        return;
+    }
     closeCreateBook();
 
     // Hämta fält
@@ -215,9 +219,9 @@ closeBook.addEventListener("click", async function () {
     div.dataset.id = savedBook.id;
 
     // Klick → öppna redigering
-    div.addEventListener("click", function () {
-        openBookForEdit(savedBook.id);
-    });
+    // div.addEventListener("click", function () {
+    //     openBookForEdit(savedBook.id);
+    // });
 
     // Lägg till bild
     if (imgSrc) {
@@ -255,11 +259,6 @@ closeBook.addEventListener("click", async function () {
         for (let k = 0; k < stars.length; k++) {
             stars[k].classList.remove("filled");
         }
-    }
-
-    if (!currentUser) {
-        alert("You must be logged in to save a book!");
-        return;
     }
 });
 
