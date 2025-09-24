@@ -19,6 +19,7 @@ let loginBtn = document.getElementById("loginBtn");         // inne i login-form
 let registerBtn = document.getElementById("newUser");       // inne i register-formuläret
 let logoutBtn = document.getElementById("logoutBtn");       // logga ut-knappen
 let appLogout = document.getElementById("app");
+const closeBtn = document.getElementById("close");
 
 let currentUser = null;
 
