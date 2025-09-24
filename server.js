@@ -16,43 +16,39 @@ serve(async (req) => {
 
     // CORS preflight
     if (req.method === "OPTIONS") {
-        return new Response(null, {
-            headers: {
-                ...corsHeaders,
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Content-Type",
-            },
-        });
+        return new Response(null, { headers: corsHeaders });
     }
 
     // ---------------- API ----------------
 
+    // Register
     if (req.method === "POST" && url.pathname === "/register") {
         let { username, password } = await req.json();
         let existing = await kv.get(["users", username]);
         if (existing.value) {
             return new Response(JSON.stringify({ error: "User exists" }), {
                 status: 400,
-                headers: jsonHeaders,
+                headers: corsHeaders,
             });
         }
         await kv.set(["users", username], { password });
-        return new Response(JSON.stringify({ success: true }), { headers: jsonHeaders });
+        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
     }
 
+    // Login
     if (req.method === "POST" && url.pathname === "/login") {
         let { username, password } = await req.json();
         let user = await kv.get(["users", username]);
         if (!user.value || user.value.password !== password) {
             return new Response(JSON.stringify({ error: "Invalid login" }), {
                 status: 401,
-                headers: jsonHeaders,
+                headers: corsHeaders,
             });
         }
-        return new Response(JSON.stringify({ success: true }), { headers: jsonHeaders });
+        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
     }
 
+    // Create or update book
     if (req.method === "POST" && url.pathname.startsWith("/books/")) {
         let username = url.pathname.split("/")[2];
         let book = await req.json();
@@ -60,24 +56,26 @@ serve(async (req) => {
             book.id = crypto.randomUUID();
         }
         await kv.set(["books", username, book.id], book);
-        return new Response(JSON.stringify(book), { headers: jsonHeaders });
+        return new Response(JSON.stringify(book), { headers: corsHeaders });
     }
 
+    // Get all books
     if (req.method === "GET" && url.pathname.startsWith("/books/")) {
         let username = url.pathname.split("/")[2];
         let books = [];
         for await (const entry of kv.list({ prefix: ["books", username] })) {
             books.push(entry.value);
         }
-        return new Response(JSON.stringify(books), { headers: jsonHeaders });
+        return new Response(JSON.stringify(books), { headers: corsHeaders });
     }
 
+    // Delete book
     if (req.method === "DELETE" && url.pathname.startsWith("/books/")) {
         let parts = url.pathname.split("/");
         let username = parts[2];
         let id = parts[3];
         await kv.delete(["books", username, id]);
-        return new Response(JSON.stringify({ success: true }), { headers: jsonHeaders });
+        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
     }
 
     // ---------------- Static files ----------------
@@ -90,9 +88,6 @@ serve(async (req) => {
     try {
         return await serveFile(req, "." + url.pathname);
     } catch {
-        return new Response("Not found", { status: 404 });
+        return new Response("Not found", { status: 404, headers: corsHeaders });
     }
 });
-
-
-//test
