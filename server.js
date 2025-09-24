@@ -49,15 +49,34 @@ serve(async (req) => {
     }
 
     // Create or update book
+    // if (req.method === "POST" && url.pathname.startsWith("/books/")) {
+    //     let username = url.pathname.split("/")[2];
+    //     let book = await req.json();
+    //     if (!book.id) {
+    //         book.id = crypto.randomUUID();
+    //     }
+    //     await kv.set(["books", username, book.id], book);
+    //     return new Response(JSON.stringify(book), { headers: corsHeaders });
+    // }
+
     if (req.method === "POST" && url.pathname.startsWith("/books/")) {
-        let username = url.pathname.split("/")[2];
-        let book = await req.json();
-        if (!book.id) {
-            book.id = crypto.randomUUID();
+        try {
+            let username = url.pathname.split("/")[2];
+            let book = await req.json();
+            if (!book.id) {
+                book.id = crypto.randomUUID();
+            }
+            await kv.set(["books", username, book.id], book);
+            return new Response(JSON.stringify(book), { headers: corsHeaders });
+        } catch (err) {
+            console.error("Fel i POST /books:", err);
+            return new Response(JSON.stringify({ error: "Server error", details: String(err) }), {
+                status: 500,
+                headers: corsHeaders,
+            });
         }
-        await kv.set(["books", username, book.id], book);
-        return new Response(JSON.stringify(book), { headers: corsHeaders });
     }
+
 
     // Get all books
     if (req.method === "GET" && url.pathname.startsWith("/books/")) {
