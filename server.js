@@ -3,7 +3,10 @@ import { serveFile } from "https://deno.land/std@0.177.0/http/file_server.ts";
 
 const kv = await Deno.openKv();
 
-const jsonHeaders = {
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
     "Content-Type": "application/json",
 };
 
@@ -15,7 +18,7 @@ serve(async (req) => {
     if (req.method === "OPTIONS") {
         return new Response(null, {
             headers: {
-                ...jsonHeaders,
+                ...corsHeaders,
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "GET, POST, DELETE, OPTIONS",
                 "Access-Control-Allow-Headers": "Content-Type",
