@@ -30,7 +30,7 @@ function showCreateBook() {
     createBookDiv.style.display = "block";
 }
 
-function closeCreateBook() {
+function hideCreateBook() {
     createBookDiv.style.display = "none";
 }
 
@@ -167,7 +167,7 @@ addBook.addEventListener("click", function () {
 
 // spara bok
 closeBook.addEventListener("click", async function () {
-    closeCreateBook();
+    hideCreateBook();
 
     let authorName = author.value;
     let bookTitle = document.getElementById("bookTitle").value;
