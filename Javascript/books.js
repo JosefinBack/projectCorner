@@ -112,6 +112,8 @@ loginBtn.addEventListener("click", async function () {
     }
 
     appLogout.style.display = "block";
+    loginBtn.style.display = "none";
+    registerBtn.style.display = "none";
 });
 
 
@@ -143,6 +145,8 @@ logoutBtn.addEventListener("click", function () {
     currentUser = null;
     main.innerHTML = "";
     document.getElementById("who").textContent = "";
+
+    appLogout.style.display = "none";
 });
 
 
@@ -151,8 +155,9 @@ addBook.addEventListener("click", function () {
     if (!currentUser) {
         alert("You must log in first!");
         return;
+    } else {
+        createABook();
     }
-    createABook();
 });
 
 
