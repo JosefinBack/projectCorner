@@ -2,7 +2,7 @@
 
 let addBook = document.getElementById("addBook");
 let closeBook = document.getElementById("close");
-let createBook = document.getElementById("createBook");
+const createBookDiv = document.getElementById("createBook");
 let main = document.querySelector("main");
 let author = document.getElementById("author");
 
@@ -25,13 +25,16 @@ let currentUser = null;
 
 // ---------------- Hjälpfunktioner ----------------
 
-function createABook() {
-    createBook.style.display = "block";
+function showCreateBook() {
+    createBookDiv.style.display = "block";
 }
 
 function closeCreateBook() {
-    createBook.style.display = "none";
+    createBookDiv.style.display = "none";
 }
+
+addBook.addEventListener("click", showCreateBook);
+closeBtn.addEventListener("click", hideCreateBook);
 
 async function loadBooks() {
     if (!currentUser) return;
