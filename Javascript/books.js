@@ -185,7 +185,6 @@ closeBook.addEventListener("click", async function () {
 
     // Bygg bokobjekt
     let book = {
-        pic: imgSrc,
         title: bookTitle.value,
         genre: bookGenre.value,
         author: authorName.value,
@@ -198,44 +197,26 @@ closeBook.addEventListener("click", async function () {
     };
 
     // Skicka till servern
-    // let res = await fetch(BASE_URL + "/books/" + currentUser, {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(book),
-    // });
-    // let savedBook = await res.json();
-
-
     let res = await fetch(BASE_URL + "/books/" + currentUser, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(book),
     });
+    let savedBook = await res.json();
 
-    console.log("Response status:", res.status);
-    let textTest = await res.text();
-    console.log("Raw response:", textTest);
-
-    let savedBook;
-    try {
-        savedBook = JSON.parse(textTest);
-    } catch (e) {
-        console.error("Kunde inte parsa JSON:", e);
-        return;
-    }
 
     // Skapa en div i main
-    let div = document.createElement("div");
-    div.style.width = "150px";
-    div.style.margin = "10px";
-    div.style.padding = "10px";
-    div.style.border = "1px solid #ccc";
-    div.style.display = "flex";
-    div.style.flexDirection = "column";
-    div.style.alignItems = "center";
+    let divOfBook = document.createElement("div");
+    divOfBook.style.width = "150px";
+    divOfBook.style.margin = "10px";
+    divOfBook.style.padding = "10px";
+    divOfBook.style.border = "1px solid #ccc";
+    divOfBook.style.display = "flex";
+    divOfBook.style.flexDirection = "column";
+    divOfBook.style.alignItems = "center";
 
     // Spara id på diven
-    div.dataset.id = savedBook.id;
+    divOfBook.dataset.id = savedBook.id;
 
     // Klick → öppna redigering
     // div.addEventListener("click", function () {
@@ -248,16 +229,16 @@ closeBook.addEventListener("click", async function () {
         imgEl.src = imgSrc;
         imgEl.style.width = "100px";
         imgEl.style.height = "150px";
-        div.appendChild(imgEl);
+        divOfBook.appendChild(imgEl);
     }
 
     // Lägg till titel och författare
     let text = document.createElement("p");
-    text.textContent = savedBook.title + " – " + savedBook.author;
-    div.appendChild(text);
+    text.textContent = bookTitle.value;
+    divOfBook.appendChild(text);
 
     // Lägg till main
-    main.appendChild(div);
+    main.appendChild(divOfBook);
 
     // Återställ formuläret
     bookTitle.value = "";

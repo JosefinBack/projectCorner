@@ -49,16 +49,6 @@ serve(async (req) => {
     }
 
     // Create or update book
-    // if (req.method === "POST" && url.pathname.startsWith("/books/")) {
-    //     let username = url.pathname.split("/")[2];
-    //     let book = await req.json();
-    //     if (!book.id) {
-    //         book.id = crypto.randomUUID();
-    //     }
-    //     await kv.set(["books", username, book.id], book);
-    //     return new Response(JSON.stringify(book), { headers: corsHeaders });
-    // }
-
     if (req.method === "POST" && url.pathname.startsWith("/books/")) {
         try {
             let username = url.pathname.split("/")[2];
