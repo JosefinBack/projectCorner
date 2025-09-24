@@ -10,6 +10,16 @@ let loginBtn = document.getElementById("loginBtn");
 let registerBtn = document.getElementById("newUser");
 let logoutBtn = document.getElementById("logoutBtn");
 
+
+let openLoginBtn = document.getElementById("logInButton");
+let openRegisterBtn = document.getElementById("register");
+let closeLoginBtn = document.getElementById("closeLogIn");
+let closeRegisterBtn = document.getElementById("closeReg");
+
+let loginDiv = document.getElementById("logInDiv");
+let registerDiv = document.getElementById("registration");
+
+
 let currentUser = null;
 
 // ----------- Hjälpfunktioner -----------
@@ -66,6 +76,28 @@ addBook.addEventListener("click", function () {
     }
     createABook();
 });
+
+
+// Öppna login-rutan
+openLoginBtn.addEventListener("click", function () {
+    loginDiv.style.display = "block";
+});
+
+// Öppna register-rutan
+openRegisterBtn.addEventListener("click", function () {
+    registerDiv.style.display = "block";
+});
+
+// Stäng login-rutan
+closeLoginBtn.addEventListener("click", function () {
+    loginDiv.style.display = "none";
+});
+
+// Stäng register-rutan
+closeRegisterBtn.addEventListener("click", function () {
+    registerDiv.style.display = "none";
+});
+
 
 closeBook.addEventListener("click", async function () {
     closeCreateBook();
