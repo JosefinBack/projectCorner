@@ -1,4 +1,4 @@
-// books.js
+// ---------------- Variabler ----------------
 
 let addBook = document.getElementById("addBook");
 let closeBook = document.getElementById("close");
@@ -6,11 +6,7 @@ let createBook = document.getElementById("createBook");
 let main = document.querySelector("main");
 let author = document.getElementById("author");
 
-let loginBtn = document.getElementById("loginBtn");
-let registerBtn = document.getElementById("newUser");
-let logoutBtn = document.getElementById("logoutBtn");
-
-
+// login/register
 let openLoginBtn = document.getElementById("logInButton");
 let openRegisterBtn = document.getElementById("register");
 let closeLoginBtn = document.getElementById("closeLogIn");
@@ -19,10 +15,14 @@ let closeRegisterBtn = document.getElementById("closeReg");
 let loginDiv = document.getElementById("logInDiv");
 let registerDiv = document.getElementById("registration");
 
+let loginBtn = document.getElementById("loginBtn");         // inne i login-formuläret
+let registerBtn = document.getElementById("newUser");       // inne i register-formuläret
+let logoutBtn = document.getElementById("logoutBtn");       // logga ut-knappen
 
 let currentUser = null;
 
-// ----------- Hjälpfunktioner -----------
+
+// ---------------- Hjälpfunktioner ----------------
 
 function createABook() {
     createBook.style.display = "block";
@@ -55,7 +55,6 @@ async function openBookForEdit(bookId) {
     let book = books.find((b) => b.id === bookId);
     if (!book) return;
 
-    // Fyll i formuläret igen
     document.getElementById("bookTitle").value = book.title || "";
     document.getElementById("author").value = book.author || "";
     document.getElementById("pages").value = book.pages || "";
@@ -67,8 +66,82 @@ async function openBookForEdit(bookId) {
     createABook();
 }
 
-// ----------- Event Listeners -----------
 
+// ---------------- Event Listeners ----------------
+
+// öppna/stäng login/register
+openLoginBtn.addEventListener("click", function () {
+    loginDiv.style.display = "block";
+});
+
+openRegisterBtn.addEventListener("click", function () {
+    registerDiv.style.display = "block";
+});
+
+closeLoginBtn.addEventListener("click", function () {
+    loginDiv.style.display = "none";
+});
+
+closeRegisterBtn.addEventListener("click", function () {
+    registerDiv.style.display = "none";
+});
+
+
+// logga in
+loginBtn.addEventListener("click", async function () {
+    let username = document.getElementById("loginUser").value;
+    let password = document.getElementById("loginPass").value;
+
+    let res = await fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+    });
+
+    let data = await res.json();
+    if (data.success) {
+        currentUser = username;
+        document.getElementById("who").textContent = currentUser;
+        loginDiv.style.display = "none"; // göm loginrutan
+        loadBooks();
+    } else {
+        document.getElementById("loginMessage").textContent = data.error || "Invalid login";
+    }
+});
+
+
+// registrera användare
+registerBtn.addEventListener("click", async function () {
+    let username = document.getElementById("regUser").value;
+    let password = document.getElementById("regPass").value;
+
+    let res = await fetch("/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+    });
+
+    let data = await res.json();
+    if (data.success) {
+        document.getElementById("registerMessage").textContent = "User created! You can now log in.";
+        document.getElementById("registerMessage").style.color = "green";
+        registerDiv.style.display = "none"; // göm registerrutan
+    } else {
+        document.getElementById("registerMessage").textContent = data.error || "Error creating user";
+        document.getElementById("registerMessage").style.color = "red";
+    }
+});
+
+
+// logga ut
+logoutBtn.addEventListener("click", function () {
+    currentUser = null;
+    main.innerHTML = "";
+    document.getElementById("who").textContent = "";
+});
+
+
+// öppna skapa-bok-rutan
 addBook.addEventListener("click", function () {
     if (!currentUser) {
         alert("You must log in first!");
@@ -78,27 +151,7 @@ addBook.addEventListener("click", function () {
 });
 
 
-// Öppna login-rutan
-openLoginBtn.addEventListener("click", function () {
-    loginDiv.style.display = "block";
-});
-
-// Öppna register-rutan
-openRegisterBtn.addEventListener("click", function () {
-    registerDiv.style.display = "block";
-});
-
-// Stäng login-rutan
-closeLoginBtn.addEventListener("click", function () {
-    loginDiv.style.display = "none";
-});
-
-// Stäng register-rutan
-closeRegisterBtn.addEventListener("click", function () {
-    registerDiv.style.display = "none";
-});
-
-
+// spara bok
 closeBook.addEventListener("click", async function () {
     closeCreateBook();
 
@@ -108,18 +161,15 @@ closeBook.addEventListener("click", async function () {
     let bookStart = document.getElementById("startdate").value;
     let bookFinish = document.getElementById("finishdate").value;
 
-    // boktyp
     let bookType = null;
     let selected = document.querySelector('input[name="booktype"]:checked');
     if (selected) {
         bookType = selected.value;
     }
 
-    // bild
     let img = document.querySelector("#pic img");
     let imgSrc = img ? img.src : null;
 
-    // rating
     let ratings = {};
     let starGroups = document.querySelectorAll("#ratingBox .stars");
     for (let i = 0; i < starGroups.length; i++) {
@@ -129,7 +179,6 @@ closeBook.addEventListener("click", async function () {
         ratings[category] = filledStars;
     }
 
-    // citat
     let quotes = [];
     let quoteInputs = document.querySelectorAll("#quotes input");
     for (let i = 0; i < quoteInputs.length; i++) {
@@ -156,7 +205,6 @@ closeBook.addEventListener("click", async function () {
         return;
     }
 
-    // POST till servern
     let res = await fetch("/books/" + currentUser, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -165,7 +213,6 @@ closeBook.addEventListener("click", async function () {
 
     let savedBook = await res.json();
 
-    // Lägg till i main
     let divBook = document.createElement("div");
     divBook.textContent = savedBook.title;
     divBook.dataset.id = savedBook.id;
@@ -190,50 +237,4 @@ closeBook.addEventListener("click", async function () {
             stars[k].classList.remove("filled");
         }
     }
-});
-
-// ----------- Auth -----------
-
-loginBtn.addEventListener("click", async function () {
-    let username = document.getElementById("loginUser").value;
-    let password = document.getElementById("loginPass").value;
-
-    let res = await fetch("/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-    });
-
-    let data = await res.json();
-    if (data.success) {
-        currentUser = username;
-        document.getElementById("who").textContent = currentUser;
-        loadBooks();
-    } else {
-        alert("Invalid login");
-    }
-});
-
-registerBtn.addEventListener("click", async function () {
-    let username = document.getElementById("regUser").value;
-    let password = document.getElementById("regPass").value;
-
-    let res = await fetch("/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-    });
-
-    let data = await res.json();
-    if (data.success) {
-        alert("User created! You can now log in.");
-    } else {
-        alert(data.error || "Error creating user");
-    }
-});
-
-logoutBtn.addEventListener("click", function () {
-    currentUser = null;
-    main.innerHTML = "";
-    document.getElementById("who").textContent = "";
 });
