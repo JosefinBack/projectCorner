@@ -436,13 +436,22 @@ closeAndSave.addEventListener("click", async function () {
     if (imgInput.files.length > 0) {
         let file = imgInput.files[0];
         imgUrl = await uploadToCloudinary(file);
+    } else if (window.currentEditingId) {
+        // Behåll gammal bild om vi redigerar
+        let oldDiv = document.querySelector(`[data-id="${window.currentEditingId}"]`);
+        if (oldDiv) {
+            let oldImg = oldDiv.querySelector("img");
+            if (oldImg) {
+                imgUrl = oldImg.src;
+            }
+        }
     }
 
     // Rating (från formulärets stjärnor)
     let bookRating = ratingBook.querySelectorAll(".filled").length;
 
     // Validering
-    if (!bookTitle.value.trim() || bookRating === 0 || imgInput.files.length === 0) {
+    if (!bookTitle.value.trim() || bookRating === 0 || !imgUrl) {
         alert("You must enter a title, select a book rating and upload a cover image before you can save.");
         return;
     }
@@ -458,10 +467,7 @@ closeAndSave.addEventListener("click", async function () {
         let filledStars = group.querySelectorAll(".filled").length;
         ratings[category] = filledStars;
     }
-
-    // Lägg till huvudratingen (från #ratingBook)
     ratings.book = bookRating;
-
 
     // Citat
     let quotes = [];
@@ -488,14 +494,37 @@ closeAndSave.addEventListener("click", async function () {
     };
 
     // Skicka till servern
-    let res;
+    let res, savedBook;
     if (window.currentEditingId) {
         // Uppdatera bok
         res = await fetch(BASE_URL + "/books/" + currentUser + "/" + window.currentEditingId, {
-            method: "PUT", // eller PATCH
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(book),
         });
+        savedBook = await res.json();
+
+        // 🔄 Uppdatera befintlig div
+        let existingDiv = document.querySelector(`[data-id="${window.currentEditingId}"]`);
+        if (existingDiv) {
+            existingDiv.querySelector("p").textContent = savedBook.title;
+            let imgEl = existingDiv.querySelector("img");
+            if (imgEl) {
+                imgEl.src = savedBook.imgSrc;
+            }
+            let starsDiv = existingDiv.querySelector(".stars");
+            if (starsDiv) {
+                starsDiv.innerHTML = "";
+                for (let i = 0; i < 5; i++) {
+                    let star = document.createElement("span");
+                    star.textContent = "★";
+                    if (i < savedBook.ratings.book) {
+                        star.style.color = "gold";
+                    }
+                    starsDiv.appendChild(star);
+                }
+            }
+        }
     } else {
         // Skapa ny bok
         res = await fetch(BASE_URL + "/books/" + currentUser, {
@@ -503,11 +532,11 @@ closeAndSave.addEventListener("click", async function () {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(book),
         });
+        savedBook = await res.json();
+
+        createDivOfBook(savedBook);
     }
 
-    let savedBook = await res.json();
-
-    createDivOfBook(savedBook);
     window.currentEditingId = null;
 
     // Återställ formuläret
@@ -518,6 +547,7 @@ closeAndSave.addEventListener("click", async function () {
     bookStart.value = "";
     bookFinish.value = "";
     picDiv.innerHTML = "";
+    imgInput.value = "";
     for (let i = 0; i < quoteInputs.length; i++) {
         quoteInputs[i].value = "";
     }
@@ -531,6 +561,7 @@ closeAndSave.addEventListener("click", async function () {
         }
     }
 });
+
 
 deleteBook.addEventListener("click", async function () {
 
