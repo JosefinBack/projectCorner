@@ -403,6 +403,11 @@ closeAndSave.addEventListener("click", async function () {
         return;
     }
 
+    // Om vi inte redigerar en bok just nu → nollställ editingId
+    if (!window.currentEditingId) {
+        window.currentEditingId = null;
+    }
+
     // Hämta fält
     let bookTitle = document.getElementById("bookTitle");
     let bookGenre = document.getElementById("genre");
@@ -504,6 +509,7 @@ closeAndSave.addEventListener("click", async function () {
             stars[k].classList.remove("filled");
         }
     }
+    window.currentEditingId = null;
 });
 
 deleteBook.addEventListener("click", async function () {
