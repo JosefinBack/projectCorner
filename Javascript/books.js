@@ -63,13 +63,35 @@ async function openBookForEdit(bookId) {
     // 2) Öppna formuläret
     createBook.style.display = "block";
 
-    // 3) Fyll i textfält
-    document.getElementById("bookTitle").value = book.title || "";
-    document.getElementById("genre").value = book.genre || "";
-    document.getElementById("author").value = book.author || "";
-    document.getElementById("pages").value = book.pages || "";
-    document.getElementById("startdate").value = book.start || "";
-    document.getElementById("finishdate").value = book.finish || "";
+    // // 3) Fyll i textfält
+    // document.getElementById("bookTitle").value = book.title || "";
+    // document.getElementById("genre").value = book.genre || "";
+    // document.getElementById("author").value = book.author || "";
+    // document.getElementById("pages").value = book.pages || "";
+    // document.getElementById("startdate").value = book.start || "";
+    // document.getElementById("finishdate").value = book.finish || "";
+
+    // 🧩 Vänta en frame så DOM:en säkert är uppe innan vi sätter värden
+    await new Promise(requestAnimationFrame);
+
+    // Hjälpare: sätt value om elementet finns
+    function setValue(id, value) {
+        const el = document.getElementById(id);
+        if (!el) {
+            console.warn(`[openBookForEdit] Could not find #${id} in DOM`);
+            return false;
+        }
+        el.value = value || "";
+        return true;
+    }
+
+    // 3) Fyll i textfält (säkert, utan krasch)
+    setValue("bookTitle", book.title);
+    setValue("genre", book.genre);
+    setValue("author", book.author);
+    setValue("pages", book.pages);
+    setValue("startdate", book.start);
+    setValue("finishdate", book.finish);
 
     // 4) Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
