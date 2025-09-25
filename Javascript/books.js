@@ -19,6 +19,7 @@ let passwordReg = document.getElementById("regPass");
 
 let addBook = document.getElementById("addBook");
 let closeBook = document.getElementById("close");
+let closeAndSave = document.getElementById("closeAndSave");
 let starContainers = document.getElementsByClassName("stars");
 let createBook = document.getElementById("createBook");
 let main = document.querySelector("main");
@@ -137,12 +138,15 @@ addBook.addEventListener("click", function () {
 });
 
 
-closeBook.addEventListener("click", async function () {
+closeBook.addEventListener("click", function () {
+    closeCreateBook();
+})
+
+closeAndSave.addEventListener("click", async function () {
     if (!currentUser) {
         alert("You must be logged in to save a book!");
         return;
     }
-    closeCreateBook();
 
     // Hämta fält
     let bookTitle = document.getElementById("bookTitle");
@@ -162,6 +166,18 @@ closeBook.addEventListener("click", async function () {
     // Bild
     let img = picDiv.querySelector("img");
     let imgSrc = img ? img.src : null;
+
+    let bookRating = ratingBook.querySelectorAll(".filled").length;
+
+    if (!bookTitle.value ||
+        bookRating === 0 ||
+        !img
+    ) {
+        alert("You have must enter a title, select a book rating and upload a cover image before you can save");
+        return;
+    }
+
+    closeCreateBook();
 
     // Rating
     let ratings = {};
@@ -238,7 +254,6 @@ closeBook.addEventListener("click", async function () {
     divOfBook.appendChild(text);
 
     //Lägg till rating
-    let bookRating = ratingBook.querySelectorAll(".filled").length;
     let ratingDiv = document.createElement("div");
     ratingDiv.classList.add("stars");
 
@@ -255,6 +270,7 @@ closeBook.addEventListener("click", async function () {
 
     // Lägg till main
     main.appendChild(divOfBook);
+
 
     // Återställ formuläret
     bookTitle.value = "";
