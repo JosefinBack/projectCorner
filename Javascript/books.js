@@ -182,13 +182,8 @@ async function uploadToCloudinary(file) {
 function createDivOfBook(book) {
     // Skapa en div i main
     let divOfBook = document.createElement("div");
-    divOfBook.style.width = "150px";
-    divOfBook.style.margin = "10px";
-    divOfBook.style.padding = "10px";
-    divOfBook.style.border = "1px solid #ccc";
-    divOfBook.style.display = "flex";
-    divOfBook.style.flexDirection = "column";
-    divOfBook.style.alignItems = "center";
+    divOfBook.classList.add("book-card");
+    divOfBook.dataset.id = book.id;
 
     // Spara id på diven
     divOfBook.dataset.id = book.id;
@@ -241,8 +236,6 @@ function createDivOfBook(book) {
         openBookForEdit(book.id);
     });
     divOfBook.appendChild(editBtn);
-
-    // Lägg till main
     allBooks.appendChild(divOfBook);
 }
 

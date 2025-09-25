@@ -22,7 +22,7 @@ main {
     margin: 0 auto;
 }
 
-#allBooks>div {
+.book-card {
     background: white;
     border: 1px solid #d1d5db;
     border-radius: 10px;
@@ -32,12 +32,12 @@ main {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#allBooks>div:hover {
+.book-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-#allBooks img {
+.book-card img {
     width: 100%;
     height: auto;
     max-height: 250px;
@@ -46,10 +46,18 @@ main {
     margin-bottom: 10px;
 }
 
-#allBooks p {
+.book-card p {
     margin: 5px 0;
     font-size: 14px;
     font-weight: 500;
+}
+
+.book-card .stars {
+    margin: 5px 0;
+}
+
+.book-card .stars .filled {
+    color: gold;
 }
 
 
