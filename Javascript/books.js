@@ -1,3 +1,6 @@
+let allBooks = document.getElementById("allBooks");
+
+
 let loginButton = document.getElementById("logInButton");
 let loginDiv = document.getElementById("logInDiv");
 let closeLoginButton = document.getElementById("closeLogIn");
@@ -150,7 +153,7 @@ async function loadBooks() {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
 
-    main.innerHTML = "";
+    allBooks.innerHTML = "";
 
     for (let book of books) {
         createDivOfBook(book);
@@ -220,9 +223,8 @@ function createDivOfBook(book) {
     });
     divOfBook.appendChild(editBtn);
 
-
     // Lägg till main
-    main.appendChild(divOfBook);
+    allBooks.appendChild(divOfBook);
 }
 
 //gör om bilden till mindre så servern klarar av att spara dem

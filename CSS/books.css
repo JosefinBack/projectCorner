@@ -10,6 +10,11 @@ h2 {
 main {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+#allBooks {
+    display: grid;
 }
 
 #createBook {
