@@ -150,16 +150,33 @@ async function loadBooks() {
     if (!currentUser) {
         return;
     }
-
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
-
     allBooks.innerHTML = "";
-
     for (let book of books) {
         createDivOfBook(book);
     }
 }
+
+async function uploadToCloudinary(file) {
+    const CLOUD_NAME = "dhnlbcj9b";
+    const UPLOAD_PRESET = "unsigned_books";
+
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", UPLOAD_PRESET);
+
+    let res = await fetch(url, {
+        method: "POST",
+        body: formData
+    });
+
+    let data = await res.json();
+    return data.secure_url; // här får du en https-länk till bilden
+}
+
 
 function createDivOfBook(book) {
     // Skapa en div i main
@@ -260,12 +277,6 @@ function resizeImage(file, maxWidth, callback) {
 
     reader.readAsDataURL(file);
 }
-
-
-async function deleteThisBook(book) {
-
-}
-
 
 
 //addEventListeners
@@ -419,17 +430,19 @@ closeAndSave.addEventListener("click", async function () {
     }
 
     // Bild
-    let img = picDiv.querySelector("img");
-    let imgSrc = null;
-    if (img) {
-        imgSrc = img.src;
+    let imgInput = document.getElementById("cover");
+    let imgUrl = null;
+
+    if (imgInput.files.length > 0) {
+        let file = imgInput.files[0];
+        imgUrl = await uploadToCloudinary(file);
     }
 
     // Rating (från formulärets stjärnor)
     let bookRating = ratingBook.querySelectorAll(".filled").length;
 
     // Validering
-    if (!bookTitle.value.trim() || bookRating === 0 || !img) {
+    if (!bookTitle.value.trim() || bookRating === 0 || imgInput.files.length === 0) {
         alert("You must enter a title, select a book rating and upload a cover image before you can save.");
         return;
     }
@@ -471,7 +484,7 @@ closeAndSave.addEventListener("click", async function () {
         type: bookType,
         ratings: ratings,
         quotes: quotes,
-        imgSrc: currentCover
+        imgSrc: imgUrl
     };
 
     // Skicka till servern
