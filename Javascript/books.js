@@ -27,6 +27,8 @@ let coverInput = document.getElementById("cover");
 let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
 
+let currentCover = null;
+
 
 //functions
 function createABook() {
@@ -36,6 +38,222 @@ function createABook() {
 function closeCreateBook() {
     createBook.style.display = "none";
 }
+
+async function openBookForEdit(bookId) {
+    if (!currentUser) return;
+
+    // 1) Hämta alla böcker och hitta rätt
+    let res = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await res.json();
+    let book = null;
+
+    for (let i = 0; i < books.length; i++) {
+        if (books[i].id === bookId) {
+            book = books[i];
+            break;
+        }
+    }
+
+    if (!book) {
+        console.error("Book not found:", bookId);
+        return;
+    }
+
+    // 2) Öppna formuläret
+    createBook.style.display = "block";
+
+    // 3) Fyll i textfält
+    document.getElementById("bookTitle").value = book.title || "";
+    document.getElementById("genre").value = book.genre || "";
+    document.getElementById("author").value = book.author || "";
+    document.getElementById("pages").value = book.pages || "";
+    document.getElementById("startdate").value = book.start || "";
+    document.getElementById("finishdate").value = book.finish || "";
+
+    // 4) Boktyp (radio)
+    let radios = document.querySelectorAll('input[name="booktype"]');
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].checked = false;
+        if (book.type && radios[i].value === book.type) {
+            radios[i].checked = true;
+        }
+    }
+
+    // 5) Bild
+    picDiv.innerHTML = "";
+    if (book.imgSrc) {
+        let imgEl = document.createElement("img");
+        imgEl.src = book.imgSrc;
+        imgEl.style.width = "250px";
+        imgEl.style.height = "350px";
+        imgEl.style.display = "block";
+        picDiv.appendChild(imgEl);
+
+        currentCover = book.imgSrc;
+    } else {
+        currentCover = null;
+    }
+
+    // 6) Stora rating (#ratingBook)
+    let ratingBig = document.querySelector("#ratingBook");
+    if (ratingBig) {
+        let spansBig = ratingBig.querySelectorAll("span");
+        for (let i = 0; i < spansBig.length; i++) {
+            spansBig[i].classList.remove("filled");
+        }
+
+        let bookRating = 0;
+        if (book.ratings && typeof book.ratings.book === "number") {
+            bookRating = book.ratings.book;
+        }
+
+        for (let i = 0; i < spansBig.length && i < bookRating; i++) {
+            spansBig[i].classList.add("filled");
+        }
+    }
+
+    // 7) Alla små ratings i #ratingBox
+    let starGroups = document.querySelectorAll("#ratingBox .stars");
+    for (let g = 0; g < starGroups.length; g++) {
+        let group = starGroups[g];
+        let spans = group.querySelectorAll("span");
+
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].classList.remove("filled");
+        }
+
+        let category = group.dataset.category;
+        if (book.ratings && typeof book.ratings[category] === "number") {
+            let n = book.ratings[category];
+            for (let i = 0; i < spans.length && i < n; i++) {
+                spans[i].classList.add("filled");
+            }
+        }
+    }
+
+    // 8) Citat
+    let quoteInputs = document.querySelectorAll("#quotes .quote");
+    for (let i = 0; i < quoteInputs.length; i++) {
+        quoteInputs[i].value = "";
+    }
+    if (Array.isArray(book.quotes)) {
+        for (let i = 0; i < quoteInputs.length && i < book.quotes.length; i++) {
+            quoteInputs[i].value = book.quotes[i] || "";
+        }
+    }
+
+    // 9) Spara att vi redigerar denna bok
+    window.currentEditingId = bookId;
+}
+
+
+async function loadBooks() {
+    if (!currentUser) {
+        return;
+    }
+
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json();
+
+    main.innerHTML = "";
+
+    for (let book of books) {
+        createDivOfBook(book);
+    }
+}
+
+function createDivOfBook(book) {
+    // Skapa en div i main
+    let divOfBook = document.createElement("div");
+    divOfBook.style.width = "150px";
+    divOfBook.style.margin = "10px";
+    divOfBook.style.padding = "10px";
+    divOfBook.style.border = "1px solid #ccc";
+    divOfBook.style.display = "flex";
+    divOfBook.style.flexDirection = "column";
+    divOfBook.style.alignItems = "center";
+
+    // Spara id på diven
+    divOfBook.dataset.id = book.id;
+
+
+    //Klick → öppna redigering
+    divOfBook.addEventListener("click", function () {
+        openBookForEdit(book.id);
+    });
+
+    // Lägg till bild
+    if (book.imgSrc) {
+        let imgPic = document.createElement("img");
+        imgPic.src = book.imgSrc;
+        imgPic.style.width = "100px";
+        imgPic.style.height = "150px";
+        divOfBook.appendChild(imgPic);
+    }
+
+    // Lägg till titel
+    let text = document.createElement("p");
+    text.textContent = book.title;
+    divOfBook.appendChild(text);
+
+    //Lägg till rating
+    let ratingDiv = document.createElement("div");
+    ratingDiv.classList.add("stars");
+
+    let bookRating = 0;
+    if (book.ratings && typeof book.ratings.book === "number") {
+        bookRating = book.ratings.book;
+    }
+
+
+    for (let i = 0; i < 5; i++) {
+        let star = document.createElement("span");
+        star.textContent = "★";
+        if (i < bookRating) {
+            star.style.color = "gold";
+        }
+        ratingDiv.appendChild(star);
+    }
+    divOfBook.appendChild(ratingDiv);
+
+
+    // Lägg till main
+    main.appendChild(divOfBook);
+}
+
+//gör om bilden till mindre så servern klarar av att spara dem
+function resizeImage(file, maxWidth, callback) {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const img = new Image();
+        img.onload = function () {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            // Räkna ut ny storlek (proportionellt)
+            let scale = maxWidth / img.width;
+            let newWidth = img.width * scale;
+            let newHeight = img.height * scale;
+
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+
+            // Rita om bilden på canvas
+            ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+            // Gör om till Base64 (JPEG med kvalitet 0.7)
+            let resizedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+
+            // Skicka tillbaka via callback
+            callback(resizedBase64);
+        };
+        img.src = event.target.result;
+    };
+
+    reader.readAsDataURL(file);
+}
+
 
 
 //addEventListeners
@@ -104,6 +322,7 @@ loginBtn.addEventListener("click", async function () {
     let data = await res.json();
     if (data.success) {
         currentUser = userLogIn.value;
+        localStorage.setItem("currentUser", currentUser);
         who.textContent = currentUser;
         loginMessage.textContent = "Welcome " + currentUser + "!";
         loginMessage.style.color = "green";
@@ -123,6 +342,7 @@ loginBtn.addEventListener("click", async function () {
 // Logga ut
 logoutBtn.addEventListener("click", function () {
     currentUser = null;
+    localStorage.removeItem("currentUser");
     who.textContent = "";
     main.innerHTML = "";
     loginMessage.innerHTML = "";
@@ -130,6 +350,28 @@ logoutBtn.addEventListener("click", function () {
     loginButton.style.display = "block"; // visa login igen
     registerButton.style.display = "block"; // visa register igen
 });
+
+//förminskar bilden
+coverInput.addEventListener("change", function () {
+    let file = coverInput.files[0];
+    if (!file) return;
+
+    // Skala ner till max 300px bred
+    resizeImage(file, 300, function (resizedBase64) {
+        // Visa bilden i formuläret
+        picDiv.innerHTML = "";
+        let img = document.createElement("img");
+        img.src = resizedBase64;
+        img.style.width = "250px";
+        img.style.height = "350px";
+        picDiv.appendChild(img);
+
+        // Spara Base64-strängen i en variabel
+        // som du senare skickar till servern
+        currentCover = resizedBase64;
+    });
+});
+
 
 
 //Skapa en bok
@@ -165,21 +407,23 @@ closeAndSave.addEventListener("click", async function () {
 
     // Bild
     let img = picDiv.querySelector("img");
-    let imgSrc = img ? img.src : null;
+    let imgSrc = null;
+    if (img) {
+        imgSrc = img.src;
+    }
 
+    // Rating (från formulärets stjärnor)
     let bookRating = ratingBook.querySelectorAll(".filled").length;
 
-    if (!bookTitle.value ||
-        bookRating === 0 ||
-        !img
-    ) {
-        alert("You have must enter a title, select a book rating and upload a cover image before you can save");
+    // Validering
+    if (!bookTitle.value.trim() || bookRating === 0 || !img) {
+        alert("You must enter a title, select a book rating and upload a cover image before you can save.");
         return;
     }
 
     closeCreateBook();
 
-    // Rating
+    // Rating (alla kategorier i #ratingBox)
     let ratings = {};
     let starGroups = document.querySelectorAll("#ratingBox .stars");
     for (let i = 0; i < starGroups.length; i++) {
@@ -188,6 +432,10 @@ closeAndSave.addEventListener("click", async function () {
         let filledStars = group.querySelectorAll(".filled").length;
         ratings[category] = filledStars;
     }
+
+    // Lägg till huvudratingen (från #ratingBook)
+    ratings.book = bookRating;
+
 
     // Citat
     let quotes = [];
@@ -210,6 +458,7 @@ closeAndSave.addEventListener("click", async function () {
         type: bookType,
         ratings: ratings,
         quotes: quotes,
+        imgSrc: currentCover
     };
 
     // Skicka till servern
@@ -220,57 +469,7 @@ closeAndSave.addEventListener("click", async function () {
     });
     let savedBook = await res.json();
 
-
-    // Skapa en div i main
-    let divOfBook = document.createElement("div");
-    divOfBook.style.width = "150px";
-    divOfBook.style.margin = "10px";
-    divOfBook.style.padding = "10px";
-    divOfBook.style.border = "1px solid #ccc";
-    divOfBook.style.display = "flex";
-    divOfBook.style.flexDirection = "column";
-    divOfBook.style.alignItems = "center";
-
-    // Spara id på diven
-    divOfBook.dataset.id = savedBook.id;
-
-    // Klick → öppna redigering
-    // div.addEventListener("click", function () {
-    //     openBookForEdit(savedBook.id);
-    // });
-
-    // Lägg till bild
-    if (imgSrc) {
-        let imgEl = document.createElement("img");
-        imgEl.src = imgSrc;
-        imgEl.style.width = "100px";
-        imgEl.style.height = "150px";
-        divOfBook.appendChild(imgEl);
-    }
-
-    // Lägg till titel
-    let text = document.createElement("p");
-    text.textContent = bookTitle.value;
-    divOfBook.appendChild(text);
-
-    //Lägg till rating
-    let ratingDiv = document.createElement("div");
-    ratingDiv.classList.add("stars");
-
-    for (let i = 0; i < 5; i++) {
-        let star = document.createElement("span");
-        star.textContent = "★";
-        if (i < bookRating) {
-            star.style.color = "gold";
-        }
-        ratingDiv.appendChild(star);
-    }
-    divOfBook.appendChild(ratingDiv);
-
-
-    // Lägg till main
-    main.appendChild(divOfBook);
-
+    createDivOfBook(savedBook);
 
     // Återställ formuläret
     bookTitle.value = "";
@@ -317,25 +516,14 @@ for (let i = 0; i < starContainers.length; i++) {
 }
 
 
-//Ladda upp en bild på bokomslaget
-coverInput.addEventListener("change", function () {
-    let file = coverInput.files[0];   // ta första vald fil
-    if (!file) return;
-
-    let reader = new FileReader();
-    reader.onload = function (e) {
-        // rensa ev. gammal bild
-        picDiv.innerHTML = "";
-
-        // skapa img och visa bilden
-        let img = document.createElement("img");
-        img.src = e.target.result;
-        img.style.width = "250px";
-        img.style.height = "350px";
-        img.style.display = "block";
-
-        picDiv.appendChild(img);
-    };
-
-    reader.readAsDataURL(file); // läs filen som data-URL
-});
+//När sidan laddas om, fortsätter vara inloggad
+let savedUser = localStorage.getItem("currentUser");
+if (savedUser) {
+    currentUser = savedUser;
+    who.textContent = currentUser;
+    appDiv.style.display = "block";
+    loginBtn.style.display = "none";
+    registerButton.style.display = "none";
+    loginButton.style.display = "none";
+    loadBooks(); // ✅ hämta böckerna direkt
+}
