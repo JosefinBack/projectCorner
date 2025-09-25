@@ -218,6 +218,7 @@ function createDivOfBook(book) {
         e.stopPropagation(); // så att inte andra click triggas
         openBookForEdit(book.id);
     });
+    divOfBook.appendChild(editBtn);
 
 
     // Lägg till main
