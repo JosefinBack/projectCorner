@@ -3,6 +3,7 @@ let loginDiv = document.getElementById("logInDiv");
 let closeLoginButton = document.getElementById("closeLogIn");
 let loginBtn = document.getElementById("loginBtn");
 let loginMessage = document.getElementById("loginMessage");
+let who = document.getElementById("who");
 let userLogIn = document.getElementById("loginUser");
 let passwordLogIn = document.getElementById("loginPass");
 
