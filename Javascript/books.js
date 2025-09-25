@@ -47,7 +47,7 @@ function closeCreateBook() {
 async function openBookForEdit(bookId) {
     if (!currentUser) return;
 
-    // 1) Hämta alla böcker och hitta rätt
+    // Hämta alla böcker och hitta rätt
     let res = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await res.json();
 
@@ -57,7 +57,7 @@ async function openBookForEdit(bookId) {
         return;
     }
 
-    // 2) Öppna formuläret
+    // Öppna formuläret
     createBook.style.display = "block";
 
     // Hjälpfunktion för att sätta value om elementet finns
@@ -70,21 +70,22 @@ async function openBookForEdit(bookId) {
         }
     }
 
-    // 3) Fyll i textfält (utan att krascha om något saknas)
+    // Fyll i textfält (utan att krascha om något saknas)
     setValue("bookTitle", book.title);
     setValue("genre", book.genre);
     setValue("author", book.author);
     setValue("pages", book.pages);
     setValue("startdate", book.start);
     setValue("finishdate", book.finish);
+    setValue("summary", book.summary);
 
-    // 4) Boktyp (radio)
+    // Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
         radios[i].checked = (book.type && radios[i].value === book.type);
     }
 
-    // 5) Bild
+    // Bild
     picDiv.innerHTML = "";
     if (book.imgSrc) {
         let imgEl = document.createElement("img");
@@ -99,7 +100,7 @@ async function openBookForEdit(bookId) {
         currentCover = null;
     }
 
-    // 6) Stora rating (#ratingBook)
+    //Stora rating (#ratingBook)
     let ratingBig = document.querySelector("#ratingBook");
     if (ratingBig) {
         let spansBig = ratingBig.querySelectorAll("span");
@@ -114,7 +115,7 @@ async function openBookForEdit(bookId) {
         }
     }
 
-    // 7) Alla små ratings i #ratingBox
+    // Alla små ratings i #ratingBox
     let starGroups = document.querySelectorAll("#ratingBox .stars");
     for (let g = 0; g < starGroups.length; g++) {
         let group = starGroups[g];
@@ -130,7 +131,7 @@ async function openBookForEdit(bookId) {
         }
     }
 
-    // 8) Citat
+    // Citat
     let quoteInputs = document.querySelectorAll("#quotes .quote");
     for (let i = 0; i < quoteInputs.length; i++) {
         quoteInputs[i].value = "";
@@ -141,7 +142,7 @@ async function openBookForEdit(bookId) {
         }
     }
 
-    // 9) Spara att vi redigerar denna bok
+    // Spara att vi redigerar denna bok
     window.currentEditingId = bookId;
 }
 
@@ -421,6 +422,7 @@ closeAndSave.addEventListener("click", async function () {
     let bookPages = document.getElementById("pages");
     let bookStart = document.getElementById("startdate");
     let bookFinish = document.getElementById("finishdate");
+    let bookSummary = document.getElementById("summary");
 
     // Boktyp (radio)
     let bookType = null;
@@ -490,7 +492,8 @@ closeAndSave.addEventListener("click", async function () {
         type: bookType,
         ratings: ratings,
         quotes: quotes,
-        imgSrc: imgUrl
+        imgSrc: imgUrl,
+        summary: bookSummary.value
     };
 
     // Skicka till servern
@@ -548,10 +551,15 @@ closeAndSave.addEventListener("click", async function () {
     bookFinish.value = "";
     picDiv.innerHTML = "";
     imgInput.value = "";
+    bookSummary.value = "";
+
     for (let i = 0; i < quoteInputs.length; i++) {
         quoteInputs[i].value = "";
     }
-
+    let radios = document.querySelectorAll('input[name="booktype"]');
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].checked = false;
+    }
     let allStarGroups = document.querySelectorAll(".stars");
     for (let j = 0; j < allStarGroups.length; j++) {
         let group = allStarGroups[j];
@@ -564,9 +572,7 @@ closeAndSave.addEventListener("click", async function () {
 
 
 deleteBook.addEventListener("click", async function () {
-
     let bookId = window.currentEditingId;
-
     if (!confirm("Are you sure you want to delete this book?")) {
         return;
     }
