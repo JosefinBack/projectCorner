@@ -332,7 +332,7 @@ loginBtn.addEventListener("click", async function () {
         registerButton.style.display = "none";
         loginButton.style.display = "none";
 
-        // här kan du nu anropa loadBooks() för att hämta användarens böcker
+        loadBooks();
     } else {
         loginMessage.textContent = data.error;
         loginMessage.style.color = "red";
