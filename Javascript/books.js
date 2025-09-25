@@ -403,11 +403,6 @@ closeAndSave.addEventListener("click", async function () {
         return;
     }
 
-    // Om vi inte redigerar en bok just nu → nollställ editingId
-    if (!window.currentEditingId) {
-        window.currentEditingId = null;
-    }
-
     // Hämta fält
     let bookTitle = document.getElementById("bookTitle");
     let bookGenre = document.getElementById("genre");
@@ -480,14 +475,27 @@ closeAndSave.addEventListener("click", async function () {
     };
 
     // Skicka till servern
-    let res = await fetch(BASE_URL + "/books/" + currentUser, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(book),
-    });
+    let res;
+    if (window.currentEditingId) {
+        // Uppdatera bok
+        res = await fetch(BASE_URL + "/books/" + currentUser + "/" + window.currentEditingId, {
+            method: "PUT", // eller PATCH
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(book),
+        });
+    } else {
+        // Skapa ny bok
+        res = await fetch(BASE_URL + "/books/" + currentUser, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(book),
+        });
+    }
+
     let savedBook = await res.json();
 
     createDivOfBook(savedBook);
+    window.currentEditingId = null;
 
     // Återställ formuläret
     bookTitle.value = "";
@@ -509,7 +517,6 @@ closeAndSave.addEventListener("click", async function () {
             stars[k].classList.remove("filled");
         }
     }
-    window.currentEditingId = null;
 });
 
 deleteBook.addEventListener("click", async function () {

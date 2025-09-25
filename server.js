@@ -48,15 +48,17 @@ serve(async (req) => {
         return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
     }
 
-    // Create or update book
+    // Create book
     if (req.method === "POST" && url.pathname.startsWith("/books/")) {
         try {
             let username = url.pathname.split("/")[2];
             let book = await req.json();
-            if (!book.id) {
-                book.id = crypto.randomUUID();
-            }
+
+            // Alltid skapa nytt ID för nya böcker
+            book.id = crypto.randomUUID();
+
             await kv.set(["books", username, book.id], book);
+
             return new Response(JSON.stringify(book), { headers: corsHeaders });
         } catch (err) {
             console.error("Fel i POST /books:", err);
@@ -66,6 +68,30 @@ serve(async (req) => {
             });
         }
     }
+
+    // Update book
+    if (req.method === "PUT" && url.pathname.startsWith("/books/")) {
+        try {
+            let parts = url.pathname.split("/");
+            let username = parts[2];
+            let id = parts[3];
+            let book = await req.json();
+
+            // säkerställ att id följer med
+            book.id = id;
+
+            await kv.set(["books", username, id], book);
+
+            return new Response(JSON.stringify(book), { headers: corsHeaders });
+        } catch (err) {
+            console.error("Fel i PUT /books/:username/:id", err);
+            return new Response(JSON.stringify({ error: "Server error", details: String(err) }), {
+                status: 500,
+                headers: corsHeaders,
+            });
+        }
+    }
+
 
 
     // Get all books
