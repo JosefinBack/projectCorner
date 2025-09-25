@@ -348,6 +348,7 @@ logoutBtn.addEventListener("click", function () {
     loginMessage.innerHTML = "";
     appDiv.style.display = "none";   // göm appen
     loginButton.style.display = "block"; // visa login igen
+    loginBtn.style.display = "block";
     registerButton.style.display = "block"; // visa register igen
 });
 
