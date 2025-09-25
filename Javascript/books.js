@@ -232,10 +232,26 @@ closeBook.addEventListener("click", async function () {
         divOfBook.appendChild(imgEl);
     }
 
-    // Lägg till titel och författare
+    // Lägg till titel
     let text = document.createElement("p");
     text.textContent = bookTitle.value;
     divOfBook.appendChild(text);
+
+    //Lägg till rating
+    let bookRating = ratingBook.querySelectorAll(".filled").length;
+    let ratingDiv = document.createElement("div");
+    ratingDiv.classList.add("stars");
+
+    for (let i = 0; i < 5; i++) {
+        let star = document.createElement("span");
+        star.textContent = "★";
+        if (i < bookRating) {
+            star.style.color = "gold";
+        }
+        ratingDiv.appendChild(star);
+    }
+    divOfBook.appendChild(ratingDiv);
+
 
     // Lägg till main
     main.appendChild(divOfBook);
