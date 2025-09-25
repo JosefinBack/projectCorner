@@ -30,6 +30,7 @@ let main = document.querySelector("main");
 let coverInput = document.getElementById("cover");
 let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
+let deleteBook = document.getElementById("delete");
 
 let currentCover = null;
 
