@@ -80,11 +80,14 @@ serve(async (req) => {
 
     // Delete book
     if (req.method === "DELETE" && url.pathname.startsWith("/books/")) {
-        let parts = url.pathname.split("/");
-        let username = parts[2];
-        let id = parts[3];
-        await kv.delete(["books", username, id]);
-        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+        let parts = url.pathname.split("/");   // delar upp URL:en i ["", "books", username, id]
+        let username = parts[2];               // andra elementet blir användarnamn
+        let id = parts[3];                     // tredje elementet blir bokens id
+        await kv.delete(["books", username, id]); // tar bort boken från databasen
+        return new Response(
+            JSON.stringify({ success: true }),
+            { headers: corsHeaders }
+        );
     }
 
     // ---------------- Static files ----------------

@@ -262,6 +262,11 @@ function resizeImage(file, maxWidth, callback) {
 }
 
 
+async function deleteThisBook(book) {
+
+}
+
+
 
 //addEventListeners
 
@@ -498,6 +503,28 @@ closeAndSave.addEventListener("click", async function () {
         for (let k = 0; k < stars.length; k++) {
             stars[k].classList.remove("filled");
         }
+    }
+});
+
+deleteBook.addEventListener("click", async function () {
+
+    let bookId = window.currentEditingId;
+
+    if (!confirm("Are you sure you want to delete this book?")) {
+        return;
+    }
+
+    let res = await fetch(BASE_URL + "/books/" + currentUser + "/" + bookId, {
+        method: "DELETE",
+    });
+    let result = await res.json();
+
+    if (result.success) {
+        alert("Book deleted");
+        loadBooks();
+        closeCreateBook();
+    } else {
+        alert("Something went wrong when deleting")
     }
 });
 
