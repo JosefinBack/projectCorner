@@ -46,60 +46,38 @@ async function openBookForEdit(bookId) {
     // 1) Hämta alla böcker och hitta rätt
     let res = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await res.json();
-    let book = null;
 
-    for (let i = 0; i < books.length; i++) {
-        if (books[i].id === bookId) {
-            book = books[i];
-            break;
-        }
-    }
-
+    let book = books.find(b => b.id === bookId);
     if (!book) {
-        console.error("Book not found:", bookId);
+        console.warn("Book not found:", bookId);
         return;
     }
 
     // 2) Öppna formuläret
     createBook.style.display = "block";
 
-    // // 3) Fyll i textfält
-    // document.getElementById("bookTitle").value = book.title || "";
-    // document.getElementById("genre").value = book.genre || "";
-    // document.getElementById("author").value = book.author || "";
-    // document.getElementById("pages").value = book.pages || "";
-    // document.getElementById("startdate").value = book.start || "";
-    // document.getElementById("finishdate").value = book.finish || "";
+    // Hjälpfunktion för att sätta value om elementet finns
+    function setValue(id, value) {
+        const el = document.getElementById(id);
+        if (el) {
+            el.value = value || "";
+        } else {
+            console.warn(`[openBookForEdit] Missing element #${id}`);
+        }
+    }
 
-    // 🧩 Vänta en frame så DOM:en säkert är uppe innan vi sätter värden
-    // await new Promise(requestAnimationFrame);
-
-    // // Hjälpare: sätt value om elementet finns
-    // function setValue(id, value) {
-    //     const el = document.getElementById(id);
-    //     if (!el) {
-    //         console.warn(`[openBookForEdit] Could not find #${id} in DOM`);
-    //         return false;
-    //     }
-    //     el.value = value || "";
-    //     return true;
-    // }
-
-    // // 3) Fyll i textfält (säkert, utan krasch)
-    // setValue("bookTitle", book.title);
-    // setValue("genre", book.genre);
-    // setValue("author", book.author);
-    // setValue("pages", book.pages);
-    // setValue("startdate", book.start);
-    // setValue("finishdate", book.finish);
+    // 3) Fyll i textfält (utan att krascha om något saknas)
+    setValue("bookTitle", book.title);
+    setValue("genre", book.genre);
+    setValue("author", book.author);
+    setValue("pages", book.pages);
+    setValue("startdate", book.start);
+    setValue("finishdate", book.finish);
 
     // 4) Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
-        radios[i].checked = false;
-        if (book.type && radios[i].value === book.type) {
-            radios[i].checked = true;
-        }
+        radios[i].checked = (book.type && radios[i].value === book.type);
     }
 
     // 5) Bild
@@ -121,14 +99,11 @@ async function openBookForEdit(bookId) {
     let ratingBig = document.querySelector("#ratingBook");
     if (ratingBig) {
         let spansBig = ratingBig.querySelectorAll("span");
-        for (let i = 0; i < spansBig.length; i++) {
-            spansBig[i].classList.remove("filled");
-        }
+        spansBig.forEach(span => span.classList.remove("filled"));
 
-        let bookRating = 0;
-        if (book.ratings && typeof book.ratings.book === "number") {
-            bookRating = book.ratings.book;
-        }
+        let bookRating = (book.ratings && typeof book.ratings.book === "number")
+            ? book.ratings.book
+            : 0;
 
         for (let i = 0; i < spansBig.length && i < bookRating; i++) {
             spansBig[i].classList.add("filled");
@@ -140,10 +115,7 @@ async function openBookForEdit(bookId) {
     for (let g = 0; g < starGroups.length; g++) {
         let group = starGroups[g];
         let spans = group.querySelectorAll("span");
-
-        for (let i = 0; i < spans.length; i++) {
-            spans[i].classList.remove("filled");
-        }
+        spans.forEach(span => span.classList.remove("filled"));
 
         let category = group.dataset.category;
         if (book.ratings && typeof book.ratings[category] === "number") {
@@ -238,6 +210,14 @@ function createDivOfBook(book) {
         ratingDiv.appendChild(star);
     }
     divOfBook.appendChild(ratingDiv);
+
+    // 🔘 Redigera-knapp
+    let editBtn = document.createElement("button");
+    editBtn.textContent = "Redigera";
+    editBtn.addEventListener("click", (e) => {
+        e.stopPropagation(); // så att inte andra click triggas
+        openBookForEdit(book.id);
+    });
 
 
     // Lägg till main
