@@ -153,7 +153,25 @@ async function loadBooks() {
     }
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
-    books.sort((a, b) => a.order - b.order);
+
+    books.sort((a, b) => {
+        // båda har samma serie → jämför nummer
+        if (a.seriesName && b.seriesName && a.seriesName === b.seriesName) {
+            return (a.seriesNumber || 0) - (b.seriesNumber || 0);
+        }
+
+        // om båda har serier → sortera på serienamnet
+        if (a.seriesName && b.seriesName) {
+            return a.seriesName.localeCompare(b.seriesName);
+        }
+
+        // en har serie, den andra inte → serieboken först
+        if (a.seriesName && !b.seriesName) return -1;
+        if (!a.seriesName && b.seriesName) return 1;
+
+        // ingen serie → sortera på titel
+        return a.title.localeCompare(b.title);
+    });
 
     allBooks.innerHTML = "";
     for (let book of books) {
@@ -220,7 +238,7 @@ function createDivOfBook(book) {
     }
 
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 10; i++) {
         let star = document.createElement("span");
         star.textContent = "★";
         if (i < bookRating) {
@@ -418,6 +436,24 @@ closeAndSave.addEventListener("click", async function () {
     let bookStart = document.getElementById("startdate");
     let bookFinish = document.getElementById("finishdate");
     let bookSummary = document.getElementById("summary");
+    let inputIsSeries = document.getElementById("isSeries");
+    let inputSeriesName = document.getElementById("seriesName");
+    let inputSeriesNumber = document.getElementById("seriesNumber");
+
+    // Serie-fält
+    let seriesName = null;
+    let seriesNumber = null;
+    if (inputIsSeries.checked) {
+        seriesName = inputSeriesName.value.trim();
+        let numberValue = inputSeriesNumber.value.trim();
+        if (numberValue !== "") {
+            seriesNumber = Number(numberValue);
+            if (isNaN(seriesNumber)) {
+                alert("Series number must be a valid number.");
+                return;
+            }
+        }
+    }
 
     // Boktyp (radio)
     let bookType = null;
@@ -488,7 +524,9 @@ closeAndSave.addEventListener("click", async function () {
         ratings: ratings,
         quotes: quotes,
         imgSrc: imgUrl,
-        summary: bookSummary.value
+        summary: bookSummary.value,
+        seriesName: seriesName,
+        seriesNumber: seriesNumber,
     };
 
     // Skicka till servern
@@ -513,7 +551,7 @@ closeAndSave.addEventListener("click", async function () {
             let starsDiv = existingDiv.querySelector(".stars");
             if (starsDiv) {
                 starsDiv.innerHTML = "";
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 10; i++) {
                     let star = document.createElement("span");
                     star.textContent = "★";
                     if (i < savedBook.ratings.book) {
@@ -547,6 +585,9 @@ closeAndSave.addEventListener("click", async function () {
     picDiv.innerHTML = "";
     imgInput.value = "";
     bookSummary.value = "";
+    inputIsSeries.checked = false;
+    inputSeriesName.value = "";
+    inputSeriesNumber.value = "";
 
     for (let i = 0; i < quoteInputs.length; i++) {
         quoteInputs[i].value = "";

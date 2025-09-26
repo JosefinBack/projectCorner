@@ -15,7 +15,7 @@ main {
 
 #allBooks {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 20px;
     padding: 20px;
     max-width: 1200px;
@@ -124,6 +124,10 @@ main {
     margin-left: 19px
 }
 
+#createBook p {
+    font-weight: bold;
+}
+
 #quotes input[type="text"] {
     width: 90%;
     margin-left: 10px;
@@ -187,11 +191,12 @@ main {
 }
 
 #ratingBook {
-    font-size: 30px;
+    font-size: 22px;
 }
 
 .ratingBook {
     display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 20px;
     margin-top: 10px;
