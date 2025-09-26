@@ -227,3 +227,14 @@ main {
 #app {
     display: none;
 }
+
+#reloadMessage {
+    display: none;
+    color: green;
+    font-size: 0.9em;
+}
+
+#reloading {
+    display: flex;
+    gap: 10px;
+}

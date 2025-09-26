@@ -43,163 +43,168 @@
 
 
     <main>
-        <h4>All books</h4>
-        <div id="createBook">
-            <div id="containerwrap">
-                <div id="boxTwo">
-                    <!-- knapp för att ladda upp bild -->
-                    <button type="button" onclick="document.getElementById('cover').click()">
-                        Upload pic here
-                    </button>
+        <div>
+            <h4>All books</h4>
+            <div id="reloading">
+                <button id="reload">Reload books</button>
+                <p id="reloadMessage"></p>
+            </div>
+            <div id="createBook">
+                <div id="containerwrap">
+                    <div id="boxTwo">
+                        <!-- knapp för att ladda upp bild -->
+                        <button type="button" onclick="document.getElementById('cover').click()">
+                            Upload pic here
+                        </button>
 
-                    <!-- det riktiga file-inputfältet (gömt) -->
-                    <input type="file" id="cover" accept="image/*" style="display:none;">
-                    <div id="pic">
-                    </div>
-                    <div class="ratingBook">
-                        <p>Book rating: </p>
-                        <div class="stars" id="ratingBook" data-category="book">
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
-                            <span>★</span>
+                        <!-- det riktiga file-inputfältet (gömt) -->
+                        <input type="file" id="cover" accept="image/*" style="display:none;">
+                        <div id="pic">
+                        </div>
+                        <div class="ratingBook">
+                            <p>Book rating: </p>
+                            <div class="stars" id="ratingBook" data-category="book">
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                                <span>★</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="boxOne">
-                    <div class="bigBox">
-                        <p>Title</p><input type="text" id="bookTitle">
-                    </div>
-
-                    <div class="bigBox">
-                        <p>Authour</p><input type="text" id="author">
-                        <p>Genre</p><input type="text" id="genre">
-                    </div>
-
-                    <div>
-                        <input type="checkbox" id="isSeries">
-                        <label for="isSeries">Part of a series</label>
+                    <div id="boxOne">
                         <div class="bigBox">
-                            <p>Series name:</p><input type="text" id="seriesName">
-                            <p>Book number in series:</p><input type="text" id="seriesNumber">
+                            <p>Title</p><input type="text" id="bookTitle">
                         </div>
-                    </div>
 
-                    <div class="bigBox">
-                        <p>Pages</p><input type="text" id="pages">
-                        <p>Start date:</p><input type="text" id="startdate">
-                        <p>Finish date:</p><input type="text" id="finishdate">
-                    </div>
+                        <div class="bigBox">
+                            <p>Authour</p><input type="text" id="author">
+                            <p>Genre</p><input type="text" id="genre">
+                        </div>
 
-                    <div id="typeOfBook">
                         <div>
-                            <p>Book type</p>
+                            <input type="checkbox" id="isSeries">
+                            <label for="isSeries">Part of a series</label>
+                            <div class="bigBox">
+                                <p>Series name:</p><input type="text" id="seriesName">
+                                <p>Book number in series:</p><input type="text" id="seriesNumber">
+                            </div>
                         </div>
+
                         <div class="bigBox">
-                            <div class="booktype">
-                                <input type="radio" id="fysical" value="fysical" name="booktype">
-                                <label for="fysical">Fysical book</label>
-                            </div>
-                            <div class="booktype">
-                                <input type="radio" id="e-book" value="e-book" name="booktype">
-                                <label for="e-book">E-book</label>
-                            </div>
-                            <div class="booktype">
-                                <input type="radio" id="audiobook" value="audiobook" name="booktype">
-                                <label for="audiobook">Audiobook</label>
-                            </div>
-                            <div class="booktype">
-                                <input type="radio" id="mix" value="mix" name="booktype">
-                                <label for="mix">A mix</label>
-                            </div>
+                            <p>Pages</p><input type="text" id="pages">
+                            <p>Start date:</p><input type="text" id="startdate">
+                            <p>Finish date:</p><input type="text" id="finishdate">
                         </div>
-                    </div>
-                    <div id="boxThree">
-                        <div id="ratingBox">
-                            <p class="boxThreeHeadline">Rating</p>
-                            <div class="rating">
-                                <p>Story:</p>
-                                <div class="stars" data-category="story">
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                </div>
-                            </div>
 
-                            <div class="rating">
-                                <p>Characters:</p>
-                                <div class="stars" data-category="characters">
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                </div>
+                        <div id="typeOfBook">
+                            <div>
+                                <p>Book type</p>
                             </div>
-
-                            <div class="rating">
-                                <p>Wright style:</p>
-                                <div class="stars" data-category="style">
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
+                            <div class="bigBox">
+                                <div class="booktype">
+                                    <input type="radio" id="fysical" value="fysical" name="booktype">
+                                    <label for="fysical">Fysical book</label>
                                 </div>
-                            </div>
-
-                            <div class="rating">
-                                <p>Entertaning:</p>
-                                <div class="stars" data-category="fun">
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
+                                <div class="booktype">
+                                    <input type="radio" id="e-book" value="e-book" name="booktype">
+                                    <label for="e-book">E-book</label>
                                 </div>
-                            </div>
-
-                            <div class="rating">
-                                <p>Ending:</p>
-                                <div class="stars" data-category="ending">
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
-                                    <span>★</span>
+                                <div class="booktype">
+                                    <input type="radio" id="audiobook" value="audiobook" name="booktype">
+                                    <label for="audiobook">Audiobook</label>
+                                </div>
+                                <div class="booktype">
+                                    <input type="radio" id="mix" value="mix" name="booktype">
+                                    <label for="mix">A mix</label>
                                 </div>
                             </div>
                         </div>
+                        <div id="boxThree">
+                            <div id="ratingBox">
+                                <p class="boxThreeHeadline">Rating</p>
+                                <div class="rating">
+                                    <p>Story:</p>
+                                    <div class="stars" data-category="story">
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                    </div>
+                                </div>
 
-                        <div id="quotes">
-                            <p class="boxThreeHeadline">Favorite quotes</p>
-                            <input type="text" class="quote">
-                            <input type="text" class="quote">
-                            <input type="text" class="quote">
-                            <input type="text" class="quote">
-                            <input type="text" class="quote">
+                                <div class="rating">
+                                    <p>Characters:</p>
+                                    <div class="stars" data-category="characters">
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                    </div>
+                                </div>
+
+                                <div class="rating">
+                                    <p>Wright style:</p>
+                                    <div class="stars" data-category="style">
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                    </div>
+                                </div>
+
+                                <div class="rating">
+                                    <p>Entertaning:</p>
+                                    <div class="stars" data-category="fun">
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                    </div>
+                                </div>
+
+                                <div class="rating">
+                                    <p>Ending:</p>
+                                    <div class="stars" data-category="ending">
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                        <span>★</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="quotes">
+                                <p class="boxThreeHeadline">Favorite quotes</p>
+                                <input type="text" class="quote">
+                                <input type="text" class="quote">
+                                <input type="text" class="quote">
+                                <input type="text" class="quote">
+                                <input type="text" class="quote">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div>
-                <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
-                    placeholder="Skriv en kort sammanfattning..."></textarea>
-            </div>
+                <div>
+                    <p>Summery of the book:</p><textarea id="summary" rows="5" cols="40"
+                        placeholder="Skriv en kort sammanfattning..."></textarea>
+                </div>
 
-            <button id="closeAndSave">Save & close</button>
-            <button id="close">Close</button>
-            <button id="delete">Delete book</button>
-        </div>
-        <div id="allBooks"></div>
+                <button id="closeAndSave">Save & close</button>
+                <button id="close">Close</button>
+                <button id="delete">Delete book</button>
+            </div>
+            <div id="allBooks"></div>
     </main>
 
     <script src="../Javascript/header-inside.js" defer></script>

@@ -1,4 +1,5 @@
 let allBooks = document.getElementById("allBooks");
+let reloadBooks = document.getElementById("reload");
 
 
 let loginButton = document.getElementById("logInButton");
@@ -35,6 +36,23 @@ let deleteBook = document.getElementById("delete");
 let currentCover = null;
 
 
+
+// Hämta inputfält
+let bookTitle = document.getElementById("bookTitle");
+let bookGenre = document.getElementById("genre");
+let authorName = document.getElementById("author");
+let bookPages = document.getElementById("pages");
+let bookStart = document.getElementById("startdate");
+let bookFinish = document.getElementById("finishdate");
+let bookSummary = document.getElementById("summary");
+let inputIsSeries = document.getElementById("isSeries");
+let inputSeriesName = document.getElementById("seriesName");
+let inputSeriesNumber = document.getElementById("seriesNumber");
+
+// Bild
+let imgInput = document.getElementById("cover");
+let imgUrl = null;
+
 //functions
 function createABook() {
     createBook.style.display = "block";
@@ -70,7 +88,7 @@ async function openBookForEdit(bookId) {
         }
     }
 
-    // Fyll i textfält (utan att krascha om något saknas)
+    // Fyll i textfält 
     setValue("bookTitle", book.title);
     setValue("genre", book.genre);
     setValue("author", book.author);
@@ -78,6 +96,17 @@ async function openBookForEdit(bookId) {
     setValue("startdate", book.start);
     setValue("finishdate", book.finish);
     setValue("summary", book.summary);
+
+    if (book.seriesName) {
+        document.getElementById("isSeries").checked = true;
+        setValue("seriesName", book.seriesName);
+        setValue("seriesNumber", book.seriesNumber);
+    } else {
+        document.getElementById("isSeries").checked = false;
+        setValue("seriesName", "");
+        setValue("seriesNumber", "");
+    }
+
 
     // Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
@@ -292,6 +321,54 @@ function resizeImage(file, maxWidth, callback) {
     reader.readAsDataURL(file);
 }
 
+function whipeForm() {
+    // textfält
+    bookTitle.value = "";
+    bookGenre.value = "";
+    authorName.value = "";
+    bookPages.value = "";
+    bookStart.value = "";
+    bookFinish.value = "";
+    picDiv.innerHTML = "";
+    imgInput.value = "";
+    bookSummary.value = "";
+
+    // serie
+    inputIsSeries.checked = false;
+    inputSeriesName.value = "";
+    inputSeriesNumber.value = "";
+
+    // citat
+    let quoteInputs = document.querySelectorAll("#quotes .quote");
+    for (let i = 0; i < quoteInputs.length; i++) {
+        quoteInputs[i].value = "";
+    }
+
+    // radioknappar
+    let radios = document.querySelectorAll('input[name="booktype"]');
+    for (let i = 0; i < radios.length; i++) {
+        radios[i].checked = false;
+    }
+
+    // rating – bara i formuläret
+    let ratingBig = document.querySelector("#ratingBook");
+    if (ratingBig) {
+        let spansBig = ratingBig.querySelectorAll("span");
+        for (let i = 0; i < spansBig.length; i++) {
+            spansBig[i].classList.remove("filled");
+        }
+    }
+
+    let starGroups = document.querySelectorAll("#ratingBox .stars");
+    for (let g = 0; g < starGroups.length; g++) {
+        let stars = starGroups[g].querySelectorAll("span");
+        for (let s = 0; s < stars.length; s++) {
+            stars[s].classList.remove("filled");
+        }
+    }
+}
+
+
 
 //addEventListeners
 
@@ -410,11 +487,25 @@ coverInput.addEventListener("change", function () {
     });
 });
 
+//reload books
+reloadBooks.addEventListener("click", async function () {
+    await loadBooks(); // vänta tills böckerna laddats om
 
+    let msg = document.getElementById("reloadMessage");
+    msg.textContent = "Books reloaded!";
+    msg.style.display = "block";
+    msg.style.margin = "0px";
+
+    // göm efter 4 sekunder
+    setTimeout(() => {
+        msg.style.display = "none";
+    }, 3000);
+});
 
 //Skapa en bok
 addBook.addEventListener("click", function () {
     createABook();
+    whipeForm();
 });
 
 
@@ -428,17 +519,12 @@ closeAndSave.addEventListener("click", async function () {
         return;
     }
 
-    // Hämta fält
-    let bookTitle = document.getElementById("bookTitle");
-    let bookGenre = document.getElementById("genre");
-    let authorName = document.getElementById("author");
-    let bookPages = document.getElementById("pages");
-    let bookStart = document.getElementById("startdate");
-    let bookFinish = document.getElementById("finishdate");
-    let bookSummary = document.getElementById("summary");
-    let inputIsSeries = document.getElementById("isSeries");
-    let inputSeriesName = document.getElementById("seriesName");
-    let inputSeriesNumber = document.getElementById("seriesNumber");
+    // Boktyp (radio)
+    let bookType = null;
+    let selected = document.querySelector('input[name="booktype"]:checked');
+    if (selected) {
+        bookType = selected.value;
+    }
 
     // Serie-fält
     let seriesName = null;
@@ -454,17 +540,6 @@ closeAndSave.addEventListener("click", async function () {
             }
         }
     }
-
-    // Boktyp (radio)
-    let bookType = null;
-    let selected = document.querySelector('input[name="booktype"]:checked');
-    if (selected) {
-        bookType = selected.value;
-    }
-
-    // Bild
-    let imgInput = document.getElementById("cover");
-    let imgUrl = null;
 
     if (imgInput.files.length > 0) {
         let file = imgInput.files[0];
@@ -574,36 +649,8 @@ closeAndSave.addEventListener("click", async function () {
     }
 
     window.currentEditingId = null;
+    whipeForm();
 
-    // Återställ formuläret
-    bookTitle.value = "";
-    bookGenre.value = "";
-    authorName.value = "";
-    bookPages.value = "";
-    bookStart.value = "";
-    bookFinish.value = "";
-    picDiv.innerHTML = "";
-    imgInput.value = "";
-    bookSummary.value = "";
-    inputIsSeries.checked = false;
-    inputSeriesName.value = "";
-    inputSeriesNumber.value = "";
-
-    for (let i = 0; i < quoteInputs.length; i++) {
-        quoteInputs[i].value = "";
-    }
-    let radios = document.querySelectorAll('input[name="booktype"]');
-    for (let i = 0; i < radios.length; i++) {
-        radios[i].checked = false;
-    }
-    let allStarGroups = document.querySelectorAll(".stars");
-    for (let j = 0; j < allStarGroups.length; j++) {
-        let group = allStarGroups[j];
-        let stars = group.querySelectorAll("span");
-        for (let k = 0; k < stars.length; k++) {
-            stars[k].classList.remove("filled");
-        }
-    }
 });
 
 
