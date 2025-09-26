@@ -57,6 +57,10 @@ serve(async (req) => {
             // Alltid skapa nytt ID för nya böcker
             book.id = crypto.randomUUID();
 
+            if (!book.order) {
+                book.order = Date.now();
+            }
+
             await kv.set(["books", username, book.id], book);
 
             return new Response(JSON.stringify(book), { headers: corsHeaders });
@@ -79,6 +83,10 @@ serve(async (req) => {
 
             // säkerställ att id följer med
             book.id = id;
+
+            if (!book.order) {
+                book.order = Date.now();
+            }
 
             await kv.set(["books", username, id], book);
 
