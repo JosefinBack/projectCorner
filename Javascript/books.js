@@ -153,6 +153,7 @@ async function loadBooks() {
     }
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
+    books.sort();
     allBooks.innerHTML = "";
     for (let book of books) {
         createDivOfBook(book);
