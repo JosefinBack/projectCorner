@@ -361,7 +361,7 @@ logoutBtn.addEventListener("click", function () {
     currentUser = null;
     localStorage.removeItem("currentUser");
     who.textContent = "";
-    main.innerHTML = "";
+    allBooks.innerHTML = "";
     loginMessage.innerHTML = "";
     appDiv.style.display = "none";   // göm appen
     loginButton.style.display = "block"; // visa login igen
