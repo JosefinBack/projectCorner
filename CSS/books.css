@@ -24,10 +24,32 @@ main {
 
 #filterBtn {
     font-size: 18px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    padding-right: 20px;
+    /* lite plats för pilen */
 }
 
 #filterBtn:hover {
     font-weight: bold;
+}
+
+
+#filterBtn::after {
+    content: "▼";
+    /* nedåtpil */
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+#filterBtn.open::after {
+    transform: translateY(-50%) rotate(180deg);
+    /* snurra uppåt */
 }
 
 .filterDIV {
@@ -103,7 +125,7 @@ main {
     border: 1px solid #d1d5db;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }

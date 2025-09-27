@@ -503,6 +503,7 @@ let allFilters = document.getElementById("allFilters")
 
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
+    filterButton.classList.toggle("open");
 });
 
 //Skapa funktioner som kopplar författarnas namn till deras böcker. 
