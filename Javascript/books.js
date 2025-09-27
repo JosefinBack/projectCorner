@@ -505,6 +505,9 @@ filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
 });
 
+//Skapa funktioner som kopplar författarnas namn till deras böcker. 
+//jag tänker att mn gör ett fetch-anrop för varje namn som hämtar alla böcker som rätt författar-namn
+
 
 // 📌 Desktop: fyll listan när musen går in på Author-diven
 authorDIV.addEventListener("mouseenter", async function () {
