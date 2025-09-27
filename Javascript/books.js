@@ -259,8 +259,19 @@ function createDivOfBook(book) {
 
     // Lägg till titel
     let text = document.createElement("p");
+    let textSerie = document.createElement("p");
+
+    text.classList.add("book-title")
     text.textContent = book.title;
     divOfBook.appendChild(text);
+
+    if (book.seriesName) {
+        textSerie.textContent = `Series: ${book.seriesName} (Book ${book.seriesNumber})`;
+        textSerie.classList.add("book-serie");
+        divOfBook.appendChild(textSerie);
+    }
+
+
 
     //Lägg till rating
     let ratingDiv = document.createElement("div");
