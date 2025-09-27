@@ -229,7 +229,7 @@ async function uploadToCloudinary(file) {
 
 
 function createDivOfBook(book) {
-    // Skapa en div i main
+    // Skapa en div i allBooks
     let divOfBook = document.createElement("div");
     divOfBook.classList.add("book-card");
     divOfBook.dataset.id = book.id;
@@ -238,10 +238,15 @@ function createDivOfBook(book) {
     divOfBook.dataset.id = book.id;
 
 
-    //Klick → öppna redigering
-    divOfBook.addEventListener("click", function () {
-        openBookForEdit(book.id);
+    let divedit = document.createElement("div");
+    divedit.classList.add("editPic");
+
+    divOfBook.appendChild(divedit);
+
+    divedit.addEventListener("click", function () {
+        openBookForEdit(book.id)
     });
+
 
     // Lägg till bild
     if (book.imgSrc) {
@@ -277,14 +282,6 @@ function createDivOfBook(book) {
     }
     divOfBook.appendChild(ratingDiv);
 
-    // 🔘 Redigera-knapp
-    let editBtn = document.createElement("button");
-    editBtn.textContent = "Redigera";
-    editBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // så att inte andra click triggas
-        openBookForEdit(book.id);
-    });
-    divOfBook.appendChild(editBtn);
     allBooks.appendChild(divOfBook);
 }
 
