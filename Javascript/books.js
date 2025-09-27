@@ -32,6 +32,7 @@ let coverInput = document.getElementById("cover");
 let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
 let deleteBook = document.getElementById("delete");
+let filterButton = document.getElementById("filterBtn");
 
 let currentCover = null;
 
@@ -272,7 +273,6 @@ function createDivOfBook(book) {
     }
 
 
-
     //Lägg till rating
     let ratingDiv = document.createElement("div");
     ratingDiv.classList.add("stars");
@@ -376,6 +376,26 @@ function whipeForm() {
     }
 }
 
+async function filterFunction() {
+    let res = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await res.json();
+
+    let allAuthors = [];
+    for (let book of books) {
+        if (!allAuthors.includes(book.author)) {
+            allAuthors.push(book.author);
+        }
+    }
+    let authorList = document.getElementById("authorsList");
+
+    for (let author of allAuthors) {
+        let list = document.createElement("p");
+        list.textContent = author;
+        authorList.appendChild(list);
+    }
+}
+
+
 
 
 //addEventListeners
@@ -455,6 +475,7 @@ loginBtn.addEventListener("click", async function () {
         loginButton.style.display = "none";
 
         loadBooks();
+        filterFunction();
     } else {
         loginMessage.textContent = data.error;
         loginMessage.style.color = "red";
@@ -473,6 +494,58 @@ logoutBtn.addEventListener("click", function () {
     loginBtn.style.display = "block";
     registerButton.style.display = "block"; // visa register igen
 });
+
+//filter
+let authorDIV = document.getElementById("authorDIV");
+let allAuthorsNames = document.getElementById("authors");
+let authorList = document.getElementById("authorsList");
+let allFilters = document.getElementById("allFilters")
+
+filterButton.addEventListener("click", function () {
+    allFilters.classList.toggle("visible");
+});
+
+
+// 📌 Desktop: fyll listan när musen går in på Author-diven
+authorDIV.addEventListener("mouseenter", async function () {
+    if (window.innerWidth >= 768) {
+        authorList.innerHTML = "";
+        await filterFunction();
+        allAuthorsNames.classList.add("visible");
+    }
+});
+
+authorDIV.addEventListener("mouseleave", function () {
+    if (window.innerWidth >= 768) {
+        allAuthorsNames.classList.remove("visible"); // fade-out
+    }
+});
+
+// Mobil: klick på Author togglar listan
+authorDIV.addEventListener("click", function (event) {
+    if (window.innerWidth < 768) {
+        event.stopPropagation(); // hindra bubbla uppåt
+
+        if (allAuthorsNames.style.display === "block") {
+            allAuthorsNames.style.display = "none";
+        } else {
+            authorList.innerHTML = "";
+            filterFunction();
+            allAuthorsNames.style.display = "block";
+        }
+    }
+});
+
+// Mobil: klick utanför stänger listan
+document.addEventListener("click", function (event) {
+    if (window.innerWidth < 768) {
+        if (!authorDIV.contains(event.target)) {
+            allAuthorsNames.style.display = "none";
+        }
+    }
+});
+
+
 
 //förminskar bilden
 coverInput.addEventListener("change", function () {

@@ -13,6 +13,82 @@ main {
     flex-wrap: wrap;
 }
 
+#filtering {
+    width: 100px;
+    height: auto;
+    text-align: center;
+    background-color: #d1d5db;
+    color: black;
+    cursor: pointer;
+}
+
+#filterBtn {
+    font-size: 18px;
+}
+
+#filterBtn:hover {
+    font-weight: bold;
+}
+
+.filterDIV {
+    border: 1px solid black;
+}
+
+#allFilters {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    cursor: pointer;
+}
+
+#allFilters.visible {
+    display: block;
+    opacity: 1;
+}
+
+#allFilters div {
+    padding: 6px;
+    cursor: pointer;
+}
+
+#authorDIV {
+    position: relative;
+    display: block;
+    cursor: pointer;
+}
+
+#authors {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    min-width: 150px;
+    transition: opacity 0.3s ease;
+    /* fade-in effekt */
+}
+
+/* Klass som aktiverar visning */
+#authors.visible {
+    display: block;
+    opacity: 1;
+}
+
+#authorsList p {
+    cursor: pointer;
+    list-style: none;
+    padding: 5px;
+}
+
+#authorsList p:hover {
+    background-color: #f0f0f0;
+}
+
+
+
 #allBooks {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -83,8 +159,7 @@ main {
 }
 
 .editPic::after {
-    content: "edit book";
-    /* texten i rutan */
+    content: "Edit book";
     position: absolute;
     bottom: 125%;
     /* placerar ovanför bilden */
