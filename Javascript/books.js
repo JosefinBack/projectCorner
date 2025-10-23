@@ -517,6 +517,7 @@ logoutBtn.addEventListener("click", function () {
 //filter
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
+allAuthorsNames.style.paddingBottom = "30px";
 let authorList = document.getElementById("authorsList");
 let allFilters = document.getElementById("allFilters");
 let searchButton = document.getElementById("searchButton");
