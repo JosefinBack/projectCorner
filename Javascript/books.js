@@ -387,13 +387,32 @@ async function filterFunction() {
         }
     }
     let authorList = document.getElementById("authorsList");
+    authorList.innerHTML = "";
 
     for (let author of allAuthors) {
-        let list = document.createElement("p");
-        list.textContent = author;
-        authorList.appendChild(list);
+        // skapa en container (div eller label)
+        let container = document.createElement("div");
+        container.classList.add("authorInFilter");
+
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.style.border = "1px solid black";
+        checkbox.style.width = "20px";
+        checkbox.style.height = "20px";
+        checkbox.value = author;
+        checkbox.name = "authorFilter";
+
+        let p = document.createElement("p");
+        p.textContent = author;
+
+        container.appendChild(checkbox);
+        container.appendChild(p);
+        authorList.appendChild(container);
     }
 }
+
+
+
 
 
 
@@ -499,12 +518,43 @@ logoutBtn.addEventListener("click", function () {
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
 let authorList = document.getElementById("authorsList");
-let allFilters = document.getElementById("allFilters")
+let allFilters = document.getElementById("allFilters");
+let searchButton = document.getElementById("searchButton");
 
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
     filterButton.classList.toggle("open");
 });
+
+searchButton.addEventListener("click", async function () {
+    const checkedBoxes = document.querySelectorAll('input[name="authorFilter"]:checked');
+
+    let choosenAuthors = [];
+    for (let authos of checkedBoxes) {
+        choosenAuthors.push(authos.value);
+    }
+    console.log(choosenAuthors);
+
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json();
+
+    let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
+    console.log(choosenBooks);
+
+    allBooks.innerHTML = "";
+    for (let book of choosenBooks) {
+        createDivOfBook(book);
+    }
+
+    let divAuthos = document.getElementById("authors");
+    divAuthos.classList.remove("visible");
+    allFilters.classList.remove("visible");
+    filterButton.classList.remove("open");
+
+
+});
+
+
 
 //Skapa funktioner som kopplar författarnas namn till deras böcker. 
 //jag tänker att mn gör ett fetch-anrop för varje namn som hämtar alla böcker som rätt författar-namn

@@ -40,33 +40,32 @@
         <h3>Welcome <span id="who"></span></h3>
         <button id="logoutBtn">Log out</button>
     </div>
-
-
-    <main>
-        <div>
-            <h4>All books</h4>
-            <div id="reloading">
-                <button id="reload">Reload books</button>
-                <p id="reloadMessage"></p>
-                <div id="filtering">
-                    <div>
-                        <p id="filterBtn">Filter</p>
-                        <div id="allFilters">
-                            <div id="authorDIV" class="filterDIV">
-                                Author
-                                <div id="authors">
-                                    <div id="authorsList">
-                                    </div>
-                                </div>
+    <div id="reloading">
+        <button id="reload">Reload all books</button>
+        <p id="reloadMessage"></p>
+        <div id="filtering">
+            <div>
+                <p id="filterBtn">Filter</p>
+                <div id="allFilters">
+                    <div id="authorDIV" class="filterDIV">
+                        Author
+                        <div id="authors">
+                            <div id="authorsList">
                             </div>
-                            <div>
-                                Year
-                                <div id="allYears"></div>
-                            </div>
+                            <button id="searchButton">Search</button>
                         </div>
+                    </div>
+                    <div>
+                        Year
+                        <div id="allYears"></div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <main>
+        <div id="wrapper">
             <div id="createBook">
                 <div id="containerwrap">
                     <div id="boxTwo">
