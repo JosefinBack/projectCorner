@@ -411,6 +411,34 @@ async function filterFunction() {
     }
 }
 
+async function filterByYear() {
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json(); //ger en array av alla böcker
+
+    console.log(books);
+    // let booksReadThisYear = [];
+
+    // for (let book of books) {
+    //     if (!booksReadThisYear.includes(book.finish[0])) {
+    //         booksReadThisYear.push(book); 
+    //     }
+    // }
+
+    let allYears = [];
+    for (let book of books) {
+        let year = book.finish.slice(0, 4);
+        if (!allYears.includes(year)) {
+            allYears.push(year);
+        }
+    }
+
+    console.log(allYears); //kan använda denna för att bygga en lista med vilka år som finns att filtrera på 
+
+    let booksFrom2024 = books.filter(book => book.finish.slice(0, 4) === "2024");
+
+    console.log(booksFrom2024);
+
+}
 
 
 
@@ -551,14 +579,7 @@ searchButton.addEventListener("click", async function () {
     divAuthos.classList.remove("visible");
     allFilters.classList.remove("visible");
     filterButton.classList.remove("open");
-
-
 });
-
-
-
-//Skapa funktioner som kopplar författarnas namn till deras böcker. 
-//jag tänker att mn gör ett fetch-anrop för varje namn som hämtar alla böcker som rätt författar-namn
 
 
 // 📌 Desktop: fyll listan när musen går in på Author-diven
@@ -844,3 +865,7 @@ if (savedUser) {
     loginButton.style.display = "none";
     loadBooks(); // ✅ hämta böckerna direkt
 }
+
+
+
+filterByYear();
