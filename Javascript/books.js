@@ -691,7 +691,7 @@ reloadBooks.addEventListener("click", async function () {
     msg.style.display = "block";
     msg.style.margin = "0px";
 
-    // göm efter 4 sekunder
+    // göm efter 3 sekunder
     setTimeout(() => {
         msg.style.display = "none";
     }, 3000);
@@ -845,7 +845,6 @@ closeAndSave.addEventListener("click", async function () {
 
     window.currentEditingId = null;
     whipeForm();
-
 });
 
 
