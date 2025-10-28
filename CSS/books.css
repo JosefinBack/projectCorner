@@ -71,13 +71,13 @@ main {
     cursor: pointer;
 }
 
-#authorDIV {
+.filterDiv {
     position: relative;
     display: block;
     cursor: pointer;
 }
 
-#authors {
+.listInDiv {
     display: none;
     position: absolute;
     top: 0;
@@ -92,24 +92,27 @@ main {
 }
 
 /* Klass som aktiverar visning */
-#authors.visible {
+.listInDiv.visible {
     display: block;
     opacity: 1;
 }
 
-#authorsList p {
+#authorsList p,
+#allYearList p {
     cursor: pointer;
     list-style: none;
     padding: 5px;
 }
 
-#authorsList p:hover {
+#authorsList p:hover,
+#allYearList p:hover {
     background-color: #f0f0f0;
 }
 
 
 /* filter */
-.authorInFilter {
+.authorInFilter,
+.yearInFilter {
     display: flex;
     align-items: center;
     gap: 20px;

@@ -376,7 +376,7 @@ function whipeForm() {
     }
 }
 
-async function filterFunction() {
+async function filterAuthors() {
     let res = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await res.json();
 
@@ -415,15 +415,6 @@ async function filterByYear() {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json(); //ger en array av alla böcker
 
-    console.log(books);
-    // let booksReadThisYear = [];
-
-    // for (let book of books) {
-    //     if (!booksReadThisYear.includes(book.finish[0])) {
-    //         booksReadThisYear.push(book); 
-    //     }
-    // }
-
     let allYears = [];
     for (let book of books) {
         let year = book.finish.slice(0, 4);
@@ -431,12 +422,36 @@ async function filterByYear() {
             allYears.push(year);
         }
     }
+    let yearList = document.getElementById("allYearList");
+    yearList.innerHTML = "";
 
-    console.log(allYears); //kan använda denna för att bygga en lista med vilka år som finns att filtrera på 
+    let years = allYears.sort();
 
-    let booksFrom2024 = books.filter(book => book.finish.slice(0, 4) === "2024");
+    for (let year of years) {
+        let container = document.createElement("div");
+        container.classList.add("yearInFilter");
 
-    console.log(booksFrom2024);
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.style.border = "1px solid black";
+        checkbox.style.width = "20px";
+        checkbox.style.height = "20px";
+        checkbox.value = year;
+        checkbox.name = "yearFilter";
+
+        let p = document.createElement("p");
+        p.textContent = year;
+        container.appendChild(checkbox);
+        container.appendChild(p);
+        yearList.appendChild(container);
+
+    }
+
+    // console.log(years); //kan använda denna för att bygga en lista med vilka år som finns att filtrera på 
+
+    // let booksFrom2024 = books.filter(book => book.finish.slice(0, 4) === "2024");
+
+    // console.log(booksFrom2024);
 
 }
 
@@ -522,7 +537,7 @@ loginBtn.addEventListener("click", async function () {
         loginButton.style.display = "none";
 
         loadBooks();
-        filterFunction();
+        filterAuthors();
     } else {
         loginMessage.textContent = data.error;
         loginMessage.style.color = "red";
@@ -542,27 +557,35 @@ logoutBtn.addEventListener("click", function () {
     registerButton.style.display = "block"; // visa register igen
 });
 
+
 //filter
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
+allAuthorsNames.classList.add("listInDiv");
 allAuthorsNames.style.paddingBottom = "30px";
 let authorList = document.getElementById("authorsList");
 let allFilters = document.getElementById("allFilters");
-let searchButton = document.getElementById("searchButton");
+let searchButtonAuthor = document.getElementById("searchButtonAuthor");
+
+let yearDiv = document.getElementById("yearDiv");
+let yearFilter = document.getElementById("allYears");
+yearFilter.classList.add("listInDiv");
+let allYearList = document.getElementById("allYearList");
+let searchButtonYear = document.getElementById("searchButtonYear");
 
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
     filterButton.classList.toggle("open");
 });
 
-searchButton.addEventListener("click", async function () {
+searchButtonAuthor.addEventListener("click", async function () {
     const checkedBoxes = document.querySelectorAll('input[name="authorFilter"]:checked');
 
     let choosenAuthors = [];
     for (let authos of checkedBoxes) {
         choosenAuthors.push(authos.value);
     }
-    console.log(choosenAuthors);
+    // console.log(choosenAuthors);
 
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
@@ -575,18 +598,41 @@ searchButton.addEventListener("click", async function () {
         createDivOfBook(book);
     }
 
-    let divAuthos = document.getElementById("authors");
-    divAuthos.classList.remove("visible");
+    let divAuthors = document.getElementById("authors");
+    divAuthors.classList.remove("visible");
     allFilters.classList.remove("visible");
     filterButton.classList.remove("open");
 });
 
+searchButtonYear.addEventListener("click", async function () {
+    let checkBoxes = document.querySelectorAll('input[name="yearFilter"]:checked');
 
-// 📌 Desktop: fyll listan när musen går in på Author-diven
+    let choosenYear = [];
+    for (let year of checkBoxes) {
+        choosenYear.push(year.value);
+    }
+
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json();
+
+    let yearChecked = books.filter(book => choosenYear.includes(book.finish.slice(0, 4)));
+
+    allBooks.innerHTML = "";
+    for (let book of yearChecked) {
+        createDivOfBook(book);
+    }
+
+    let divYears = document.getElementById("allYears");
+    divYears.classList.remove("visible");
+    allFilters.classList.remove("visible");
+    filterButton.classList.remove("open");
+});
+
+// fyll listan när man klickar
 authorDIV.addEventListener("mouseenter", async function () {
     if (window.innerWidth >= 768) {
         authorList.innerHTML = "";
-        await filterFunction();
+        await filterAuthors();
         allAuthorsNames.classList.add("visible");
     }
 });
@@ -597,29 +643,21 @@ authorDIV.addEventListener("mouseleave", function () {
     }
 });
 
-// Mobil: klick på Author togglar listan
-authorDIV.addEventListener("click", function (event) {
-    if (window.innerWidth < 768) {
-        event.stopPropagation(); // hindra bubbla uppåt
-
-        if (allAuthorsNames.style.display === "block") {
-            allAuthorsNames.style.display = "none";
-        } else {
-            authorList.innerHTML = "";
-            filterFunction();
-            allAuthorsNames.style.display = "block";
-        }
+yearDiv.addEventListener("mouseenter", async function () {
+    if (window.innerWidth >= 768) {
+        allYearList.innerHTML = "";
+        await filterByYear();
+        yearFilter.classList.add("visible");
     }
 });
 
-// Mobil: klick utanför stänger listan
-document.addEventListener("click", function (event) {
-    if (window.innerWidth < 768) {
-        if (!authorDIV.contains(event.target)) {
-            allAuthorsNames.style.display = "none";
-        }
+yearDiv.addEventListener("mouseleave", function () {
+    if (window.innerWidth >= 768) {
+        yearFilter.classList.remove("visible");
     }
 });
+
+
 
 
 
