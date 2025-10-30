@@ -14,7 +14,6 @@
     <h1>Digital reading journal</h1>
     <h2>Track your reading journey</h2>
 
-    <button id="addBook">Add a book</button>
     <button id="logInButton">Log in</button>
     <button id="register">Register</button>
 
@@ -36,38 +35,51 @@
         <button id="closeLogIn">Close</button>
     </div>
 
-    <div id="app">
-        <h3>Welcome <span id="who"></span></h3>
-        <button id="logoutBtn">Log out</button>
-    </div>
-    <div id="reloading">
-        <button id="reload">Reload all books</button>
-        <p id="reloadMessage"></p>
-        <div id="filtering">
-            <div>
-                <p id="filterBtn">Filter</p>
-                <div id="allFilters">
-                    <div id="authorDIV" class="filterDiv">
-                        Author
-                        <div id="authors" class="listInDiv">
-                            <div id="authorsList"></div>
-                            <button id="searchButtonAuthor">Search</button>
-                        </div>
-                    </div>
-                    <div id="yearDiv" class="filterDiv">
-                        Year
-                        <div id="allYears" class="listInDiv">
-                            <div id="allYearList"></div>
-                            <button id="searchButtonYear">Search</button>
-                        </div>
-                    </div>
+    <div id="filtering">
+        <p id="filterBtn">Filter</p>
+        <div id="allFilters">
+            <div id="authorDIV" class="filterDiv">
+                Author
+                <div id="authors" class="listInDiv">
+                    <div id="authorsList"></div>
+                    <button id="searchButtonAuthor">Search</button>
+                </div>
+            </div>
+            <div id="yearDiv" class="filterDiv">
+                Year
+                <div id="allYears" class="listInDiv">
+                    <div id="allYearList"></div>
+                    <button id="searchButtonYear">Search</button>
+                </div>
+            </div>
+            <div id="genreDiv" class="filterDiv">
+                Genre
+                <div id="allGenre" class="listInDiv">
+                    <div id="allGenreList"></div>
+                    <button id="searchButtonGenre">Search</button>
                 </div>
             </div>
         </div>
     </div>
 
+
     <main>
         <div id="wrapper">
+            <div id="bookmeny">
+                <div id="rightmeny" class="bookMeny">
+                    <div id="app">
+                        <h3>Welcome to your bookshelf <span id="who"></span></h3>
+                    </div>
+                </div>
+                <div id="leftmeny" class="bookMeny">
+                    <button id="addBook">Add a book</button>
+                    <div id="reloading">
+                        <button id="reload">Reload all books</button>
+                        <p id="reloadMessage">Books reloaded!</p>
+                    </div>
+                    <button id="logoutBtn">Log out</button>
+                </div>
+            </div>
             <div id="createBook">
                 <div id="containerwrap">
                     <div id="boxTwo">

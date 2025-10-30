@@ -2,9 +2,32 @@ h2 {
     text-align: center;
 }
 
-#addBook {
-    padding: 10px;
-    background-color: lightpink;
+#bookmeny {
+    height: 120px;
+    width: 100%;
+    border-bottom: 1px solid black;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bookMeny {
+    display: flex;
+    gap: 20px;
+    margin: 40px 20px 0px;
+}
+
+#reloading {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    height: 40px;
+    background-color: rgb(255, 208, 215);
+    margin: 5px;
+    padding: 8px;
+    border: 1px solid black;
+    border-radius: 10px;
 }
 
 main {
@@ -12,25 +35,28 @@ main {
 }
 
 #filtering {
-    width: 100px;
-    height: auto;
-    text-align: center;
-    background-color: #d1d5db;
-    color: black;
+    width: 150px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid black;
     cursor: pointer;
+    text-align: center;
 }
 
 #filterBtn {
     font-size: 18px;
-    display: inline-block;
-    position: relative;
     cursor: pointer;
-    padding-right: 20px;
-    /* lite plats för pilen */
+    width: 100%;
+    padding: 0px 5px;
+    position: relative;
+    top: -4px;
+    box-sizing: border-box;
 }
 
-#filterBtn:hover {
+#filtering:hover,
+.filterDiv:hover {
     font-weight: bold;
+    text-decoration: underline;
 }
 
 
@@ -38,7 +64,7 @@ main {
     content: "▼";
     /* nedåtpil */
     position: absolute;
-    right: 0;
+    right: 17px;
     top: 50%;
     transform: translateY(-50%);
     transition: transform 0.3s ease;
@@ -59,26 +85,36 @@ main {
     opacity: 0;
     transition: opacity 0.8s ease;
     cursor: pointer;
+    border: 1px solid black;
 }
+
+
 
 #allFilters.visible {
-    display: block;
+    display: inline-block;
     opacity: 1;
-}
-
-#allFilters div {
-    padding: 6px;
-    cursor: pointer;
+    position: relative;
+    top: -8px;
+    left: -1px;
+    z-index: 1000;
 }
 
 .filterDiv {
     position: relative;
-    display: block;
+    display: inline-block;
     cursor: pointer;
+
+    padding: 10px 5px;
+    cursor: pointer;
+    background-color: white;
+    width: 150px;
+    border-bottom: 1px solid black;
+    box-sizing: border-box;
 }
 
 .listInDiv {
     display: none;
+    padding: 10px;
     position: absolute;
     top: 0;
     left: 100%;
@@ -361,10 +397,10 @@ main {
     margin: 2px;
 }
 
-#quotes {
-    display: flex;
-    flex-direction: column;
-    width: 50%;
+#reloadMessage {
+    visibility: hidden;
+    margin: 0px;
+    text-align: center;
 }
 
 
@@ -381,15 +417,11 @@ main {
     display: none;
 }
 
-#reloadMessage {
-    display: none;
-    color: green;
-    font-size: 0.9em;
-}
 
-#reloading {
+#quotes {
     display: flex;
-    gap: 10px;
+    flex-direction: column;
+    width: 50%;
 }
 
 #wrapper {

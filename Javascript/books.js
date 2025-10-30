@@ -530,7 +530,7 @@ loginBtn.addEventListener("click", async function () {
         who.textContent = currentUser;
         loginMessage.textContent = "Welcome " + currentUser + "!";
         loginMessage.style.color = "green";
-        appDiv.style.display = "block";
+        appDiv.style.display = "inline-block";
         loginDiv.style.display = "none";
         loginBtn.style.display = "none";
         registerButton.style.display = "none";
@@ -628,33 +628,51 @@ searchButtonYear.addEventListener("click", async function () {
     filterButton.classList.remove("open");
 });
 
+
+
 // fyll listan när man klickar
-authorDIV.addEventListener("mouseenter", async function () {
+authorDIV.addEventListener("click", async function (event) {
+    event.stopPropagation();
     if (window.innerWidth >= 768) {
         authorList.innerHTML = "";
         await filterAuthors();
         allAuthorsNames.classList.add("visible");
+        yearFilter.classList.remove("visible");
     }
 });
 
-authorDIV.addEventListener("mouseleave", function () {
-    if (window.innerWidth >= 768) {
-        allAuthorsNames.classList.remove("visible"); // fade-out
-    }
-});
 
-yearDiv.addEventListener("mouseenter", async function () {
+yearDiv.addEventListener("click", async function (event) {
+    event.stopPropagation();
     if (window.innerWidth >= 768) {
         allYearList.innerHTML = "";
         await filterByYear();
         yearFilter.classList.add("visible");
+        allAuthorsNames.classList.remove("visible");
     }
 });
 
-yearDiv.addEventListener("mouseleave", function () {
-    if (window.innerWidth >= 768) {
+
+//stäng
+document.addEventListener("click", function (event) {
+    // Kolla om klicket inte är inne i authorDIV, allAuthorsNames, yearDiv eller yearFilter
+    if (
+        !authorDIV.contains(event.target) &&
+        !allAuthorsNames.contains(event.target) &&
+        !yearDiv.contains(event.target) &&
+        !yearFilter.contains(event.target)
+    ) {
+        allAuthorsNames.classList.remove("visible");
         yearFilter.classList.remove("visible");
     }
+});
+
+allAuthorsNames.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+
+yearFilter.addEventListener("click", function (event) {
+    event.stopPropagation();
 });
 
 
@@ -687,13 +705,11 @@ reloadBooks.addEventListener("click", async function () {
     await loadBooks(); // vänta tills böckerna laddats om
 
     let msg = document.getElementById("reloadMessage");
-    msg.textContent = "Books reloaded!";
-    msg.style.display = "block";
-    msg.style.margin = "0px";
+    msg.style.visibility = "visible";
 
     // göm efter 3 sekunder
     setTimeout(() => {
-        msg.style.display = "none";
+        msg.style.visibility = "hidden";
     }, 3000);
 });
 
@@ -896,7 +912,7 @@ let savedUser = localStorage.getItem("currentUser");
 if (savedUser) {
     currentUser = savedUser;
     who.textContent = currentUser;
-    appDiv.style.display = "block";
+    appDiv.style.display = "inline-block";
     loginBtn.style.display = "none";
     registerButton.style.display = "none";
     loginButton.style.display = "none";
