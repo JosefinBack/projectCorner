@@ -647,7 +647,8 @@ searchButtonAuthor.addEventListener("click", async function () {
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
-    filterUsed.innerHTML = `Filter/ Genre/ ${choosenAuthors}`;
+    let authorArray = choosenAuthors.join(", ");
+    filterUsed.innerHTML = `Filter/ Genre/ ${authorArray}`;
 });
 
 searchButtonYear.addEventListener("click", async function () {
@@ -675,7 +676,8 @@ searchButtonYear.addEventListener("click", async function () {
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
-    filterUsed.innerHTML = `Filter/Genre/${choosenYear}`;
+    let yearArray = choosenYear.join(", ");
+    filterUsed.innerHTML = `Filter/ Genre/ ${yearArray}`;
 });
 
 searchButtonGenre.addEventListener("click", async function () {
@@ -703,7 +705,8 @@ searchButtonGenre.addEventListener("click", async function () {
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
-    filterUsed.innerHTML = `Filter/Genre/${choosenGenre}`;
+    let genreArray = choosenGenre.join(", ");
+    filterUsed.innerHTML = `Filter/ Genre/ ${genreArray}`;
 });
 
 

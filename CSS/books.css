@@ -52,7 +52,8 @@ main {
     text-align: center;
 }
 
-#filterBtn {
+#filterBtn,
+#sortBtn {
     font-size: 18px;
     cursor: pointer;
     width: 100%;
@@ -63,6 +64,7 @@ main {
 }
 
 #filtering:hover,
+#sortBtn,
 .filterDiv:hover {
     font-weight: bold;
     text-decoration: underline;
@@ -412,11 +414,9 @@ main {
     text-align: center;
 }
 
-
 #usedFilter {
     visibility: hidden;
 }
-
 
 /* logga in och registrera användare */
 #registration {
