@@ -2,6 +2,10 @@ h2 {
     text-align: center;
 }
 
+h3 {
+    margin: 0px;
+}
+
 #bookmeny {
     height: 120px;
     width: 100%;
@@ -14,6 +18,11 @@ h2 {
     display: flex;
     gap: 20px;
     margin: 40px 20px 0px;
+}
+
+#rightmeny {
+    display: flex;
+    flex-direction: column;
 }
 
 #reloading {
@@ -147,9 +156,9 @@ main {
 
 
 /* filter */
-.authorInFilter,
-.yearInFilter {
+.filterPart {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
 }
@@ -401,6 +410,11 @@ main {
     visibility: hidden;
     margin: 0px;
     text-align: center;
+}
+
+
+#usedFilter {
+    visibility: hidden;
 }
 
 

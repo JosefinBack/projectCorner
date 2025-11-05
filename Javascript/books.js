@@ -392,7 +392,7 @@ async function filterAuthors() {
     for (let author of allAuthors) {
         // skapa en container (div eller label)
         let container = document.createElement("div");
-        container.classList.add("authorInFilter");
+        container.classList.add("filterPart");
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -429,7 +429,7 @@ async function filterByYear() {
 
     for (let year of years) {
         let container = document.createElement("div");
-        container.classList.add("yearInFilter");
+        container.classList.add("filterPart");
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -455,8 +455,40 @@ async function filterByYear() {
 
 }
 
+async function filterByGenre() {
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json(); //ger en array av alla böcker
 
+    let allGenres = [];
 
+    for (let book of books) {
+        if (!allGenres.includes(book.genre)) {
+            allGenres.push(book.genre);
+        }
+    }
+
+    let genreList = document.getElementById("allGenreList");
+    genreList.innerHTML = "";
+
+    for (let genre of allGenres) {
+        let container = document.createElement("div");
+        container.classList.add("filterPart");
+
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.style.border = "1px solid black";
+        checkbox.style.width = "20px";
+        checkbox.style.height = "20px";
+        checkbox.value = genre;
+        checkbox.name = "genreFilter";
+
+        let p = document.createElement("p");
+        p.textContent = genre;
+        container.appendChild(checkbox);
+        container.appendChild(p);
+        genreList.appendChild(container);
+    }
+}
 
 
 
@@ -559,6 +591,9 @@ logoutBtn.addEventListener("click", function () {
 
 
 //filter
+
+let filterUsed = document.getElementById("usedFilter");
+
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
 allAuthorsNames.classList.add("listInDiv");
@@ -572,6 +607,13 @@ let yearFilter = document.getElementById("allYears");
 yearFilter.classList.add("listInDiv");
 let allYearList = document.getElementById("allYearList");
 let searchButtonYear = document.getElementById("searchButtonYear");
+
+let genreDiv = document.getElementById("genreDiv");
+let allGenres = document.getElementById("allGenre");
+allGenres.classList.add("listInDiv");
+let listWithAllGenres = document.getElementById("allGenreList");
+let searchButtonGenre = document.getElementById("searchButtonGenre");
+
 
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
@@ -591,7 +633,7 @@ searchButtonAuthor.addEventListener("click", async function () {
     let books = await result.json();
 
     let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
-    console.log(choosenBooks);
+    // console.log(choosenBooks);
 
     allBooks.innerHTML = "";
     for (let book of choosenBooks) {
@@ -602,6 +644,10 @@ searchButtonAuthor.addEventListener("click", async function () {
     divAuthors.classList.remove("visible");
     allFilters.classList.remove("visible");
     filterButton.classList.remove("open");
+
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Filter/ Genre/ ${choosenAuthors}`;
 });
 
 searchButtonYear.addEventListener("click", async function () {
@@ -626,6 +672,38 @@ searchButtonYear.addEventListener("click", async function () {
     divYears.classList.remove("visible");
     allFilters.classList.remove("visible");
     filterButton.classList.remove("open");
+
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Filter/Genre/${choosenYear}`;
+});
+
+searchButtonGenre.addEventListener("click", async function () {
+    let checkBoxes = document.querySelectorAll('input[name="genreFilter"]:checked');
+
+    let choosenGenre = [];
+    for (let genre of checkBoxes) {
+        choosenGenre.push(genre.value);
+    }
+
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json();
+
+    let genreChecked = books.filter(book => choosenGenre.includes(book.genre));
+
+    allBooks.innerHTML = "";
+    for (let book of genreChecked) {
+        createDivOfBook(book);
+    }
+
+    let divGenre = document.getElementById("allGenre");
+    divGenre.classList.remove("visible");
+    allFilters.classList.remove("visible");
+    filterButton.classList.remove("open");
+
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Filter/Genre/${choosenGenre}`;
 });
 
 
@@ -637,7 +715,10 @@ authorDIV.addEventListener("click", async function (event) {
         authorList.innerHTML = "";
         await filterAuthors();
         allAuthorsNames.classList.add("visible");
+
+        //stäng de andra
         yearFilter.classList.remove("visible");
+        allGenres.classList.remove("visible");
     }
 });
 
@@ -648,22 +729,39 @@ yearDiv.addEventListener("click", async function (event) {
         allYearList.innerHTML = "";
         await filterByYear();
         yearFilter.classList.add("visible");
+
+        //Stäng de andra
         allAuthorsNames.classList.remove("visible");
+        allGenres.classList.remove("visible");
     }
 });
+
+genreDiv.addEventListener("click", async function (event) {
+    event.stopPropagation();
+    listWithAllGenres.innerHTML = "";
+    await filterByGenre();
+    allGenres.classList.add("visible");
+
+    //Stäng de andra
+    allAuthorsNames.classList.remove("visible");
+    yearFilter.classList.remove("visible");
+})
 
 
 //stäng
 document.addEventListener("click", function (event) {
-    // Kolla om klicket inte är inne i authorDIV, allAuthorsNames, yearDiv eller yearFilter
+    // Kolla om klicket inte är inne i authorDIV, yearDiv eller genreDiv, samt deras respektive listor
     if (
         !authorDIV.contains(event.target) &&
         !allAuthorsNames.contains(event.target) &&
         !yearDiv.contains(event.target) &&
-        !yearFilter.contains(event.target)
+        !yearFilter.contains(event.target) &&
+        !genreDiv.contains(event.target) &&
+        !allGenres.contains(event.target)
     ) {
         allAuthorsNames.classList.remove("visible");
         yearFilter.classList.remove("visible");
+        allGenres.classList.remove("visible");
     }
 });
 
@@ -674,6 +772,11 @@ allAuthorsNames.addEventListener("click", function (event) {
 yearFilter.addEventListener("click", function (event) {
     event.stopPropagation();
 });
+
+allGenres.addEventListener("click", function (event) {
+    event.stopPropagation();
+});
+
 
 
 
@@ -702,6 +805,7 @@ coverInput.addEventListener("change", function () {
 
 //reload books
 reloadBooks.addEventListener("click", async function () {
+    filterUsed.innerHTML = "";
     await loadBooks(); // vänta tills böckerna laddats om
 
     let msg = document.getElementById("reloadMessage");
@@ -921,4 +1025,4 @@ if (savedUser) {
 
 
 
-filterByYear();
+filterByGenre();
