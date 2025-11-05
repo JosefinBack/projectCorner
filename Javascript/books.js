@@ -633,12 +633,25 @@ searchButtonAuthor.addEventListener("click", async function () {
     let books = await result.json();
 
     let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
-    // console.log(choosenBooks);
+
+    choosenBooks.sort((a, b) => {
+        // Först sortera på författarnamn
+        const authorCompare = a.author.localeCompare(b.author);
+        if (authorCompare !== 0) {
+            return authorCompare;
+        }
+
+        // Om samma författare → sortera på titel
+        return a.title.localeCompare(b.title);
+    });
+
+
 
     allBooks.innerHTML = "";
     for (let book of choosenBooks) {
         createDivOfBook(book);
     }
+
 
     let divAuthors = document.getElementById("authors");
     divAuthors.classList.remove("visible");
@@ -668,6 +681,8 @@ searchButtonYear.addEventListener("click", async function () {
     for (let book of yearChecked) {
         createDivOfBook(book);
     }
+
+
 
     let divYears = document.getElementById("allYears");
     divYears.classList.remove("visible");
