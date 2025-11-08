@@ -8,8 +8,8 @@ document.getElementById("headerFront").innerHTML = `
         <div class="menyButton">Projekt</div>
         <div class="dropdown-content">
           <a href="HTML/projekt1.html">Projekt 1</a>
-          <a href="HTML/projekt2.html">Projekt 2</a>
-          <a href="HTML/projekt3.html">Projekt 3</a>
+          <a href="HTML/books.html">Book journal</a>
+          <a href="HTML/calender.html">Calender</a>
           <a href="HTML/memory.html">Memory</a>
         </div>
       </div>
