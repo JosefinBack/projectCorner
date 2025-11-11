@@ -491,6 +491,19 @@ async function filterByGenre() {
 }
 
 
+async function allBooksThisyear(year) {
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json();
+
+    let booksInThisYear = books.filter(b => b.year === books.finish);
+
+    let showBookNumber = document.getElementById("howManyBooks");
+    showBookNumber.innerHTML = `You have read ${booksInThisYear.length} books this year
+    <br> 
+    2025: ${booksInThisYear.length} books
+    `;
+}
+
 
 //addEventListeners
 
@@ -1042,5 +1055,4 @@ if (savedUser) {
 }
 
 
-
-filterByGenre();
+allBooksThisyear(2025);
