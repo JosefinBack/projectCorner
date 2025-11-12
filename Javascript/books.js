@@ -495,7 +495,7 @@ async function allBooksThisyear(year) {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
 
-    let booksInThisYear = books.filter(b => b.year === books.finish);
+    let booksInThisYear = books.filter(b => b.finish && b.finish.startsWith(year.toString()));
 
     let showBookNumber = document.getElementById("howManyBooks");
     showBookNumber.innerHTML = `You have read ${booksInThisYear.length} books this year
@@ -839,6 +839,9 @@ reloadBooks.addEventListener("click", async function () {
     filterUsed.innerHTML = "";
     await loadBooks(); // vänta tills böckerna laddats om
 
+    const thisYear = new Date().getFullYear();
+    allBooksThisyear(thisYear);
+
     let msg = document.getElementById("reloadMessage");
     msg.style.visibility = "visible";
 
@@ -909,8 +912,6 @@ closeAndSave.addEventListener("click", async function () {
         alert("You must enter a title, select a book rating and upload a cover image before you can save.");
         return;
     }
-
-    closeCreateBook();
 
     // Rating (alla kategorier i #ratingBox)
     let ratings = {};
@@ -996,6 +997,11 @@ closeAndSave.addEventListener("click", async function () {
 
     window.currentEditingId = null;
     whipeForm();
+
+    const thisYear = new Date().getFullYear();
+    await allBooksThisyear(thisYear);
+
+    closeCreateBook();
 });
 
 
@@ -1054,5 +1060,5 @@ if (savedUser) {
     loadBooks(); // ✅ hämta böckerna direkt
 }
 
-
-allBooksThisyear(2025);
+const thisYear = new Date().getFullYear();
+allBooksThisyear(thisYear);
