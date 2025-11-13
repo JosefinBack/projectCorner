@@ -467,6 +467,8 @@ async function filterByGenre() {
         }
     }
 
+    console.log(allGenres);
+
     let genreList = document.getElementById("allGenreList");
     genreList.innerHTML = "";
 
@@ -490,7 +492,6 @@ async function filterByGenre() {
     }
 }
 
-
 async function allBooksThisyear(year) {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
@@ -498,9 +499,10 @@ async function allBooksThisyear(year) {
     let booksInThisYear = books.filter(b => b.finish && b.finish.startsWith(year.toString()));
 
     let showBookNumber = document.getElementById("howManyBooks");
-    showBookNumber.innerHTML = `You have read ${booksInThisYear.length} books this year
+    showBookNumber.style.fontSize = "18px";
+    showBookNumber.innerHTML = `You have read <strong>${booksInThisYear.length}</strong> books this year
     <br> 
-    2025: ${booksInThisYear.length} books
+    <strong>2025:</strong> ${booksInThisYear.length} books
     `;
 }
 
@@ -694,8 +696,6 @@ searchButtonYear.addEventListener("click", async function () {
     for (let book of yearChecked) {
         createDivOfBook(book);
     }
-
-
 
     let divYears = document.getElementById("allYears");
     divYears.classList.remove("visible");

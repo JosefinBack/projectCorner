@@ -4,12 +4,13 @@ h2 {
 
 h3 {
     margin: 0px;
+    font-size: 25px;
 }
 
 /* meny */
 
 #bookmeny {
-    height: 120px;
+    height: 165px;
     width: 100%;
     border-bottom: 1px solid black;
     display: flex;
@@ -54,6 +55,7 @@ main {
     border: 1px solid black;
     cursor: pointer;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 #filterBtn,
