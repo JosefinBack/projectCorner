@@ -1064,3 +1064,8 @@ if (savedUser) {
 
 const thisYear = new Date().getFullYear();
 allBooksThisyear(thisYear);
+
+
+
+//Kunna se böckerna i listformat
+//två olika knapapr för listvy - en för lista och en för kort 
