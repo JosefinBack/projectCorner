@@ -39,14 +39,16 @@ button {
     padding: 8px;
     border: 1px solid black;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 main {
     margin: 50px 0px;
 }
 
-#filtering {
-    width: 150px;
+#filtering,
+#sort {
+    width: 95px;
     height: 50px;
     background-color: white;
     border: 1px solid black;
@@ -66,23 +68,12 @@ main {
 }
 
 #filtering:hover,
-#sortBtn,
+#sortBtn:hover,
 .filterDiv:hover {
     font-weight: bold;
     text-decoration: underline;
 }
 
-
-#filterBtn::after {
-    content: "▼";
-    /* nedåtpil */
-    position: absolute;
-    right: 17px;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.3s ease;
-    font-size: 14px;
-}
 
 #filterBtn.open::after {
     transform: translateY(-50%) rotate(180deg);
@@ -112,7 +103,8 @@ main {
     z-index: 1000;
 }
 
-.filterDiv {
+.filterDiv,
+.sortDiv {
     position: relative;
     display: inline-block;
     cursor: pointer;
@@ -120,7 +112,7 @@ main {
     padding: 10px 5px;
     cursor: pointer;
     background-color: white;
-    width: 150px;
+    width: 120px;
     border-bottom: 1px solid black;
     box-sizing: border-box;
 }
@@ -438,6 +430,11 @@ main {
     display: none;
 }
 
+#logoutBtn {
+    position: absolute;
+    top: 350px;
+    left: 1269px;
+}
 
 #quotes {
     display: flex;
@@ -447,4 +444,15 @@ main {
 
 #wrapper {
     position: relative;
+}
+
+#bigWrapper {
+    display: flex;
+    gap: 20px;
+}
+
+#sideMeny {
+    display: flex;
+    flex-direction: column;
+    margin: 171px 0px;
 }

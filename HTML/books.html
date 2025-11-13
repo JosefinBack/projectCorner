@@ -11,6 +11,7 @@
 
 <body>
     <div id="headerFront"></div>
+    <button id="logoutBtn">Log out</button>
     <h1>Digital reading journal</h1>
     <h2>Track your reading journey</h2>
 
@@ -34,60 +35,62 @@
         <button id="loginBtn">Log in</button>
         <button id="closeLogIn">Close</button>
     </div>
+    <div id="bigWrapper">
+        <div id="sideMeny">
+            <div id="filtering">
+                <p id="filterBtn">Filter</p>
+                <div id="allFilters">
 
-    <main>
-        <div id="wrapper">
-            <div id="bookmeny">
-                <div id="rightmeny" class="bookMeny">
-                    <div id="app">
-                        <h3>Welcome to your bookshelf <span id="who"></span></h3>
+                    <div id="authorDIV" class="filterDiv">
+                        <p>Author</p>
+                        <div id="authors" class="listInDiv">
+                            <div id="authorsList"></div>
+                            <button id="searchButtonAuthor">Search</button>
+                        </div>
                     </div>
-                    <div id="howManyBooks"></div>
-                    <div id="usedFilter">
-                        <p>Filteranvändning</p>
-                    </div>
-                </div>
 
-                <div id="leftmeny" class="bookMeny">
-                    <button id="addBook">Add a book</button>
-                    <div id="reloading">
-                        <button id="reload">Reload all books</button>
-                        <p id="reloadMessage">Books reloaded!</p>
+                    <div id="yearDiv" class="filterDiv">
+                        <p>Year</p>
+                        <div id="allYears" class="listInDiv">
+                            <div id="allYearList"></div>
+                            <button id="searchButtonYear">Search</button>
+                        </div>
                     </div>
-                    <button id="logoutBtn">Log out</button>
+
+                    <div id="genreDiv" class="filterDiv">
+                        <p>Genre</p>
+                        <div id="allGenre" class="listInDiv">
+                            <div id="allGenreList"></div>
+                            <button id="searchButtonGenre">Search</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div id="sort">
+                <p id="sortBtn">Sortering</p>
+            </div>
 
-            <div id="filterAndSearch">
-                <div id="filtering">
-                    <p id="filterBtn">Filter</p>
-                    <div id="allFilters">
-                        <div id="authorDIV" class="filterDiv">
-                            Author
-                            <div id="authors" class="listInDiv">
-                                <div id="authorsList"></div>
-                                <button id="searchButtonAuthor">Search</button>
-                            </div>
+        </div>
+        <main>
+            <div id="wrapper">
+                <div id="bookmeny">
+                    <div id="rightmeny" class="bookMeny">
+                        <div id="app">
+                            <h3>Welcome to your bookshelf <span id="who"></span></h3>
                         </div>
-                        <div id="yearDiv" class="filterDiv">
-                            Year
-                            <div id="allYears" class="listInDiv">
-                                <div id="allYearList"></div>
-                                <button id="searchButtonYear">Search</button>
-                            </div>
-                        </div>
-                        <div id="genreDiv" class="filterDiv">
-                            Genre
-                            <div id="allGenre" class="listInDiv">
-                                <div id="allGenreList"></div>
-                                <button id="searchButtonGenre">Search</button>
-                            </div>
+                        <div id="howManyBooks"></div>
+                        <div id="usedFilter">
+                            <p>Filteranvändning</p>
                         </div>
                     </div>
-                </div>
 
-                <div id="sort">
-                    <p id="sortBtn">Sortering</p>
+                    <div id="leftmeny" class="bookMeny">
+                        <button id="addBook">Add a book</button>
+                        <div id="reloading">
+                            <button id="reload">Reload all books</button>
+                            <p id="reloadMessage">Books reloaded!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -247,7 +250,8 @@
                 <button id="delete">Delete book</button>
             </div>
             <div id="allBooks"></div>
-    </main>
+        </main>
+    </div>
 
     <script src="../Javascript/header-inside.js" defer></script>
     <script src="../Javascript/books.js" defer></script>
