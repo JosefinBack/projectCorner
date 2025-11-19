@@ -32,7 +32,7 @@ let coverInput = document.getElementById("cover");
 let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
 let deleteBook = document.getElementById("delete");
-let filterButton = document.getElementById("filterBtn");
+let filterButton = document.getElementById("filtering");
 
 let currentCover = null;
 
@@ -632,7 +632,6 @@ let searchButtonGenre = document.getElementById("searchButtonGenre");
 
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
-    filterButton.classList.toggle("open");
 });
 
 searchButtonAuthor.addEventListener("click", async function () {
@@ -671,7 +670,6 @@ searchButtonAuthor.addEventListener("click", async function () {
     let divAuthors = document.getElementById("authors");
     divAuthors.classList.remove("visible");
     allFilters.classList.remove("visible");
-    filterButton.classList.remove("open");
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
@@ -700,7 +698,6 @@ searchButtonYear.addEventListener("click", async function () {
     let divYears = document.getElementById("allYears");
     divYears.classList.remove("visible");
     allFilters.classList.remove("visible");
-    filterButton.classList.remove("open");
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
@@ -729,7 +726,6 @@ searchButtonGenre.addEventListener("click", async function () {
     let divGenre = document.getElementById("allGenre");
     divGenre.classList.remove("visible");
     allFilters.classList.remove("visible");
-    filterButton.classList.remove("open");
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
@@ -841,14 +837,6 @@ reloadBooks.addEventListener("click", async function () {
 
     const thisYear = new Date().getFullYear();
     allBooksThisyear(thisYear);
-
-    let msg = document.getElementById("reloadMessage");
-    msg.style.visibility = "visible";
-
-    // göm efter 3 sekunder
-    setTimeout(() => {
-        msg.style.visibility = "hidden";
-    }, 3000);
 });
 
 //Skapa en bok
