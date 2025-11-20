@@ -674,7 +674,10 @@ searchButtonAuthor.addEventListener("click", async function () {
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
     let authorArray = choosenAuthors.join(", ");
-    filterUsed.innerHTML = `Filter/ Genre/ ${authorArray}`;
+    filterUsed.innerHTML = `Filter/ Authors/ ${authorArray}`;
+    filterUsed.style.fontWeight = "bold";
+
+    reloadBooks.style.visibility = "visible"
 });
 
 searchButtonYear.addEventListener("click", async function () {
@@ -703,6 +706,8 @@ searchButtonYear.addEventListener("click", async function () {
     filterUsed.innerHTML = "";
     let yearArray = choosenYear.join(", ");
     filterUsed.innerHTML = `Filter/ Genre/ ${yearArray}`;
+
+    reloadBooks.style.visibility = "visible"
 });
 
 searchButtonGenre.addEventListener("click", async function () {
@@ -731,6 +736,8 @@ searchButtonGenre.addEventListener("click", async function () {
     filterUsed.innerHTML = "";
     let genreArray = choosenGenre.join(", ");
     filterUsed.innerHTML = `Filter/ Genre/ ${genreArray}`;
+
+    reloadBooks.style.visibility = "visible"
 });
 
 
@@ -835,8 +842,10 @@ reloadBooks.addEventListener("click", async function () {
     filterUsed.innerHTML = "";
     await loadBooks(); // vänta tills böckerna laddats om
 
-    const thisYear = new Date().getFullYear();
-    allBooksThisyear(thisYear);
+    // const thisYear = new Date().getFullYear();
+    // allBooksThisyear(thisYear);
+
+    reloadBooks.style.visibility = "hidden";
 });
 
 //Skapa en bok

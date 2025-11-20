@@ -10,7 +10,7 @@ h3 {
 /* meny */
 
 #bookmeny {
-    height: 165px;
+    height: 110px;
     width: 100%;
     border-bottom: 1px solid black;
     display: flex;
@@ -25,6 +25,10 @@ h3 {
 
 #rightmeny {
     display: flex;
+}
+
+#leftmeny {
+    padding: 20px;
 }
 
 button {
@@ -59,16 +63,16 @@ main {
     display: flex;
     flex-direction: column;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.2s ease;
     cursor: pointer;
     border: 1px solid black;
+    position: relative;
 }
 
 #allFilters.visible {
     display: flex;
     opacity: 1;
-    position: relative;
-    z-index: 1000;
+    position: absolute;
 }
 
 .filterDiv {
@@ -373,10 +377,8 @@ main {
     margin: 2px;
 }
 
-#reloadMessage {
+#reload {
     visibility: hidden;
-    margin: 0px;
-    text-align: center;
 }
 
 #usedFilter {
