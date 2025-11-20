@@ -55,6 +55,11 @@ main {
     text-align: center;
 }
 
+.bookmenyButton:hover {
+    text-decoration: underline;
+    box-shadow: 2px 2px 2px gray;
+}
+
 .filterDIV {
     border: 1px solid black;
 }
@@ -89,6 +94,7 @@ main {
 
 .listInDiv {
     display: none;
+    text-align: center;
     padding: 10px;
     position: absolute;
     top: 0;
@@ -113,14 +119,7 @@ main {
     cursor: pointer;
     list-style: none;
     padding: 5px;
-    margin: 0px;
 }
-
-#authorsList p:hover,
-#allYearList p:hover {
-    background-color: #f0f0f0;
-}
-
 
 /* filter */
 
@@ -132,7 +131,12 @@ main {
     display: flex;
     flex-direction: row;
     align-items: center;
+    border-radius: 10px;
     gap: 20px;
+}
+
+.filterPart:hover {
+    background-color: rgba(218, 245, 216, 0.3);
 }
 
 

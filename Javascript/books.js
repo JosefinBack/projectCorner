@@ -462,10 +462,19 @@ async function filterByGenre() {
     let allGenres = [];
 
     for (let book of books) {
-        if (!allGenres.includes(book.genre)) {
-            allGenres.push(book.genre);
+        if (!book.genre) continue;
+
+        // Splitta strängen till en array (Fantasy, Dark romance → ["Fantasy", "Dark romance"])
+        let genreParts = book.genre.split(",").map(g => g.trim());
+
+        // Lägg till varje individuell genre
+        for (let g of genreParts) {
+            if (!allGenres.includes(g)) {
+                allGenres.push(g);
+            }
         }
     }
+
 
     console.log(allGenres);
 
