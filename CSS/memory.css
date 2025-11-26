@@ -127,7 +127,9 @@ h1 {
 }
 
 #buttonToMemory {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    grid-template-rows: repeat(2, 200px);
     gap: 80px;
     justify-content: center;
     padding: 20px;
