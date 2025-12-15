@@ -203,6 +203,8 @@ async function loadBooks() {
         return a.title.localeCompare(b.title);
     });
 
+    console.log(books)
+
     allBooks.innerHTML = "";
     for (let book of books) {
         createDivOfBook(book);
