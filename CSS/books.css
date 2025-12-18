@@ -29,6 +29,8 @@ h3 {
 
 #leftmeny {
     padding: 20px;
+    display: flex;
+    gap: 20px;
 }
 
 button {
@@ -417,4 +419,25 @@ main {
 #bigWrapper {
     display: flex;
     gap: 20px;
+}
+
+
+.divInListview {
+    display: flex;
+    gap: 10px;
+    height: 100px;
+    border: 1px solid black;
+    align-items: center;
+}
+
+.girdListview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.textWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }

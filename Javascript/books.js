@@ -36,6 +36,8 @@ let filterButton = document.getElementById("filtering");
 
 let currentCover = null;
 
+let viewList = document.getElementById("list");
+let viewCard = document.getElementById("ruta");
 
 
 // Hämta inputfält
@@ -202,8 +204,6 @@ async function loadBooks() {
         // ingen serie → sortera på titel
         return a.title.localeCompare(b.title);
     });
-
-    console.log(books)
 
     allBooks.innerHTML = "";
     for (let book of books) {
@@ -823,6 +823,63 @@ allGenres.addEventListener("click", function (event) {
 });
 
 
+//Vy, lista eller kort
+
+viewList.addEventListener("click", async function () {
+    let result = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await result.json();
+
+    main.innerHTML = "";
+    main.classList.add("girdListview")
+
+    for (let book of books) {
+        let arrayBook = []
+        let div = document.createElement("div");
+        div.classList.add("divInListview")
+
+        let img = document.createElement("img");
+        img.src = book.imgSrc;
+        img.style.width = "60px";
+        img.style.height = "90px";
+        img.style.objectFit = "cover";
+
+        let textWrapper = document.createElement("div");
+        textWrapper.classList.add("textWrapper");
+
+        let title = document.createElement("p");
+        title.textContent = book.title;
+
+        let serie = document.createElement("p");
+
+        if (book.seriesName === "The Empyrean series") {
+            serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}`
+        } else {
+            serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}- series`
+        }
+
+        let rating = document.createElement("p");
+        rating.textContent = `Rating: ${book.ratings.book} / 10`;
+
+        textWrapper.appendChild(title);
+        textWrapper.appendChild(serie);
+
+        div.appendChild(img);
+        div.appendChild(rating)
+        div.appendChild(textWrapper);
+
+        main.appendChild(div);
+
+    };
+
+    console.log(books);
+
+
+});
+
+
+viewCard.addEventListener("click", function () {
+    loadBooks();
+});
 
 
 
