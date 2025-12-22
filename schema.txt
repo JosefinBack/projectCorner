@@ -1,0 +1,83 @@
+TimeEdit - Malmö universitet
+DA297A-VT2026-68010, Databasteknik, ME140B-VT2026-TS742, Crossmedia: Teori 2025-12-22 - 2026-04-05 v 52-14 v 52-v 14  
+     v 52 2025-12-24 00:00 - 00:00 Julafton,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 52 2025-12-25 00:00 - 00:00 Juldagen,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 52 2025-12-26 00:00 - 00:00 Annandag jul,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 1 2025-12-31 00:00 - 00:00 Nyårsafton,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 1 2026-01-01 00:00 - 00:00 Nyårsdagen,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 2 2026-01-06 00:00 - 00:00 Trettondedag jul,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 4 2026-01-19 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 4 2026-01-19 14:15 - 17:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson,  Kursintroduktion,  ,  ,  Föreläsning 1: Intro, demo,  ,  Kockum fritid hörsalen
+     v 4 2026-01-19 14:15 - 15:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Kursintroduktion,  ,  ,  ,  ,  OR:E439
+     v 4 2026-01-19 15:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Föreläsning,  ,  ,  ,  ,  OR:E439
+     v 4 2026-01-20 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 4 2026-01-21 08:00 - 17:00 Terminsstart: lokaler bokas endast åt undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 4 2026-01-21 08:15 - 10:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Föreläsning,  ,  ,  ,  ,  OR:E439
+     v 4 2026-01-22 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 4 2026-01-22 08:15 - 10:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson,  Föreläsning,  ,  ,  Föreläsning 2: Logic, relational model, keys,  ,  NI:C0E11
+     v 4 2026-01-22 14:15 - 17:00 TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson, Sebastian Wöhrman,  Övning,  ,  ,  Teoriövning 1: Logic, relationships,  ,  NI:A0506
+     v 4 2026-01-23 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 5 2026-01-26 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 5 2026-01-26 14:15 - 17:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson, Sebastian Wöhrman,  Övning,  ,  ,  Teoriövning 1: Logic, relationships,  ,  NI:A0506
+     v 5 2026-01-26 15:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Maria Engberg,  Föreläsning,  ,  ,  ,  ,  OR:E439
+     v 5 2026-01-27 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 5 2026-01-28 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 5 2026-01-28 08:15 - 10:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Maria Engberg,  Föreläsning,  ,  ,  ,  ,  OR:E439
+     v 5 2026-01-28 10:15 - 12:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Arezoo Sarkheyli-Hägele,  Föreläsning,  ,  ,  Föreläsning 3: Getting started in SQL/DBMS, create table, select, insert,  ,  NI:B0E07
+     v 5 2026-01-29 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 5 2026-01-29 15:15 - 17:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive,  Föreläsning,  ,  ,  Föreläsning 4: Uppkoppling till databas,  ,  NI:B0E15
+     v 5 2026-01-30 08:00 - 17:00 Terminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 6 2026-02-02 13:15 - 15:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson,  Föreläsning,  ,  ,  Föreläsning 5: Funktionellt beroende + E/R 1,  ,  NI:B0E07
+     v 6 2026-02-02 13:15 - 15:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Föreläsning,  ,  ,  ,  ,  OR:E439
+     v 6 2026-02-03 13:15 - 16:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb: 1 Get started with DBMS,  ,  NI:A0314, NI:A0318
+     v 6 2026-02-04 09:15 - 12:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb: 1 Get started with DBMS,  ,  NI:A0314, NI:A0318
+     v 6 2026-02-04 15:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Föreläsning,  ,  ,  ,  ,  OR:E439
+     v 6 2026-02-05 15:15 - 17:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson,  Föreläsning,  ,  ,  Föreläsning 6: Normal forms,  ,  NI:B0E07
+     v 7 2026-02-09 13:15 - 16:00 TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson, Sebastian Wöhrman,  Övning,  ,  ,  Teoriövning 2 för Spel: Schema design, E/R,  ,  NI:A0506
+     v 7 2026-02-10 13:15 - 16:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson, Sebastian Wöhrman,  Övning,  ,  ,  Teoriövning 2 för IA: Schema design, E/R,  ,  NI:A0306
+     v 7 2026-02-11 08:15 - 10:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Arezoo Sarkheyli-Hägele,  Föreläsning,  ,  ,  Föreläsning 7: SQL: Join, grouping, aggregates, views,  ,  NI:B0E07
+     v 7 2026-02-11 15:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Johannes Karlsson, Liselotte Heimdahl,  Introduktion,  ,  ,  Transmedia plan,  ,  OR:E439
+     v 7 2026-02-12 15:15 - 17:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Arezoo Sarkheyli-Hägele,  Föreläsning,  ,  ,  Föreläsning 8: SQL problem solving session,  ,  NI:B0E07
+     v 8 2026-02-16 08:45 - 09:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  ,  Inlämning,  ,  ,  Seminarieuppgift,  ,  Inget lokalbehov
+     v 8 2026-02-16 13:15 - 15:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson,  Föreläsning,  ,  ,  Föreläsning 9: Schema creation recap, indexes,  ,  OR:D328
+     v 8 2026-02-18 09:15 - 12:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb, Spel: 2 Join, view, and stored procedure,  ,  NI:A0314, NI:A0318
+     v 8 2026-02-19 13:15 - 16:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb, IA: 2 Join, view, and stored procedure,  ,  NI:A0314, NI:A0318
+     v 8 2026-02-20 08:15 - 10:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Johannes Karlsson,  Seminarium,  ,  ,  Grupp 1,  ,  NI:A0510
+     v 8 2026-02-20 10:15 - 12:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Liselotte Heimdahl,  Seminarium,  ,  ,  Grupp 2,  ,  NI:A0510
+     v 8 2026-02-20 13:15 - 15:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Liselotte Heimdahl,  Seminarium,  ,  ,  Grupp 2,  ,  NI:A0510
+     v 9 2026-02-23 13:15 - 16:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive,  Övrigt,  ,  ,  Project: Customer Questions and Answers: 08.15: Health center. 08:50 Conference management. 09.25: Online store.,  ,  OR:D328
+     v 9 2026-02-25 08:15 - 10:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson,  Föreläsning,  ,  ,  Föreläsning 10: Transaction system, theory summary,  ,  OR:D337
+     v 9 2026-02-25 08:15 - 10:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Workshop,  ,  ,  Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov
+     v 9 2026-02-25 10:15 - 12:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Workshop,  ,  ,  Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov
+     v 9 2026-02-25 13:15 - 16:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Johannes Karlsson, Liselotte Heimdahl,  Övrigt,  ,  ,  Avstämning Transmedia plan,  ,  OR:B423
+     v 9 2026-02-26 13:15 - 16:00 TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson, Sebastian Wöhrman,  Övning,  ,  ,  Teoriövning 3 för Spel: E/R 2, normal forms, improve schema,  ,  NI:A0606
+     v 9 2026-02-26 13:15 - 15:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Handledning,  ,  ,  Drop-in uppsats,  ,  NI:B0303
+     v 9 2026-02-26 15:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Handledning,  ,  ,  Drop-in uppsats,  ,  NI:B0303
+     v 9 2026-02-27 08:15 - 10:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Workshop,  ,  ,  Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov
+     v 9 2026-02-27 10:15 - 12:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Workshop,  ,  ,  Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov
+     v 10 2026-03-03 14:15 - 17:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Jesper Larsson, Sebastian Wöhrman,  Övning,  ,  ,  Teoriövning 3 för IA: E/R 2, normal forms, improve schema,  ,  NI:A0306
+     v 10 2026-03-04 10:15 - 12:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Arezoo Sarkheyli-Hägele,  Föreläsning,  ,  ,  Föreläsning 11: Index and transactions in SQL,  ,  OR:D328
+     v 10 2026-03-04 13:15 - 16:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Johannes Karlsson,  Övrigt,  ,  ,  Avstämning Transmedia plan,  ,  OR:B423
+     v 10 2026-03-05 08:15 - 10:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Föreläsning,  ,  ,  Föreläsning med Kajsa Sundin,  ,  OR:B423
+     v 10 2026-03-05 10:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Workshop,  ,  ,  Författarworkshop med Kajsa Sundin,  ,  OR:B423
+     v 10 2026-03-05 13:15 - 15:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Arezoo Sarkheyli-Hägele,  Föreläsning,  ,  ,  Föreläsning 12: SQL: Procedures, functions, triggers,  ,  OR:D328
+     v 10 2026-03-06 13:15 - 15:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Handledning,  ,  ,  Drop-in uppsats,  ,  NI:B0303
+     v 10 2026-03-06 15:15 - 17:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Handledning,  ,  ,  Drop-in uppsats,  ,  NI:B0303
+     v 11 2026-03-09 13:15 - 16:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb, Spel: 3 DB connectivity, indexes and transactions,  ,  NI:A0314, NI:A0318
+     v 11 2026-03-10 14:15 - 17:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb, IA: 3 DB connectivity, indexes and transactions,  ,  NI:A0314, NI:A0318
+     v 11 2026-03-11 08:15 - 11:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb, Spel: 4 Trigger, function and procedure,  ,  NI:A0314, NI:A0318
+     v 11 2026-03-12 14:15 - 17:00 TGIAR-HT2025-58803,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive, Gent Ymeri,  Laboration,  ,  ,  Hjälptid för datorlabb, IA: 4 Trigger, function and procedure,  ,  NI:A0314, NI:A0318
+     v 13 2026-03-23 12:15 - 13:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Information,  ,  ,  Informationsträff MMA/valbara kurser,  ,  Digital
+     v 13 2026-03-23 13:15 - 18:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive,  Redovisning,  ,  ,  Tider för ordinarie projektredovisningstillfälle,  ,  NI:A0418
+     v 13 2026-03-25 08:15 - 13:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive,  Redovisning,  ,  ,  Tider för ordinarie projektredovisningstillfälle,  ,  NI:A0418
+     v 13 2026-03-25 08:15 - 12:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Övrigt,  ,  ,  Presentation Transmedia plan,  ,  NI:A0411
+     v 13 2026-03-25 13:15 - 15:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  Thomas Alm,  Övrigt,  ,  ,  Presentation Transmedia plan,  ,  NI:A0411
+     v 13 2026-03-26 13:15 - 18:00 TGIAR-HT2025-58803, TGSPA-HT2025-58806,  DA297A-VT2026-68010, DA297A-VT2026-TS019,  ,  Anders Ive,  Redovisning,  ,  ,  Tider för ordinarie projektredovisningstillfälle,  ,  NI:A0418
+     v 13 2026-03-27 08:45 - 09:00 TGMMA-HT2024-48112, TGWDU-HT2024-48103,  ME140B-VT2026-TS742,  ,  ,  Inlämning,  ,  ,  Uppsats,  ,  Inget lokalbehov
+     v 14 2026-03-30 08:00 - 17:00 Mitterminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 14 2026-03-31 08:00 - 17:00 Mitterminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 14 2026-04-01 08:00 - 17:00 Mitterminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 14 2026-04-02 08:00 - 17:00 Mitterminsstart: lokaler bokas endast för undervisning,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 14 2026-04-03 00:00 - 00:00 Långfredag,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 14 2026-04-04 00:00 - 00:00 Påskafton,  ,  ,  ,  ,  ,  ,  ,  ,  
+     v 14 2026-04-05 00:00 - 00:00 Påskdagen,  ,  ,  ,  ,  ,  ,  ,  ,  

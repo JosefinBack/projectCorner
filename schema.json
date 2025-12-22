@@ -1,0 +1,466 @@
+[
+  {
+    "date": "2026-01-19",
+    "startTime": "14:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "1: Intro, demo,  ,  Kockum fritid hörsalen",
+    "location": null
+  },
+  {
+    "date": "2026-01-19",
+    "startTime": "14:15",
+    "endTime": "15:00",
+    "type": "",
+    "moment": "",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-01-19",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-01-21",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Föreläsning",
+    "moment": "OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-01-22",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 2: Logic, relational model, keys,  ,  NI:C0E11",
+    "location": "NI:C0E11"
+  },
+  {
+    "date": "2026-01-22",
+    "startTime": "14:15",
+    "endTime": "17:00",
+    "type": "Övning",
+    "moment": "Teoriövning 1: Logic, relationships,  ,  NI:A0506",
+    "location": "NI:A0506"
+  },
+  {
+    "date": "2026-01-26",
+    "startTime": "14:15",
+    "endTime": "17:00",
+    "type": "Övning",
+    "moment": "Teoriövning 1: Logic, relationships,  ,  NI:A0506",
+    "location": "NI:A0506"
+  },
+  {
+    "date": "2026-01-26",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-01-28",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Föreläsning",
+    "moment": "OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-01-28",
+    "startTime": "10:15",
+    "endTime": "12:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 3: Getting started in SQL/DBMS, create table, select, insert,  ,  NI:B0E07",
+    "location": "NI:B0E07"
+  },
+  {
+    "date": "2026-01-29",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 4: Uppkoppling till databas,  ,  NI:B0E15",
+    "location": "NI:B0E15"
+  },
+  {
+    "date": "2026-02-02",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 5: Funktionellt beroende + E/R 1,  ,  NI:B0E07",
+    "location": "NI:B0E07"
+  },
+  {
+    "date": "2026-02-02",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Föreläsning",
+    "moment": "OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-02-03",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb: 1 Get started with DBMS,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-02-04",
+    "startTime": "09:15",
+    "endTime": "12:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb: 1 Get started with DBMS,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-02-04",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-02-05",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 6: Normal forms,  ,  NI:B0E07",
+    "location": "NI:B0E07"
+  },
+  {
+    "date": "2026-02-09",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Övning",
+    "moment": "Teoriövning 2 för Spel: Schema design, E/R,  ,  NI:A0506",
+    "location": "NI:A0506"
+  },
+  {
+    "date": "2026-02-10",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Övning",
+    "moment": "Teoriövning 2 för IA: Schema design, E/R,  ,  NI:A0306",
+    "location": "NI:A0306"
+  },
+  {
+    "date": "2026-02-11",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 7: SQL: Join, grouping, aggregates, views,  ,  NI:B0E07",
+    "location": "NI:B0E07"
+  },
+  {
+    "date": "2026-02-11",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Introduktion",
+    "moment": "Transmedia plan,  ,  OR:E439",
+    "location": "OR:E439"
+  },
+  {
+    "date": "2026-02-12",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 8: SQL problem solving session,  ,  NI:B0E07",
+    "location": "NI:B0E07"
+  },
+  {
+    "date": "2026-02-16",
+    "startTime": "08:45",
+    "endTime": "09:00",
+    "type": "Inlämning",
+    "moment": "Seminarieuppgift,  ,  Inget lokalbehov",
+    "location": "Inget lokalbehov"
+  },
+  {
+    "date": "2026-02-16",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 9: Schema creation recap, indexes,  ,  OR:D328",
+    "location": "OR:D328"
+  },
+  {
+    "date": "2026-02-18",
+    "startTime": "09:15",
+    "endTime": "12:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb, Spel: 2 Join, view, and stored procedure,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-02-19",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb, IA: 2 Join, view, and stored procedure,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-02-20",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Seminarium",
+    "moment": "Grupp 1,  ,  NI:A0510",
+    "location": "NI:A0510"
+  },
+  {
+    "date": "2026-02-20",
+    "startTime": "10:15",
+    "endTime": "12:00",
+    "type": "Seminarium",
+    "moment": "Grupp 2,  ,  NI:A0510",
+    "location": "NI:A0510"
+  },
+  {
+    "date": "2026-02-20",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Seminarium",
+    "moment": "Grupp 2,  ,  NI:A0510",
+    "location": "NI:A0510"
+  },
+  {
+    "date": "2026-02-23",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Övrigt",
+    "moment": "Project: Customer Questions and Answers: 08.15: Health center. 08:50 Conference management. 09.25: Online store.,  ,  OR:D328",
+    "location": "OR:D328"
+  },
+  {
+    "date": "2026-02-25",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 10: Transaction system, theory summary,  ,  OR:D337",
+    "location": "OR:D337"
+  },
+  {
+    "date": "2026-02-25",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Workshop",
+    "moment": "Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov",
+    "location": "Inget lokalbehov"
+  },
+  {
+    "date": "2026-02-25",
+    "startTime": "10:15",
+    "endTime": "12:00",
+    "type": "Workshop",
+    "moment": "Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov",
+    "location": "Inget lokalbehov"
+  },
+  {
+    "date": "2026-02-25",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Övrigt",
+    "moment": "Avstämning Transmedia plan,  ,  OR:B423",
+    "location": "OR:B423"
+  },
+  {
+    "date": "2026-02-26",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Övning",
+    "moment": "Teoriövning 3 för Spel: E/R 2, normal forms, improve schema,  ,  NI:A0606",
+    "location": "NI:A0606"
+  },
+  {
+    "date": "2026-02-26",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Handledning",
+    "moment": "Drop-in uppsats,  ,  NI:B0303",
+    "location": "NI:B0303"
+  },
+  {
+    "date": "2026-02-26",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Handledning",
+    "moment": "Drop-in uppsats,  ,  NI:B0303",
+    "location": "NI:B0303"
+  },
+  {
+    "date": "2026-02-27",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Workshop",
+    "moment": "Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov",
+    "location": "Inget lokalbehov"
+  },
+  {
+    "date": "2026-02-27",
+    "startTime": "10:15",
+    "endTime": "12:00",
+    "type": "Workshop",
+    "moment": "Kopieringsapparaten. Anmälan via Canvas. Plats: Niagara, plan 6B (Medieteknik).,  ,  Inget lokalbehov",
+    "location": "Inget lokalbehov"
+  },
+  {
+    "date": "2026-03-03",
+    "startTime": "14:15",
+    "endTime": "17:00",
+    "type": "Övning",
+    "moment": "Teoriövning 3 för IA: E/R 2, normal forms, improve schema,  ,  NI:A0306",
+    "location": "NI:A0306"
+  },
+  {
+    "date": "2026-03-04",
+    "startTime": "10:15",
+    "endTime": "12:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 11: Index and transactions in SQL,  ,  OR:D328",
+    "location": "OR:D328"
+  },
+  {
+    "date": "2026-03-04",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Övrigt",
+    "moment": "Avstämning Transmedia plan,  ,  OR:B423",
+    "location": "OR:B423"
+  },
+  {
+    "date": "2026-03-05",
+    "startTime": "08:15",
+    "endTime": "10:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning med Kajsa Sundin,  ,  OR:B423",
+    "location": "OR:B423"
+  },
+  {
+    "date": "2026-03-05",
+    "startTime": "10:15",
+    "endTime": "17:00",
+    "type": "Workshop",
+    "moment": "Författarworkshop med Kajsa Sundin,  ,  OR:B423",
+    "location": "OR:B423"
+  },
+  {
+    "date": "2026-03-05",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Föreläsning",
+    "moment": "Föreläsning 12: SQL: Procedures, functions, triggers,  ,  OR:D328",
+    "location": "OR:D328"
+  },
+  {
+    "date": "2026-03-06",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Handledning",
+    "moment": "Drop-in uppsats,  ,  NI:B0303",
+    "location": "NI:B0303"
+  },
+  {
+    "date": "2026-03-06",
+    "startTime": "15:15",
+    "endTime": "17:00",
+    "type": "Handledning",
+    "moment": "Drop-in uppsats,  ,  NI:B0303",
+    "location": "NI:B0303"
+  },
+  {
+    "date": "2026-03-09",
+    "startTime": "13:15",
+    "endTime": "16:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb, Spel: 3 DB connectivity, indexes and transactions,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-03-10",
+    "startTime": "14:15",
+    "endTime": "17:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb, IA: 3 DB connectivity, indexes and transactions,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-03-11",
+    "startTime": "08:15",
+    "endTime": "11:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb, Spel: 4 Trigger, function and procedure,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-03-12",
+    "startTime": "14:15",
+    "endTime": "17:00",
+    "type": "Laboration",
+    "moment": "Hjälptid för datorlabb, IA: 4 Trigger, function and procedure,  ,  NI:A0314, NI:A0318",
+    "location": "NI:A0314"
+  },
+  {
+    "date": "2026-03-23",
+    "startTime": "12:15",
+    "endTime": "13:00",
+    "type": "Information",
+    "moment": "Informationsträff MMA/valbara kurser,  ,  Digital",
+    "location": "Digital"
+  },
+  {
+    "date": "2026-03-23",
+    "startTime": "13:15",
+    "endTime": "18:00",
+    "type": "Redovisning",
+    "moment": "Tider för ordinarie projektredovisningstillfälle,  ,  NI:A0418",
+    "location": "NI:A0418"
+  },
+  {
+    "date": "2026-03-25",
+    "startTime": "08:15",
+    "endTime": "13:00",
+    "type": "Redovisning",
+    "moment": "Tider för ordinarie projektredovisningstillfälle,  ,  NI:A0418",
+    "location": "NI:A0418"
+  },
+  {
+    "date": "2026-03-25",
+    "startTime": "08:15",
+    "endTime": "12:00",
+    "type": "Övrigt",
+    "moment": "Presentation Transmedia plan,  ,  NI:A0411",
+    "location": "NI:A0411"
+  },
+  {
+    "date": "2026-03-25",
+    "startTime": "13:15",
+    "endTime": "15:00",
+    "type": "Övrigt",
+    "moment": "Presentation Transmedia plan,  ,  NI:A0411",
+    "location": "NI:A0411"
+  },
+  {
+    "date": "2026-03-26",
+    "startTime": "13:15",
+    "endTime": "18:00",
+    "type": "Redovisning",
+    "moment": "Tider för ordinarie projektredovisningstillfälle,  ,  NI:A0418",
+    "location": "NI:A0418"
+  },
+  {
+    "date": "2026-03-27",
+    "startTime": "08:45",
+    "endTime": "09:00",
+    "type": "Inlämning",
+    "moment": "Uppsats,  ,  Inget lokalbehov",
+    "location": "Inget lokalbehov"
+  }
+]
