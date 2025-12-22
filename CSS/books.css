@@ -143,12 +143,21 @@ main {
 
 
 #allBooks {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
-    gap: 30px;
     padding: 20px;
     max-width: 1200px;
     margin: 5px auto;
+}
+
+#allBooks.gridView {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, max-content));
+    gap: 30px;
+}
+
+#allBooks.listView {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
 }
 
 .book-card {
@@ -428,12 +437,9 @@ main {
     height: 100px;
     border: 1px solid black;
     align-items: center;
-}
-
-.girdListview {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    padding: 5px;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .textWrapper {

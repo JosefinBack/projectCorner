@@ -206,6 +206,7 @@ async function loadBooks() {
     });
 
     allBooks.innerHTML = "";
+    allBooks.classList.add("gridView")
     for (let book of books) {
         createDivOfBook(book);
     }
@@ -829,8 +830,8 @@ viewList.addEventListener("click", async function () {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
 
-    main.innerHTML = "";
-    main.classList.add("girdListview")
+    allBooks.innerHTML = "";
+    allBooks.classList.add("listView")
 
     for (let book of books) {
         let arrayBook = []
@@ -867,7 +868,7 @@ viewList.addEventListener("click", async function () {
         div.appendChild(rating)
         div.appendChild(textWrapper);
 
-        main.appendChild(div);
+        allBooks.appendChild(div);
 
     };
 
@@ -878,6 +879,9 @@ viewList.addEventListener("click", async function () {
 
 
 viewCard.addEventListener("click", function () {
+    allBooks.innerHTML = "";
+    allBooks.classList.remove("listView")
+    allBooks.classList.add("gridView")
     loadBooks();
 });
 
