@@ -112,6 +112,38 @@ serve(async (req) => {
         return new Response(JSON.stringify(books), { headers: corsHeaders });
     }
 
+    // Spara alla böcker i en JSON-fil (backup)
+    // if (req.method === "POST" && url.pathname === "/backup-books") {
+
+    //     // Läs användarnamnet som skickas från frontend
+    //     const body = await req.json();
+    //     const username = body.username;
+
+    //     // Hämta alla böcker för användaren
+    //     let books = [];
+
+    //     for await (const entry of kv.list({ prefix: ["books", username] })) {
+    //         books.push(entry.value);
+    //     }
+
+    //     // Skriv över / skapa allBooks.json
+    //     await Deno.writeTextFile(
+    //         "./allBooks.json",
+    //         JSON.stringify(books, null, 2)
+    //     );
+
+    //     // Skicka svar tillbaka till frontend
+    //     return new Response(
+    //         JSON.stringify({
+    //             success: true,
+    //             message: "Backup skapad",
+    //             amount: books.length
+    //         }),
+    //         { headers: corsHeaders }
+    //     );
+    // }
+
+
     // Delete book
     if (req.method === "DELETE" && url.pathname.startsWith("/books/")) {
         let parts = url.pathname.split("/");   // delar upp URL:en i ["", "books", username, id]
@@ -128,8 +160,13 @@ serve(async (req) => {
 
     // Om man går till `/`, ladda startsidan
     if (url.pathname === "/") {
-        return await serveFile(req, "./HTML/projekt2.html");
+        return await serveFile(req, "./HTML/books.html");
     }
+
+    if (url.pathname === "/calender") {
+        return await serveFile(req, "./HTML/calender.html");
+    }
+
 
     try {
         return await serveFile(req, "." + url.pathname);

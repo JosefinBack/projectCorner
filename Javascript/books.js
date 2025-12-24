@@ -1134,6 +1134,22 @@ if (savedUser) {
 const thisYear = new Date().getFullYear();
 allBooksThisyear(thisYear);
 
+//Skapa en json-fil av alla böcker, ifall om servern skulle försvinna så vill jag ha koll på mina böcker.
+
+async function createFileOfAllBooks() {
+    let res = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await res.json();
+
+    booksArray = []
+
+    for (let book of books) {
+        booksArray.push(book)
+    }
+
+    console.log(booksArray)
+}
+
+createFileOfAllBooks()
 
 
 //Kunna se böckerna i listformat

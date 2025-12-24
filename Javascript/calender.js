@@ -116,6 +116,16 @@ btnPrev.addEventListener("click", function () {
 renderCalendar(currentYear, currentMonth);
 
 
+async function getSchedualDate() {
+    let result = await fetch("../schema.json");
+    let events = await result.json();
+
+    console.log(events)
+}
+
+getSchedualDate()
+
+
 let edit = document.getElementById("edit");
 
 
