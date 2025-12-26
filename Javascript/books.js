@@ -32,7 +32,6 @@ let coverInput = document.getElementById("cover");
 let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
 let deleteBook = document.getElementById("delete");
-let filterButton = document.getElementById("filtering");
 
 let currentCover = null;
 
@@ -379,6 +378,16 @@ function whipeForm() {
     }
 }
 
+
+//Sortering
+async function sortAuthors() {
+    let res = await fetch(BASE_URL + "/books/" + currentUser);
+    let books = await res.json();
+}
+
+
+
+//Filter
 async function filterAuthors() {
     let res = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await res.json();
@@ -402,6 +411,7 @@ async function filterAuthors() {
         checkbox.style.border = "1px solid black";
         checkbox.style.width = "20px";
         checkbox.style.height = "20px";
+        checkbox.style.flexShrink = "0";
         checkbox.value = author;
         checkbox.name = "authorFilter";
 
@@ -477,9 +487,6 @@ async function filterByGenre() {
             }
         }
     }
-
-
-    console.log(allGenres);
 
     let genreList = document.getElementById("allGenreList");
     genreList.innerHTML = "";
@@ -620,6 +627,7 @@ logoutBtn.addEventListener("click", function () {
 //filter
 
 let filterUsed = document.getElementById("usedFilter");
+let filterButton = document.getElementById("filtering");
 
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
@@ -671,13 +679,10 @@ searchButtonAuthor.addEventListener("click", async function () {
         return a.title.localeCompare(b.title);
     });
 
-
-
     allBooks.innerHTML = "";
     for (let book of choosenBooks) {
         createDivOfBook(book);
-    }
-
+    };
 
     let divAuthors = document.getElementById("authors");
     divAuthors.classList.remove("visible");
@@ -824,6 +829,17 @@ allGenres.addEventListener("click", function (event) {
 });
 
 
+//Sortering
+
+let sortBtnInMeny = document.getElementById("sort");
+let allSort = document.getElementById("allSort");
+
+sortBtnInMeny.addEventListener("click", function () {
+    allSort.classList.toggle("visible")
+});
+
+
+
 //Vy, lista eller kort
 
 viewList.addEventListener("click", async function () {
@@ -873,8 +889,6 @@ viewList.addEventListener("click", async function () {
     };
 
     console.log(books);
-
-
 });
 
 
@@ -1137,20 +1151,32 @@ allBooksThisyear(thisYear);
 //Skapa en json-fil av alla böcker, ifall om servern skulle försvinna så vill jag ha koll på mina böcker.
 
 async function createFileOfAllBooks() {
-    let res = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await res.json();
+    // let res = await fetch(BASE_URL + "/books/" + currentUser);
+    // let books = await res.json();
 
-    booksArray = []
+    // booksArray = []
 
-    for (let book of books) {
-        booksArray.push(book)
-    }
+    // for (let book of books) {
+    //     booksArray.push(book)
+    // }
 
-    console.log(booksArray)
+    // console.log(booksArray)
+
+    const res = await fetch("/backup-books", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: currentUser
+        })
+    });
+
+    const result = await res.json();
+    console.log(result);
 }
 
 createFileOfAllBooks()
-
 
 //Kunna se böckerna i listformat
 //två olika knapapr för listvy - en för lista och en för kort 

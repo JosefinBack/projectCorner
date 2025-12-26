@@ -113,35 +113,37 @@ serve(async (req) => {
     }
 
     // Spara alla böcker i en JSON-fil (backup)
-    // if (req.method === "POST" && url.pathname === "/backup-books") {
+    if (req.method === "POST" && url.pathname === "/backup-books") {
 
-    //     // Läs användarnamnet som skickas från frontend
-    //     const body = await req.json();
-    //     const username = body.username;
+        // Läs användarnamnet som skickas från frontend
+        const body = await req.json();
+        const username = body.username;
 
-    //     // Hämta alla böcker för användaren
-    //     let books = [];
+        // Hämta alla böcker för användaren
+        let books = [];
 
-    //     for await (const entry of kv.list({ prefix: ["books", username] })) {
-    //         books.push(entry.value);
-    //     }
+        for await (const entry of kv.list({ prefix: ["books", username] })) {
+            books.push(entry.value);
+        }
 
-    //     // Skriv över / skapa allBooks.json
-    //     await Deno.writeTextFile(
-    //         "./allBooks.json",
-    //         JSON.stringify(books, null, 2)
-    //     );
+        console.log(books)
 
-    //     // Skicka svar tillbaka till frontend
-    //     return new Response(
-    //         JSON.stringify({
-    //             success: true,
-    //             message: "Backup skapad",
-    //             amount: books.length
-    //         }),
-    //         { headers: corsHeaders }
-    //     );
-    // }
+        // Skriv över / skapa allBooks.json
+        await Deno.writeTextFile(
+            "./allBooks.json",
+            JSON.stringify(books, null, 2)
+        );
+
+        // Skicka svar tillbaka till frontend
+        return new Response(
+            JSON.stringify({
+                success: true,
+                message: "Backup skapad",
+                amount: books.length
+            }),
+            { headers: corsHeaders }
+        );
+    }
 
 
     // Delete book
