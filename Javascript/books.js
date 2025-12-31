@@ -1,3 +1,6 @@
+const BASE_URL = "https://josefinscorner-31.deno.dev";
+let currentUser = null;
+
 let allBooks = document.getElementById("allBooks");
 let reloadBooks = document.getElementById("reload");
 
@@ -511,19 +514,45 @@ async function filterByGenre() {
     }
 }
 
-async function allBooksThisyear(year) {
+async function allBooksByYear() {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
 
-    let booksInThisYear = books.filter(b => b.finish && b.finish.startsWith(year.toString()));
+    // Bara böcker som är avslutade
+    const finishedBooks = books.filter(book => book.finish);
 
-    let showBookNumber = document.getElementById("howManyBooks");
+    // Totalt antal lästa böcker
+    const totalBooks = finishedBooks.length;
+
+    // Räkna per år
+    const booksPerYear = {};
+
+    for (let book of finishedBooks) {
+        const year = book.finish.slice(0, 4); // "2025"
+
+        if (!booksPerYear[year]) {
+            booksPerYear[year] = 0;
+        }
+
+        booksPerYear[year]++;
+    }
+
+    const showBookNumber = document.getElementById("howManyBooks");
     showBookNumber.style.fontSize = "18px";
-    showBookNumber.innerHTML = `You have read <strong>${booksInThisYear.length}</strong> books this year
-    <br> 
-    <strong>2025:</strong> ${booksInThisYear.length} books
+
+    let html = `
+        You have read <strong>${totalBooks}</strong> books in total
+        <br><br>
     `;
+
+    for (let year in booksPerYear) {
+        html += `<strong>${year}:</strong> ${booksPerYear[year]} books<br>`;
+    }
+
+    showBookNumber.innerHTML = html;
 }
+
+allBooksByYear();
 
 
 //addEventListeners
@@ -560,8 +589,6 @@ closeLoginButton.addEventListener("click", function () {
 
 
 //Register and log in
-const BASE_URL = "https://josefinscorner-31.deno.dev";
-let currentUser = null;
 
 // --- REGISTER ---
 createButton.addEventListener("click", async function () {
@@ -1146,7 +1173,7 @@ if (savedUser) {
 }
 
 const thisYear = new Date().getFullYear();
-allBooksThisyear(thisYear);
+allBooksByYear(thisYear);
 
 //Skapa en json-fil av alla böcker, ifall om servern skulle försvinna så vill jag ha koll på mina böcker.
 
