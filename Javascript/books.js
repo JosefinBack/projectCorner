@@ -1205,5 +1205,23 @@ async function createFileOfAllBooks() {
 
 createFileOfAllBooks()
 
+// bookmenu i mobilversion
+const bookMenuToggle = document.getElementById("bookMenuToggle");
+const bookMenuDropdown = document.getElementById("bookMenuDropdown");
+
+if (bookMenuToggle && bookMenuDropdown) {
+    bookMenuToggle.addEventListener("click", function () {
+        bookMenuDropdown.classList.toggle("show");
+    });
+}
+
+bookMenuDropdown.addEventListener("click", function (event) {
+    if (event.target.tagName === "BUTTON") {
+        bookMenuDropdown.classList.remove("show");
+    }
+});
+
+
+
 //Kunna se böckerna i listformat
 //två olika knapapr för listvy - en för lista och en för kort 

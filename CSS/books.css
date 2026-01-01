@@ -7,6 +7,16 @@ h3 {
     font-size: 25px;
 }
 
+#topDIV {
+    background-color: rgba(255, 255, 255, 0.7);
+    height: 100%;
+    border-radius: 20px;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /* meny */
 
 #bookmeny {
@@ -44,7 +54,7 @@ button {
 }
 
 main {
-    margin: 50px 0px;
+    margin: 10px 0px 50px 0px;
 }
 
 .bookmenyButton {
@@ -221,7 +231,6 @@ main {
 .book-card .book-serie {
     margin: 0;
     font-size: 14px;
-
 }
 
 .book-card .stars {
@@ -442,9 +451,8 @@ main {
 }
 
 #logoutBtn {
-    position: absolute;
-    top: 350px;
-    left: 1269px;
+    display: flex;
+    justify-content: end;
 }
 
 #quotes {
@@ -474,4 +482,110 @@ main {
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+
+#bookMenuToggle {
+    display: none;
+    padding: 12px;
+    background: rgb(255, 208, 215);
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+
+/* mobilvy  */
+
+@media (max-width: 800px) {
+
+    #allBooks.gridView {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stars {
+        font-size: 12px;
+    }
+
+    .book-card {
+        background: white;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .book-card img {
+        height: 150px;
+    }
+
+    .book-card .book-title {
+        font-size: 14px;
+    }
+
+    .book-card .book-serie {
+        font-size: 12px;
+    }
+
+    #howManyBooks,
+    h3 {
+        margin: 0px 5px;
+    }
+
+    .bookmenyButton {
+        flex-shrink: 0;
+        padding: 2px;
+    }
+
+    /* Mobil dropdown bookmeny */
+    #bookMenuToggle {
+        display: none;
+        padding: 12px;
+        background: rgb(255, 208, 215);
+        border: 1px solid black;
+        border-radius: 10px;
+        text-align: center;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    #bookMenuDropdown {
+        display: block;
+    }
+
+    #bookMenuToggle {
+        display: block;
+    }
+
+    #bookMenuDropdown {
+        display: none;
+        margin-top: 10px;
+    }
+
+    #bookMenuDropdown.show {
+        display: block;
+    }
+
+    #bookmeny {
+        flex-direction: column;
+        gap: 10px;
+        z-index: 10;
+        position: relative;
+        background-color: white;
+        height: auto;
+    }
+
+    #rightmeny,
+    #leftmeny {
+        height: 50px;
+        margin: 5px;
+        padding: 5px;
+    }
+
+
 }

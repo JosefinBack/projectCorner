@@ -11,7 +11,9 @@
 
 <body>
     <div id="headerFront"></div>
-    <button id="logoutBtn">Log out</button>
+    <div id="logoutBtn">
+        <button>Log out</button>
+    </div>
     <h1>Digital reading journal</h1>
 
     <button id="logInButton">Log in</button>
@@ -35,77 +37,83 @@
         <button id="closeLogIn">Close</button>
     </div>
 
-    <div id="app">
-        <h3>Welcome to your bookshelf <span id="who"></span></h3>
+    <div id="topDIV">
+        <div id="app">
+            <h3>Welcome to your bookshelf <span id="who"></span></h3>
+        </div>
+        <div id="howManyBooks"></div>
     </div>
-    <div id="howManyBooks"></div>
 
     <main>
-        <div id="bookmeny">
-            <div id="rightmeny" class="bookMeny">
-                <div id="addBook" class="bookmenyButton">Add a book</div>
+        <!-- MOBIL-KNAPP -->
+        <div id="bookMenuToggle">Book menu ☰</div>
 
-                <div>
-                    <div id="sort" class="bookmenyButton">
-                        Sort
+        <!-- DROPDOWN-WRAPPER -->
+        <div id="bookMenuDropdown">
+
+            <div id="bookmeny">
+                <div id="rightmeny" class="bookMeny">
+                    <div id="addBook" class="bookmenyButton">Add a book</div>
+
+                    <div>
+                        <div id="sort" class="bookmenyButton">Sort</div>
+                        <div id="allSort">
+                            <div>
+                                <input type="checkbox">
+                                <p>Author: A - Ö</p>
+                            </div>
+                            <div>
+                                <input type="checkbox">
+                                <p>Author: Ö - A</p>
+                            </div>
+                            <div>
+                                <input type="checkbox">
+                                <p>Title: A - Ö</p>
+                            </div>
+                            <button>Search</button>
+                        </div>
                     </div>
-                    <div id="allSort">
-                        <div>
-                            <input type="checkbox">
-                            <p>Author: A - Ö</p>
+
+                    <div>
+                        <div id="filtering" class="bookmenyButton">Filter</div>
+                        <div id="allFilters">
+                            <div id="authorDIV" class="filterDiv">
+                                <p>Author</p>
+                                <div id="authors" class="listInDiv">
+                                    <div id="authorsList"></div>
+                                    <button id="searchButtonAuthor">Search</button>
+                                </div>
+                            </div>
+
+                            <div id="yearDiv" class="filterDiv">
+                                <p>Year</p>
+                                <div id="allYears" class="listInDiv">
+                                    <div id="allYearList"></div>
+                                    <button id="searchButtonYear">Search</button>
+                                </div>
+                            </div>
+
+                            <div id="genreDiv" class="filterDiv">
+                                <p>Genre</p>
+                                <div id="allGenre" class="listInDiv">
+                                    <div id="allGenreList"></div>
+                                    <button id="searchButtonGenre">Search</button>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <input type="checkbox">
-                            <p>Author: Ö - A</p>
-                        </div>
-                        <div>
-                            <input type="checkbox">
-                            <p>Title: A - Ö</p>
-                        </div>
-                        <button>Search</button>
+                    </div>
+
+                    <div id="reload" class="bookmenyButton">
+                        Remove filter/sort and reload books
                     </div>
                 </div>
 
-                <div>
-                    <div id="filtering" class="bookmenyButton">Filter</div>
-                    <div id="allFilters">
-                        <div id="authorDIV" class="filterDiv">
-                            <p>Author</p>
-                            <div id="authors" class="listInDiv">
-                                <div id="authorsList"></div>
-                                <button id="searchButtonAuthor">Search</button>
-                            </div>
-                        </div>
-
-                        <div id="yearDiv" class="filterDiv">
-                            <p>Year</p>
-                            <div id="allYears" class="listInDiv">
-                                <div id="allYearList"></div>
-                                <button id="searchButtonYear">Search</button>
-                            </div>
-                        </div>
-
-                        <div id="genreDiv" class="filterDiv">
-                            <p>Genre</p>
-                            <div id="allGenre" class="listInDiv">
-                                <div id="allGenreList"></div>
-                                <button id="searchButtonGenre">Search</button>
-                            </div>
-                        </div>
-                    </div>
+                <div id="leftmeny">
+                    <div id="ruta" class="bookmenyButton">Rutnät</div>
+                    <div id="list" class="bookmenyButton">Lista</div>
                 </div>
-                <div id="reload" class="bookmenyButton">Remove filter/sort and reload books</div>
             </div>
 
-
-            <div id="leftmeny">
-                <div id="ruta" class="bookmenyButton">
-                    Rutnät
-                </div>
-                <div id="list" class="bookmenyButton">
-                    Lista
-                </div>
-            </div>
         </div>
 
         <div id="usedFilter"></div>
