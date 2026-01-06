@@ -1138,7 +1138,7 @@ deleteBook.addEventListener("click", async function () {
         alert("Book deleted");
         loadBooks();
         const thisYear = new Date().getFullYear();
-        await allBooksThisyear(thisYear);
+        await allBooksByYear();
         closeCreateBook();
     } else {
         alert("Something went wrong when deleting")
