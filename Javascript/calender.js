@@ -1,22 +1,6 @@
-// let calender = document.getElementById("calender");
-
-// // let month = ["januari", "februari", "mars", "april", "maj", "juni", "juli", "augusti", "september", "oktober", "november", "december"]; 
-
-// let month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-// let array = []
-
-// //Skapa en div för varje dag
-// function createDayDiv(monthIndex) {
-//     let daysInMonth = month[monthIndex];
-//     for (let i = 1; i <= daysInMonth; i++) {
-//         let calenderDayDiv = document.createElement("div");
-//         calenderDayDiv.classList.add("day");
-//         calenderDayDiv.innerHTML = `${i}/ ${monthIndex + 1}`;
-//         calender.appendChild(calenderDayDiv);
-//     }
-// };
-// createDayDiv(4);
-// console.log(array);
+function isMobile() {
+    return window.matchMedia("(max-width: 800px)").matches;
+}
 
 
 let main = document.querySelector("main");
@@ -92,43 +76,111 @@ function renderCalendar(year, monthIndex) {
 }
 
 
-// Byt månad framåt
-btnNext.addEventListener("click", function () {
-    currentMonth++;
-    if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear++;
+btnNext.addEventListener("click", () => {
+    if (isMobile()) {
+        currentDate.setDate(currentDate.getDate() + 7);
+        renderWeek(currentDate);
+    } else {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        renderCalendar(currentYear, currentMonth);
     }
-    renderCalendar(currentYear, currentMonth);
 });
 
-// Byt månad bakåt
-btnPrev.addEventListener("click", function () {
-    currentMonth--;
-    if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear--;
+btnPrev.addEventListener("click", () => {
+    if (isMobile()) {
+        currentDate.setDate(currentDate.getDate() - 7);
+        renderWeek(currentDate);
+    } else {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        renderCalendar(currentYear, currentMonth);
     }
-    renderCalendar(currentYear, currentMonth);
 });
+
 
 // Visa aktuell månad vid start
 renderCalendar(currentYear, currentMonth);
 
 
-async function getSchedualDate() {
-    let result = await fetch("../schema.json");
-    let events = await result.json();
 
-    console.log(events)
+//Mobil
+
+
+function renderCorrectView() {
+    if (isMobile()) {
+        renderWeek(currentDate);
+    } else {
+        renderCalendar(currentYear, currentMonth);
+    }
 }
 
-getSchedualDate()
+let currentDate = new Date();
+
+function getWeekDates(date) {
+    const day = date.getDay() || 7; // söndag = 7
+    const monday = new Date(date);
+    monday.setDate(date.getDate() - day + 1);
+
+    const week = [];
+    for (let i = 0; i < 7; i++) {
+        const d = new Date(monday);
+        d.setDate(monday.getDate() + i);
+        week.push(d);
+    }
+    return week;
+}
+
+function renderWeek(date) {
+    calender.innerHTML = "";
+
+    const weekDates = getWeekDates(date);
+
+    monthName.textContent =
+        `${date.getFullYear()}`;
+
+    weekDates.forEach(d => {
+        const dayDiv = document.createElement("div");
+        dayDiv.classList.add("day");
+
+        dayDiv.innerHTML = `
+            <strong>${d.toLocaleDateString("sv-SE", { weekday: "long" })}</strong>
+            <div>${d.getDate()}/${d.getMonth() + 1}</div>
+        `;
+
+        calender.appendChild(dayDiv);
+    });
+}
+
+window.addEventListener("resize", renderCorrectView);
+renderCorrectView();
 
 
-let edit = document.getElementById("edit");
 
+//Lägga till info i kalendern
 
-edit.addEventListener("click", function () {
-    window.location.href = "calenderEdit.html"
-})
+let schedule = [];
+
+async function loadSchedule() {
+    try {
+        const response = await fetch("../schema.json");
+        schedule = await response.json();
+        console.log("Schema laddat:", schedule);
+    } catch (error) {
+        console.error("Kunde inte ladda schema.json", error);
+    }
+}
+
+loadSchedule();
+
+function getEventsForDate(date) {
+    const isoDate = date.toISOString().split("T")[0];
+
+    return schedule.filter(event => event.date === isoDate);
+}

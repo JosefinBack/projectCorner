@@ -765,7 +765,15 @@ searchButtonGenre.addEventListener("click", async function () {
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
 
-    let genreChecked = books.filter(book => choosenGenre.includes(book.genre));
+    let genreChecked = books.filter(book => {
+        if (!book.genre) return false;
+
+        let bookGenres = book.genre
+            .split(",")
+            .map(g => g.trim());
+
+        return bookGenres.some(g => choosenGenre.includes(g));
+    });
 
     allBooks.innerHTML = "";
     for (let book of genreChecked) {
@@ -1108,8 +1116,8 @@ closeAndSave.addEventListener("click", async function () {
     window.currentEditingId = null;
     whipeForm();
 
-    const thisYear = new Date().getFullYear();
-    await allBooksThisyear(thisYear);
+    // const thisYear = new Date().getFullYear();
+    await allBooksByYear();
 
     closeCreateBook();
 });
