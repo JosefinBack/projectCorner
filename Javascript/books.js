@@ -987,11 +987,6 @@ closeAndSave.addEventListener("click", async function () {
     }
 
     try {
-        if (!currentUser) {
-            alert("You must be logged in to save a book!");
-            return;
-        }
-
         // Boktyp (radio)
         let bookType = null;
         let selected = document.querySelector('input[name="booktype"]:checked');
