@@ -60,10 +60,12 @@ let imgUrl = null;
 
 //functions
 function createABook() {
+    document.getElementById("overlay").style.display = "block";
     createBook.style.display = "block";
 }
 
 function closeCreateBook() {
+    document.getElementById("overlay").style.display = "none";
     createBook.style.display = "none";
 }
 
@@ -81,6 +83,7 @@ async function openBookForEdit(bookId) {
     }
 
     // Öppna formuläret
+    document.getElementById("overlay").style.display = "block";
     createBook.style.display = "block";
 
     // Hjälpfunktion för att sätta value om elementet finns
