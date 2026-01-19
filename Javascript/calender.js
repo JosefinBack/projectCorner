@@ -182,5 +182,23 @@ loadSchedule();
 function getEventsForDate(date) {
     const isoDate = date.toISOString().split("T")[0];
 
-    return schedule.filter(event => event.date === isoDate);
+    let hit = schedule.filter(event => event.date === isoDate);
+
+    console.log(hit)
 }
+
+
+async function test() {
+
+    const response = await fetch("../schema.json");
+    schedule = await response.json();
+
+
+
+}
+
+getEventsForDate("2026-01-19")
+
+test()
+
+//loopa igenom shcema.json och sen göra en loop inuti den där man loopat schemat, och om det finns en match så ska innehållet från objektet skrivas in i rutan. 
