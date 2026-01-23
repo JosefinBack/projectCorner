@@ -179,13 +179,13 @@ async function loadSchedule() {
 
 loadSchedule();
 
-function getEventsForDate(date) {
-    const isoDate = date.toISOString().split("T")[0];
+// function getEventsForDate(date) {
+//     const isoDate = date.toISOString().split("T")[0];
 
-    let hit = schedule.filter(event => event.date === isoDate);
+//     let hit = schedule.filter(event => event.date === isoDate);
 
-    console.log(hit)
-}
+//     console.log(hit)
+// }
 
 
 async function test() {
@@ -196,8 +196,6 @@ async function test() {
 
 
 }
-
-getEventsForDate("2026-01-19")
 
 test()
 
