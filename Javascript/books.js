@@ -1,29 +1,11 @@
 const BASE_URL = "https://josefinscorner-31.deno.dev";
-let currentUser = null;
+let currentUser = "josefin";
 
 let allBooks = document.getElementById("allBooks");
 let reloadBooks = document.getElementById("reload");
 
-
-let loginButton = document.getElementById("logInButton");
-let loginDiv = document.getElementById("logInDiv");
-let closeLoginButton = document.getElementById("closeLogIn");
-let loginBtn = document.getElementById("loginBtn");
-let loginMessage = document.getElementById("loginMessage");
 let who = document.getElementById("who");
-let userLogIn = document.getElementById("loginUser");
-let passwordLogIn = document.getElementById("loginPass");
-
-let logoutBtn = document.getElementById("logoutBtn");
 let appDiv = document.getElementById("app");
-
-let regDiv = document.getElementById("registration");
-let registerButton = document.getElementById("register");
-let createButton = document.getElementById("newUser");
-let closeRegButton = document.getElementById("closeReg");
-let regMessage = document.getElementById("registerMessage");
-let userReg = document.getElementById("regUser");
-let passwordReg = document.getElementById("regPass");
 
 let addBook = document.getElementById("addBook");
 let closeBook = document.getElementById("close");
@@ -70,8 +52,6 @@ function closeCreateBook() {
 }
 
 async function openBookForEdit(bookId) {
-    if (!currentUser) return;
-
     // Hämta alla böcker och hitta rätt
     let res = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await res.json();
@@ -185,9 +165,6 @@ async function openBookForEdit(bookId) {
 
 
 async function loadBooks() {
-    if (!currentUser) {
-        return;
-    }
     let result = await fetch(BASE_URL + "/books/" + currentUser);
     let books = await result.json();
 
@@ -560,99 +537,6 @@ allBooksByYear();
 
 //addEventListeners
 
-//register
-registerButton.addEventListener("click", function () {
-    regMessage.innerHTML = "";
-    regDiv.style.display = "block";
-    loginDiv.style.display = "none";
-    userReg.value = "";
-    passwordReg.value = "";
-});
-
-closeRegButton.addEventListener("click", function () {
-    regDiv.style.display = "none";
-});
-
-createButton.addEventListener("click", function () {
-    regDiv.appendChild(regMessage);
-});
-
-
-//log in
-loginButton.addEventListener("click", function () {
-    loginDiv.style.display = "block";
-    regDiv.style.display = "none";
-    userLogIn.value = "";
-    passwordLogIn.value = "";
-});
-
-closeLoginButton.addEventListener("click", function () {
-    loginDiv.style.display = "none";
-});
-
-
-//Register and log in
-
-// --- REGISTER ---
-createButton.addEventListener("click", async function () {
-    let result = await fetch(BASE_URL + "/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: userReg.value, password: passwordReg.value })
-    });
-
-    let data = await result.json();
-    if (data.success) {
-        regMessage.textContent = "Account created! You can now log in.";
-        regMessage.style.color = "green";
-    } else {
-        regMessage.textContent = data.error;
-        regMessage.style.color = "red";
-    }
-});
-
-// --- LOGIN ---
-loginBtn.addEventListener("click", async function () {
-    let res = await fetch(BASE_URL + "/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: userLogIn.value, password: passwordLogIn.value })
-    });
-
-    let data = await res.json();
-    if (data.success) {
-        currentUser = userLogIn.value;
-        localStorage.setItem("currentUser", currentUser);
-        who.textContent = currentUser;
-        loginMessage.textContent = "Welcome " + currentUser + "!";
-        loginMessage.style.color = "green";
-        appDiv.style.display = "inline-block";
-        loginDiv.style.display = "none";
-        loginBtn.style.display = "none";
-        registerButton.style.display = "none";
-        loginButton.style.display = "none";
-
-        loadBooks();
-        filterAuthors();
-    } else {
-        loginMessage.textContent = data.error;
-        loginMessage.style.color = "red";
-    }
-});
-
-// Logga ut
-logoutBtn.addEventListener("click", function () {
-    currentUser = null;
-    localStorage.removeItem("currentUser");
-    who.textContent = "";
-    allBooks.innerHTML = "";
-    loginMessage.innerHTML = "";
-    appDiv.style.display = "none";   // göm appen
-    loginButton.style.display = "block"; // visa login igen
-    loginBtn.style.display = "block";
-    registerButton.style.display = "block"; // visa register igen
-});
-
 
 //filter
 
@@ -984,11 +868,6 @@ closeBook.addEventListener("click", function () {
 })
 
 closeAndSave.addEventListener("click", async function () {
-    if (!currentUser) {
-        alert("You must be logged in to save a book!");
-        return;
-    }
-
     try {
         // Boktyp (radio)
         let bookType = null;
@@ -1186,9 +1065,6 @@ if (savedUser) {
     currentUser = savedUser;
     who.textContent = currentUser;
     appDiv.style.display = "inline-block";
-    loginBtn.style.display = "none";
-    registerButton.style.display = "none";
-    loginButton.style.display = "none";
     loadBooks(); // ✅ hämta böckerna direkt
 }
 
