@@ -1223,7 +1223,7 @@ async function createFileOfAllBooks() {
     console.log(result);
 }
 
-createFileOfAllBooks()
+createFileOfAllBooks();
 
 // bookmenu i mobilversion
 const bookMenuToggle = document.getElementById("bookMenuToggle");
