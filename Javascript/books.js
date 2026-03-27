@@ -535,14 +535,9 @@ async function filterByYear() {
 
 async function filterByGenre() {
     let books = await loadBooks();//ger en array av alla böcker
-
-
     let allGenres = [];
-
-
     for (let book of books) {
         if (!book.genre) continue;
-
 
         // Splitta strängen till en array (Fantasy, Dark romance → ["Fantasy", "Dark romance"])
         let genreParts = book.genre.split(",").map(g => g.trim());
@@ -556,10 +551,8 @@ async function filterByGenre() {
         }
     }
 
-
     let genreList = document.getElementById("allGenreList");
     genreList.innerHTML = "";
-
 
     for (let genre of allGenres) {
         let container = document.createElement("div");
@@ -647,8 +640,6 @@ createButton.addEventListener("click", function () {
 });
 
 
-
-
 //log in
 loginButton.addEventListener("click", function () {
     loginDiv.style.display = "block";
@@ -670,25 +661,19 @@ closeLoginButton.addEventListener("click", function () {
 
 // --- REGISTER ---
 createButton.addEventListener("click", async function () {
-
-
     let email = userReg.value;
     let password = passwordReg.value;
-
 
     const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password
     });
 
-
     if (error) {
         regMessage.textContent = error.message;
         regMessage.style.color = "red";
         return;
     }
-
-
     regMessage.textContent = "Account created! You can now log in.";
     regMessage.style.color = "green";
 });
@@ -825,36 +810,26 @@ searchButtonAuthor.addEventListener("click", async function () {
 searchButtonYear.addEventListener("click", async function () {
     let checkBoxes = document.querySelectorAll('input[name="yearFilter"]:checked');
 
-
     let choosenYear = [];
     for (let year of checkBoxes) {
         choosenYear.push(year.value);
     }
 
-
     let books = await loadBooks();
-
-
     let yearChecked = books.filter(book => choosenYear.includes(book.finish.slice(0, 4)));
-
 
     allBooks.innerHTML = "";
     for (let book of yearChecked) {
         createDivOfBook(book);
     }
 
-
     let divYears = document.getElementById("allYears");
     divYears.classList.remove("visible");
     allFilters.classList.remove("visible");
-
-
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
     let yearArray = choosenYear.join(", ");
     filterUsed.innerHTML = `Filter/ Genre/ ${yearArray}`;
-
-
     reloadBooks.style.visibility = "visible"
 });
 
@@ -1063,25 +1038,22 @@ viewCard.addEventListener("click", function () {
 
 
 //förminskar bilden
-coverInput.addEventListener("change", function () {
+coverInput.addEventListener("change", async function () {
     let file = coverInput.files[0];
     if (!file) return;
 
-    // Skala ner till max 300px bred
-    // resizeImage(file, 300, function (resizedBase64) {
-    //     // Visa bilden i formuläret
-    //     picDiv.innerHTML = "";
-    //     let img = document.createElement("img");
-    //     img.src = resizedBase64;
-    //     img.style.width = "250px";
-    //     img.style.height = "350px";
-    //     picDiv.appendChild(img);
+    let url = await uploadToCloudinary(file);
 
+    // Visa bilden direkt
+    picDiv.innerHTML = "";
+    let img = document.createElement("img");
+    img.src = url;
+    img.style.width = "250px";
+    img.style.height = "350px";
+    picDiv.appendChild(img);
 
-    //     // Spara Base64-strängen i en variabel
-    //     // som du senare skickar till servern
-    //     currentCover = resizedBase64;
-    // });
+    imgUrl = url;
+    currentCover = url;
 });
 
 
@@ -1141,6 +1113,7 @@ closeAndSave.addEventListener("click", async function () {
         if (imgInput.files.length > 0) {
             let file = imgInput.files[0];
             imgUrl = await uploadToCloudinary(file);
+            currentCover = imgUrl;
         } else if (window.currentEditingId) {
             // Behåll gammal bild om vi redigerar
             let oldDiv = document.querySelector(`[data-id="${window.currentEditingId}"]`);
@@ -1193,7 +1166,7 @@ closeAndSave.addEventListener("click", async function () {
             type: bookType,
             ratings: ratings,
             quotes: quotes,
-            imgsrc: imgUrl,
+            imgsrc: imgUrl || currentCover,
             summary: bookSummary.value,
             seriesname: seriesname,
             seriesnumber: seriesnumber,
@@ -1211,7 +1184,6 @@ closeAndSave.addEventListener("click", async function () {
 
 
             savedBook = { ...book, id: window.currentEditingId };
-
 
             // 🔄 Uppdatera befintlig div
             let existingDiv = document.querySelector(`[data-id="${window.currentEditingId}"]`);
