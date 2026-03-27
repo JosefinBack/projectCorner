@@ -1,5 +1,11 @@
-const BASE_URL = "https://josefinscorner-31.deno.dev";
+
+
+const supabase = window.supabase.createClient(
+    "DIN_SUPABASE_URL",
+    "DIN_ANON_KEY"
+);
 let currentUser = null;
+
 
 let allBooks = document.getElementById("allBooks");
 let reloadBooks = document.getElementById("reload");
@@ -14,8 +20,10 @@ let who = document.getElementById("who");
 let userLogIn = document.getElementById("loginUser");
 let passwordLogIn = document.getElementById("loginPass");
 
+
 let logoutBtn = document.getElementById("logoutBtn");
 let appDiv = document.getElementById("app");
+
 
 let regDiv = document.getElementById("registration");
 let registerButton = document.getElementById("register");
@@ -24,6 +32,7 @@ let closeRegButton = document.getElementById("closeReg");
 let regMessage = document.getElementById("registerMessage");
 let userReg = document.getElementById("regUser");
 let passwordReg = document.getElementById("regPass");
+
 
 let addBook = document.getElementById("addBook");
 let closeBook = document.getElementById("close");
@@ -36,10 +45,14 @@ let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
 let deleteBook = document.getElementById("delete");
 
+
 let currentCover = null;
+
 
 let viewList = document.getElementById("list");
 let viewCard = document.getElementById("ruta");
+
+
 
 
 // Hämta inputfält
@@ -54,27 +67,34 @@ let inputIsSeries = document.getElementById("isSeries");
 let inputSeriesName = document.getElementById("seriesName");
 let inputSeriesNumber = document.getElementById("seriesNumber");
 
+
 // Bild
 let imgInput = document.getElementById("cover");
 let imgUrl = null;
 
+
 //functions
+
+
 function createABook() {
     document.getElementById("overlay").style.display = "block";
     createBook.style.display = "block";
 }
+
 
 function closeCreateBook() {
     document.getElementById("overlay").style.display = "none";
     createBook.style.display = "none";
 }
 
+
 async function openBookForEdit(bookId) {
     if (!currentUser) return;
 
+
     // Hämta alla böcker och hitta rätt
-    let res = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await res.json();
+    let books = await loadBooks()();
+
 
     let book = books.find(b => b.id === bookId);
     if (!book) {
@@ -82,9 +102,11 @@ async function openBookForEdit(bookId) {
         return;
     }
 
+
     // Öppna formuläret
     document.getElementById("overlay").style.display = "block";
     createBook.style.display = "block";
+
 
     // Hjälpfunktion för att sätta value om elementet finns
     function setValue(id, value) {
@@ -96,7 +118,8 @@ async function openBookForEdit(bookId) {
         }
     }
 
-    // Fyll i textfält 
+
+    // Fyll i textfält
     setValue("bookTitle", book.title);
     setValue("genre", book.genre);
     setValue("author", book.author);
@@ -104,6 +127,7 @@ async function openBookForEdit(bookId) {
     setValue("startdate", book.start);
     setValue("finishdate", book.finish);
     setValue("summary", book.summary);
+
 
     if (book.seriesName) {
         document.getElementById("isSeries").checked = true;
@@ -116,32 +140,38 @@ async function openBookForEdit(bookId) {
     }
 
 
+
+
     // Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
         radios[i].checked = (book.type && radios[i].value === book.type);
     }
 
+
     // Bild
     picDiv.innerHTML = "";
-    if (book.imgSrc) {
+    if (book.imgsrc) {
         let imgEl = document.createElement("img");
-        imgEl.src = book.imgSrc;
+        imgEl.src = book.imgsrc;
         imgEl.style.width = "250px";
         imgEl.style.height = "350px";
         imgEl.style.display = "block";
         picDiv.appendChild(imgEl);
 
-        currentCover = book.imgSrc;
+
+        currentCover = book.imgsrc;
     } else {
         currentCover = null;
     }
+
 
     //Stora rating (#ratingBook)
     let ratingBig = document.querySelector("#ratingBook");
     if (ratingBig) {
         let spansBig = ratingBig.querySelectorAll("span");
         spansBig.forEach(span => span.classList.remove("filled"));
+
 
         let bookRating = (book.ratings && typeof book.ratings.book === "number")
             ? book.ratings.book
@@ -178,44 +208,50 @@ async function openBookForEdit(bookId) {
             quoteInputs[i].value = book.quotes[i] || "";
         }
     }
-
     // Spara att vi redigerar denna bok
     window.currentEditingId = bookId;
 }
 
 
+
+
+// LOAD BOOKS
 async function loadBooks() {
-    if (!currentUser) {
+    if (!currentUser) return;
+
+    let { data: books, error } = await supabase
+        .from("books")
+        .select("*")
+        .eq("user_id", currentUser);
+
+    if (error) {
+        console.error(error);
         return;
     }
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json();
 
+    // sortering
     books.sort((a, b) => {
-        // båda har samma serie → jämför nummer
         if (a.seriesName && b.seriesName && a.seriesName === b.seriesName) {
             return (a.seriesNumber || 0) - (b.seriesNumber || 0);
         }
 
-        // om båda har serier → sortera på serienamnet
         if (a.seriesName && b.seriesName) {
             return a.seriesName.localeCompare(b.seriesName);
         }
 
-        // en har serie, den andra inte → serieboken först
         if (a.seriesName && !b.seriesName) return -1;
         if (!a.seriesName && b.seriesName) return 1;
 
-        // ingen serie → sortera på titel
+
         return a.title.localeCompare(b.title);
     });
-
     allBooks.innerHTML = "";
-    allBooks.classList.add("gridView")
+
     for (let book of books) {
         createDivOfBook(book);
     }
-}
+};
+
 
 async function uploadToCloudinary(file) {
     const CLOUD_NAME = "dhnlbcj9b";
@@ -237,15 +273,13 @@ async function uploadToCloudinary(file) {
 }
 
 
+
+
 function createDivOfBook(book) {
     // Skapa en div i allBooks
     let divOfBook = document.createElement("div");
     divOfBook.classList.add("book-card");
     divOfBook.dataset.id = book.id;
-
-    // Spara id på diven
-    divOfBook.dataset.id = book.id;
-
 
     let divedit = document.createElement("div");
     divedit.classList.add("editPic");
@@ -256,20 +290,19 @@ function createDivOfBook(book) {
         openBookForEdit(book.id)
     });
 
-
     // Lägg till bild
-    if (book.imgSrc) {
+    if (book.imgsrc) {
         let imgPic = document.createElement("img");
-        imgPic.src = book.imgSrc;
+        imgPic.src = book.imgsrc;
         imgPic.style.width = "100px";
         imgPic.style.height = "150px";
         divOfBook.appendChild(imgPic);
     }
 
+
     // Lägg till titel
     let text = document.createElement("p");
     let textSerie = document.createElement("p");
-
     text.classList.add("book-title")
     text.textContent = book.title;
     divOfBook.appendChild(text);
@@ -280,7 +313,6 @@ function createDivOfBook(book) {
         divOfBook.appendChild(textSerie);
     }
 
-
     //Lägg till rating
     let ratingDiv = document.createElement("div");
     ratingDiv.classList.add("stars");
@@ -289,7 +321,6 @@ function createDivOfBook(book) {
     if (book.ratings && typeof book.ratings.book === "number") {
         bookRating = book.ratings.book;
     }
-
 
     for (let i = 0; i < 10; i++) {
         let star = document.createElement("span");
@@ -300,44 +331,45 @@ function createDivOfBook(book) {
         ratingDiv.appendChild(star);
     }
     divOfBook.appendChild(ratingDiv);
-
     allBooks.appendChild(divOfBook);
 }
 
+
 //gör om bilden till mindre så servern klarar av att spara dem
-function resizeImage(file, maxWidth, callback) {
-    const reader = new FileReader();
+// function resizeImage(file, maxWidth, callback) {
+//     const reader = new FileReader();
+//     reader.onload = function (event) {
+//         const img = new Image();
 
-    reader.onload = function (event) {
-        const img = new Image();
-        img.onload = function () {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
+//         img.onload = function () {
+//             const canvas = document.createElement("canvas");
+//             const ctx = canvas.getContext("2d");
 
-            // Räkna ut ny storlek (proportionellt)
-            let scale = maxWidth / img.width;
-            let newWidth = img.width * scale;
-            let newHeight = img.height * scale;
+//             // Räkna ut ny storlek (proportionellt)
+//             let scale = maxWidth / img.width;
+//             let newWidth = img.width * scale;
+//             let newHeight = img.height * scale;
 
-            canvas.width = newWidth;
-            canvas.height = newHeight;
+//             canvas.width = newWidth;
+//             canvas.height = newHeight;
 
-            // Rita om bilden på canvas
-            ctx.drawImage(img, 0, 0, newWidth, newHeight);
+//             // Rita om bilden på canvas
+//             ctx.drawImage(img, 0, 0, newWidth, newHeight);
 
-            // Gör om till Base64 (JPEG med kvalitet 0.7)
-            let resizedBase64 = canvas.toDataURL("image/jpeg", 0.7);
+//             // Gör om till Base64 (JPEG med kvalitet 0.7)
+//             let resizedBase64 = canvas.toDataURL("image/jpeg", 0.7);
 
-            // Skicka tillbaka via callback
-            callback(resizedBase64);
-        };
-        img.src = event.target.result;
-    };
+//             // Skicka tillbaka via callback
+//             callback(resizedBase64);
+//         };
+//         img.src = event.target.result;
+//     };
 
-    reader.readAsDataURL(file);
-}
+//     reader.readAsDataURL(file);
+// }
 
-function whipeForm() {
+
+function wipeForm() {
     // textfält
     bookTitle.value = "";
     bookGenre.value = "";
@@ -349,10 +381,12 @@ function whipeForm() {
     imgInput.value = "";
     bookSummary.value = "";
 
+
     // serie
     inputIsSeries.checked = false;
     inputSeriesName.value = "";
     inputSeriesNumber.value = "";
+
 
     // citat
     let quoteInputs = document.querySelectorAll("#quotes .quote");
@@ -360,11 +394,13 @@ function whipeForm() {
         quoteInputs[i].value = "";
     }
 
+
     // radioknappar
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
         radios[i].checked = false;
     }
+
 
     // rating – bara i formuläret
     let ratingBig = document.querySelector("#ratingBook");
@@ -374,6 +410,7 @@ function whipeForm() {
             spansBig[i].classList.remove("filled");
         }
     }
+
 
     let starGroups = document.querySelectorAll("#ratingBox .stars");
     for (let g = 0; g < starGroups.length; g++) {
@@ -385,18 +422,22 @@ function whipeForm() {
 }
 
 
+
+
 //Sortering
 async function sortAuthors() {
-    let res = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await res.json();
+    let books = await loadBooks()();
 }
+
+
+
 
 
 
 //Filter
 async function filterAuthors() {
-    let res = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await res.json();
+    let books = await loadBooks()();
+
 
     let allAuthors = [];
     for (let book of books) {
@@ -407,10 +448,12 @@ async function filterAuthors() {
     let authorList = document.getElementById("authorsList");
     authorList.innerHTML = "";
 
+
     for (let author of allAuthors) {
         // skapa en container (div eller label)
         let container = document.createElement("div");
         container.classList.add("filterPart");
+
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -421,8 +464,10 @@ async function filterAuthors() {
         checkbox.value = author;
         checkbox.name = "authorFilter";
 
+
         let p = document.createElement("p");
         p.textContent = author;
+
 
         container.appendChild(checkbox);
         container.appendChild(p);
@@ -430,9 +475,10 @@ async function filterAuthors() {
     }
 }
 
+
 async function filterByYear() {
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json(); //ger en array av alla böcker
+    let books = await loadBooks()();
+
 
     let allYears = [];
     for (let book of books) {
@@ -444,11 +490,14 @@ async function filterByYear() {
     let yearList = document.getElementById("allYearList");
     yearList.innerHTML = "";
 
+
     let years = allYears.sort();
+
 
     for (let year of years) {
         let container = document.createElement("div");
         container.classList.add("filterPart");
+
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -458,33 +507,43 @@ async function filterByYear() {
         checkbox.value = year;
         checkbox.name = "yearFilter";
 
+
         let p = document.createElement("p");
         p.textContent = year;
         container.appendChild(checkbox);
         container.appendChild(p);
         yearList.appendChild(container);
 
+
     }
 
-    // console.log(years); //kan använda denna för att bygga en lista med vilka år som finns att filtrera på 
+
+    // console.log(years); //kan använda denna för att bygga en lista med vilka år som finns att filtrera på
+
 
     // let booksFrom2024 = books.filter(book => book.finish.slice(0, 4) === "2024");
 
+
     // console.log(booksFrom2024);
+
 
 }
 
+
 async function filterByGenre() {
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json(); //ger en array av alla böcker
+    let books = await loadBooks()();//ger en array av alla böcker
+
 
     let allGenres = [];
+
 
     for (let book of books) {
         if (!book.genre) continue;
 
+
         // Splitta strängen till en array (Fantasy, Dark romance → ["Fantasy", "Dark romance"])
         let genreParts = book.genre.split(",").map(g => g.trim());
+
 
         // Lägg till varje individuell genre
         for (let g of genreParts) {
@@ -494,12 +553,15 @@ async function filterByGenre() {
         }
     }
 
+
     let genreList = document.getElementById("allGenreList");
     genreList.innerHTML = "";
+
 
     for (let genre of allGenres) {
         let container = document.createElement("div");
         container.classList.add("filterPart");
+
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -509,6 +571,7 @@ async function filterByGenre() {
         checkbox.value = genre;
         checkbox.name = "genreFilter";
 
+
         let p = document.createElement("p");
         p.textContent = genre;
         container.appendChild(checkbox);
@@ -517,48 +580,62 @@ async function filterByGenre() {
     }
 }
 
+
 async function allBooksByYear() {
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json();
+    let books = await loadBooks()();
+
 
     // Bara böcker som är avslutade
     const finishedBooks = books.filter(book => book.finish);
 
+
     // Totalt antal lästa böcker
     const totalBooks = finishedBooks.length;
+
 
     // Räkna per år
     const booksPerYear = {};
 
+
     for (let book of finishedBooks) {
         const year = book.finish.slice(0, 4); // "2025"
+
 
         if (!booksPerYear[year]) {
             booksPerYear[year] = 0;
         }
 
+
         booksPerYear[year]++;
     }
+
 
     const showBookNumber = document.getElementById("howManyBooks");
     showBookNumber.style.fontSize = "18px";
 
+
     let html = `
-        You have read <strong>${totalBooks}</strong> books in total
-        <br><br>
-    `;
+       You have read <strong>${totalBooks}</strong> books in total
+       <br><br>
+   `;
+
 
     for (let year in booksPerYear) {
         html += `<strong>${year}:</strong> ${booksPerYear[year]} books<br>`;
     }
 
+
     showBookNumber.innerHTML = html;
 }
+
 
 allBooksByYear();
 
 
+
+
 //addEventListeners
+
 
 //register
 registerButton.addEventListener("click", function () {
@@ -569,13 +646,17 @@ registerButton.addEventListener("click", function () {
     passwordReg.value = "";
 });
 
+
 closeRegButton.addEventListener("click", function () {
     regDiv.style.display = "none";
 });
 
+
 createButton.addEventListener("click", function () {
     regDiv.appendChild(regMessage);
 });
+
+
 
 
 //log in
@@ -586,78 +667,111 @@ loginButton.addEventListener("click", function () {
     passwordLogIn.value = "";
 });
 
+
 closeLoginButton.addEventListener("click", function () {
     loginDiv.style.display = "none";
 });
 
 
+
+
 //Register and log in
+
 
 // --- REGISTER ---
 createButton.addEventListener("click", async function () {
-    let result = await fetch(BASE_URL + "/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: userReg.value, password: passwordReg.value })
+
+
+    let email = userReg.value;
+    let password = passwordReg.value;
+
+
+    const { data, error } = await supabase.auth.signUp({
+        email: email,
+        password: password
     });
 
-    let data = await result.json();
-    if (data.success) {
-        regMessage.textContent = "Account created! You can now log in.";
-        regMessage.style.color = "green";
-    } else {
-        regMessage.textContent = data.error;
+
+    if (error) {
+        regMessage.textContent = error.message;
         regMessage.style.color = "red";
+        return;
     }
+
+
+    regMessage.textContent = "Account created! You can now log in.";
+    regMessage.style.color = "green";
 });
+
 
 // --- LOGIN ---
 loginBtn.addEventListener("click", async function () {
-    let res = await fetch(BASE_URL + "/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username: userLogIn.value, password: passwordLogIn.value })
+
+
+    let email = userLogIn.value;
+    let password = passwordLogIn.value;
+
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+        email: email,
+        password: password
     });
 
-    let data = await res.json();
-    if (data.success) {
-        currentUser = userLogIn.value;
-        localStorage.setItem("currentUser", currentUser);
-        who.textContent = currentUser;
-        loginMessage.textContent = "Welcome " + currentUser + "!";
-        loginMessage.style.color = "green";
-        appDiv.style.display = "inline-block";
-        loginDiv.style.display = "none";
-        loginBtn.style.display = "none";
-        registerButton.style.display = "none";
-        loginButton.style.display = "none";
 
-        loadBooks();
-        filterAuthors();
-    } else {
-        loginMessage.textContent = data.error;
+    if (error) {
+        loginMessage.textContent = error.message;
         loginMessage.style.color = "red";
+        return;
     }
+
+
+    // 🔥 HÄR ÄR SKILLNADEN
+    currentUser = data.user.id;
+
+
+    who.textContent = email;
+    loginMessage.textContent = "Welcome!";
+    loginMessage.style.color = "green";
+
+
+    appDiv.style.display = "inline-block";
+    loginDiv.style.display = "none";
+    loginBtn.style.display = "none";
+    registerButton.style.display = "none";
+    loginButton.style.display = "none";
+
+
+    loadBooks();
+    filterAuthors();
 });
 
+
 // Logga ut
-logoutBtn.addEventListener("click", function () {
+logoutBtn.addEventListener("click", async function () {
+    await supabase.auth.signOut();
+
+
     currentUser = null;
-    localStorage.removeItem("currentUser");
     who.textContent = "";
     allBooks.innerHTML = "";
     loginMessage.innerHTML = "";
-    appDiv.style.display = "none";   // göm appen
-    loginButton.style.display = "block"; // visa login igen
+
+
+    appDiv.style.display = "none";
+    loginButton.style.display = "block";
     loginBtn.style.display = "block";
-    registerButton.style.display = "block"; // visa register igen
+    registerButton.style.display = "block";
 });
+
+
 
 
 //filter
 
+
 let filterUsed = document.getElementById("usedFilter");
 let filterButton = document.getElementById("filtering");
+
 
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
@@ -667,11 +781,13 @@ let authorList = document.getElementById("authorsList");
 let allFilters = document.getElementById("allFilters");
 let searchButtonAuthor = document.getElementById("searchButtonAuthor");
 
+
 let yearDiv = document.getElementById("yearDiv");
 let yearFilter = document.getElementById("allYears");
 yearFilter.classList.add("listInDiv");
 let allYearList = document.getElementById("allYearList");
 let searchButtonYear = document.getElementById("searchButtonYear");
+
 
 let genreDiv = document.getElementById("genreDiv");
 let allGenres = document.getElementById("allGenre");
@@ -680,12 +796,16 @@ let listWithAllGenres = document.getElementById("allGenreList");
 let searchButtonGenre = document.getElementById("searchButtonGenre");
 
 
+
+
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
 });
 
+
 searchButtonAuthor.addEventListener("click", async function () {
     const checkedBoxes = document.querySelectorAll('input[name="authorFilter"]:checked');
+
 
     let choosenAuthors = [];
     for (let authos of checkedBoxes) {
@@ -693,10 +813,12 @@ searchButtonAuthor.addEventListener("click", async function () {
     }
     // console.log(choosenAuthors);
 
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json();
+
+    let books = await loadBooks()();
+
 
     let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
+
 
     choosenBooks.sort((a, b) => {
         // Först sortera på författarnamn
@@ -705,18 +827,22 @@ searchButtonAuthor.addEventListener("click", async function () {
             return authorCompare;
         }
 
+
         // Om samma författare → sortera på titel
         return a.title.localeCompare(b.title);
     });
+
 
     allBooks.innerHTML = "";
     for (let book of choosenBooks) {
         createDivOfBook(book);
     };
 
+
     let divAuthors = document.getElementById("authors");
     divAuthors.classList.remove("visible");
     allFilters.classList.remove("visible");
+
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
@@ -724,76 +850,96 @@ searchButtonAuthor.addEventListener("click", async function () {
     filterUsed.innerHTML = `Filter/ Authors/ ${authorArray}`;
     filterUsed.style.fontWeight = "bold";
 
+
     reloadBooks.style.visibility = "visible"
 });
 
+
 searchButtonYear.addEventListener("click", async function () {
     let checkBoxes = document.querySelectorAll('input[name="yearFilter"]:checked');
+
 
     let choosenYear = [];
     for (let year of checkBoxes) {
         choosenYear.push(year.value);
     }
 
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json();
+
+    let books = await loadBooks()();
+
 
     let yearChecked = books.filter(book => choosenYear.includes(book.finish.slice(0, 4)));
+
 
     allBooks.innerHTML = "";
     for (let book of yearChecked) {
         createDivOfBook(book);
     }
 
+
     let divYears = document.getElementById("allYears");
     divYears.classList.remove("visible");
     allFilters.classList.remove("visible");
+
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
     let yearArray = choosenYear.join(", ");
     filterUsed.innerHTML = `Filter/ Genre/ ${yearArray}`;
 
+
     reloadBooks.style.visibility = "visible"
 });
 
+
 searchButtonGenre.addEventListener("click", async function () {
     let checkBoxes = document.querySelectorAll('input[name="genreFilter"]:checked');
+
 
     let choosenGenre = [];
     for (let genre of checkBoxes) {
         choosenGenre.push(genre.value);
     }
 
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json();
+
+    let books = await loadBooks()();
+
 
     let genreChecked = books.filter(book => {
         if (!book.genre) return false;
+
 
         let bookGenres = book.genre
             .split(",")
             .map(g => g.trim());
 
+
         return bookGenres.some(g => choosenGenre.includes(g));
     });
+
 
     allBooks.innerHTML = "";
     for (let book of genreChecked) {
         createDivOfBook(book);
     }
 
+
     let divGenre = document.getElementById("allGenre");
     divGenre.classList.remove("visible");
     allFilters.classList.remove("visible");
+
 
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
     let genreArray = choosenGenre.join(", ");
     filterUsed.innerHTML = `Filter/ Genre/ ${genreArray}`;
 
+
     reloadBooks.style.visibility = "visible"
 });
+
+
+
 
 
 
@@ -805,11 +951,14 @@ authorDIV.addEventListener("click", async function (event) {
         await filterAuthors();
         allAuthorsNames.classList.add("visible");
 
+
         //stäng de andra
         yearFilter.classList.remove("visible");
         allGenres.classList.remove("visible");
     }
 });
+
+
 
 
 yearDiv.addEventListener("click", async function (event) {
@@ -819,11 +968,13 @@ yearDiv.addEventListener("click", async function (event) {
         await filterByYear();
         yearFilter.classList.add("visible");
 
+
         //Stäng de andra
         allAuthorsNames.classList.remove("visible");
         allGenres.classList.remove("visible");
     }
 });
+
 
 genreDiv.addEventListener("click", async function (event) {
     event.stopPropagation();
@@ -831,10 +982,13 @@ genreDiv.addEventListener("click", async function (event) {
     await filterByGenre();
     allGenres.classList.add("visible");
 
+
     //Stäng de andra
     allAuthorsNames.classList.remove("visible");
     yearFilter.classList.remove("visible");
 })
+
+
 
 
 //stäng
@@ -854,23 +1008,30 @@ document.addEventListener("click", function (event) {
     }
 });
 
+
 allAuthorsNames.addEventListener("click", function (event) {
     event.stopPropagation();
 });
 
+
 yearFilter.addEventListener("click", function (event) {
     event.stopPropagation();
 });
+
 
 allGenres.addEventListener("click", function (event) {
     event.stopPropagation();
 });
 
 
+
+
 //Sortering
+
 
 let sortBtnInMeny = document.getElementById("sort");
 let allSort = document.getElementById("allSort");
+
 
 sortBtnInMeny.addEventListener("click", function () {
     allSort.classList.toggle("visible")
@@ -878,33 +1039,42 @@ sortBtnInMeny.addEventListener("click", function () {
 
 
 
+
+
+
 //Vy, lista eller kort
 
+
 viewList.addEventListener("click", async function () {
-    let result = await fetch(BASE_URL + "/books/" + currentUser);
-    let books = await result.json();
+    let books = await loadBooks()();
+
 
     allBooks.innerHTML = "";
     allBooks.classList.add("listView")
 
+
     for (let book of books) {
-        let arrayBook = []
         let div = document.createElement("div");
         div.classList.add("divInListview")
 
+
         let img = document.createElement("img");
-        img.src = book.imgSrc;
+        img.src = book.imgsrc;
         img.style.width = "60px";
         img.style.height = "90px";
         img.style.objectFit = "cover";
 
+
         let textWrapper = document.createElement("div");
         textWrapper.classList.add("textWrapper");
+
 
         let title = document.createElement("p");
         title.textContent = book.title;
 
+
         let serie = document.createElement("p");
+
 
         if (book.seriesName === "The Empyrean series") {
             serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}`
@@ -912,22 +1082,30 @@ viewList.addEventListener("click", async function () {
             serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}- series`
         }
 
+
         let rating = document.createElement("p");
         rating.textContent = `Rating: ${book.ratings.book} / 10`;
 
+
         textWrapper.appendChild(title);
         textWrapper.appendChild(serie);
+
 
         div.appendChild(img);
         div.appendChild(rating)
         div.appendChild(textWrapper);
 
+
         allBooks.appendChild(div);
+
 
     };
 
+
     console.log(books);
 });
+
+
 
 
 viewCard.addEventListener("click", function () {
@@ -940,48 +1118,60 @@ viewCard.addEventListener("click", function () {
 
 
 
+
+
+
+
 //förminskar bilden
 coverInput.addEventListener("change", function () {
     let file = coverInput.files[0];
     if (!file) return;
 
     // Skala ner till max 300px bred
-    resizeImage(file, 300, function (resizedBase64) {
-        // Visa bilden i formuläret
-        picDiv.innerHTML = "";
-        let img = document.createElement("img");
-        img.src = resizedBase64;
-        img.style.width = "250px";
-        img.style.height = "350px";
-        picDiv.appendChild(img);
+    // resizeImage(file, 300, function (resizedBase64) {
+    //     // Visa bilden i formuläret
+    //     picDiv.innerHTML = "";
+    //     let img = document.createElement("img");
+    //     img.src = resizedBase64;
+    //     img.style.width = "250px";
+    //     img.style.height = "350px";
+    //     picDiv.appendChild(img);
 
-        // Spara Base64-strängen i en variabel
-        // som du senare skickar till servern
-        currentCover = resizedBase64;
-    });
+
+    //     // Spara Base64-strängen i en variabel
+    //     // som du senare skickar till servern
+    //     currentCover = resizedBase64;
+    // });
 });
+
 
 //reload books
 reloadBooks.addEventListener("click", async function () {
     filterUsed.innerHTML = "";
     await loadBooks(); // vänta tills böckerna laddats om
 
+
     // const thisYear = new Date().getFullYear();
     // allBooksThisyear(thisYear);
+
 
     reloadBooks.style.visibility = "hidden";
 });
 
+
 //Skapa en bok
 addBook.addEventListener("click", function () {
     createABook();
-    whipeForm();
+    wipeForm();
 });
+
+
 
 
 closeBook.addEventListener("click", function () {
     closeCreateBook();
 })
+
 
 closeAndSave.addEventListener("click", async function () {
     if (!currentUser) {
@@ -1067,7 +1257,7 @@ closeAndSave.addEventListener("click", async function () {
             type: bookType,
             ratings: ratings,
             quotes: quotes,
-            imgSrc: imgUrl,
+            imgsrc: imgUrl,
             summary: bookSummary.value,
             seriesName: seriesName,
             seriesNumber: seriesNumber,
@@ -1077,12 +1267,15 @@ closeAndSave.addEventListener("click", async function () {
         let res, savedBook;
         if (window.currentEditingId) {
             // Uppdatera bok
-            res = await fetch(BASE_URL + "/books/" + currentUser + "/" + window.currentEditingId, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(book),
-            });
-            savedBook = await res.json();
+            await supabase
+                .from("books")
+                .update(book)
+                .eq("id", window.currentEditingId)
+                .eq("user_id", currentUser);
+
+
+            savedBook = { ...book, id: window.currentEditingId };
+
 
             // 🔄 Uppdatera befintlig div
             let existingDiv = document.querySelector(`[data-id="${window.currentEditingId}"]`);
@@ -1090,7 +1283,7 @@ closeAndSave.addEventListener("click", async function () {
                 existingDiv.querySelector("p").textContent = savedBook.title;
                 let imgEl = existingDiv.querySelector("img");
                 if (imgEl) {
-                    imgEl.src = savedBook.imgSrc;
+                    imgEl.src = savedBook.imgsrc;
                 }
                 let starsDiv = existingDiv.querySelector(".stars");
                 if (starsDiv) {
@@ -1107,30 +1300,34 @@ closeAndSave.addEventListener("click", async function () {
             }
         } else {
             // Skapa ny bok
-            res = await fetch(BASE_URL + "/books/" + currentUser, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(book),
-            });
-            savedBook = await res.json();
+            let { data, error } = await supabase
+                .from("books")
+                .insert([{
+                    ...book,
+                    user_id: currentUser
+                }])
+                .select();
+            if (error) {
+                console.error(error);
+                alert("Save failed");
+                return;
+            }
 
+            savedBook = data[0];
             createDivOfBook(savedBook);
+
+            await allBooksByYear();
         }
-
-
-        await allBooksByYear();
-
     } catch (err) {
         console.error("Save failed:", err);
         alert("Something went wrong while saving the book.");
     } finally {
         // 🔒 DENNA KÖRS ALLTID
         window.currentEditingId = null;
-        whipeForm();
+        wipeForm();
         closeCreateBook();
     }
 });
-
 
 
 deleteBook.addEventListener("click", async function () {
@@ -1138,15 +1335,15 @@ deleteBook.addEventListener("click", async function () {
     if (!confirm("Are you sure you want to delete this book?")) return;
 
     try {
-        let res = await fetch(BASE_URL + "/books/" + currentUser + "/" + bookId, {
-            method: "DELETE",
-        });
-        let result = await res.json();
-
-        if (!result.success) throw new Error("Delete failed");
+        await supabase
+            .from("books")
+            .delete()
+            .eq("id", bookId)
+            .eq("user_id", currentUser);
 
         loadBooks();
         await allBooksByYear();
+
 
     } catch (err) {
         console.error("Delete failed:", err);
@@ -1158,15 +1355,16 @@ deleteBook.addEventListener("click", async function () {
     }
 });
 
-
-//färga stjärnorna 
+//färga stjärnorna
 for (let i = 0; i < starContainers.length; i++) {
     let container = starContainers[i];
     let stars = container.getElementsByTagName("span");
 
+
     // gör varje stjärna klickbar
     for (let j = 0; j < stars.length; j++) {
         stars[j].addEventListener("click", function () {
+
 
             for (let k = 0; k < stars.length; k++) {
                 if (k <= j) {
@@ -1180,60 +1378,45 @@ for (let i = 0; i < starContainers.length; i++) {
 }
 
 
-//När sidan laddas om, fortsätter vara inloggad
-let savedUser = localStorage.getItem("currentUser");
-if (savedUser) {
-    currentUser = savedUser;
-    who.textContent = currentUser;
-    appDiv.style.display = "inline-block";
-    loginBtn.style.display = "none";
-    registerButton.style.display = "none";
-    loginButton.style.display = "none";
-    loadBooks(); // ✅ hämta böckerna direkt
-}
-
 const thisYear = new Date().getFullYear();
 allBooksByYear(thisYear);
 
+
 //Skapa en json-fil av alla böcker, ifall om servern skulle försvinna så vill jag ha koll på mina böcker.
 
+
 async function createFileOfAllBooks() {
-    // let res = await fetch(BASE_URL + "/books/" + currentUser);
-    // let books = await res.json();
+    if (!currentUser) return;
 
-    // booksArray = []
+    let books = await loadBooks()();
 
-    // for (let book of books) {
-    //     booksArray.push(book)
-    // }
+    const blob = new Blob(
+        [JSON.stringify(books, null, 2)],
+        { type: "application/json" }
+    );
 
-    // console.log(booksArray)
+    const url = URL.createObjectURL(blob);
 
-    const res = await fetch("/backup-books", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            username: currentUser
-        })
-    });
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `backup-${currentUser}.json`;
+    a.click();
 
-    const result = await res.json();
-    console.log(result);
+    URL.revokeObjectURL(url);
 }
 
-createFileOfAllBooks();
 
 // bookmenu i mobilversion
 const bookMenuToggle = document.getElementById("bookMenuToggle");
 const bookMenuDropdown = document.getElementById("bookMenuDropdown");
+
 
 if (bookMenuToggle && bookMenuDropdown) {
     bookMenuToggle.addEventListener("click", function () {
         bookMenuDropdown.classList.toggle("show");
     });
 }
+
 
 bookMenuDropdown.addEventListener("click", function (event) {
     if (event.target.tagName === "BUTTON") {
@@ -1242,6 +1425,28 @@ bookMenuDropdown.addEventListener("click", function (event) {
 });
 
 
+async function checkUser() {
+    const { data } = await supabase.auth.getUser();
+
+    if (!data.user) {
+        appDiv.style.display = "none";
+    }
+
+    if (data.user) {
+        currentUser = data.user.id;
+        who.textContent = data.user.email;
+        appDiv.style.display = "inline-block";
+        loginBtn.style.display = "none";
+        registerButton.style.display = "none";
+        loginButton.style.display = "none";
+        loadBooks();
+    }
+}
+
+
+checkUser();
+
 
 //Kunna se böckerna i listformat
-//två olika knapapr för listvy - en för lista och en för kort 
+//två olika knapapr för listvy - en för lista och en för kort
+
