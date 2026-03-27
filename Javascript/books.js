@@ -190,7 +190,10 @@ async function openBookForEdit(bookId) {
 
 // LOAD BOOKS
 async function loadBooks() {
-    if (!currentUser) return [];
+    if (!currentUser) {
+        console.log("No user yet");
+        return [];
+    }
 
     let { data: books, error } = await supabaseClient
         .from("books")
@@ -358,14 +361,6 @@ function wipeForm() {
 }
 
 
-
-//Sortering
-async function sortAuthors() {
-    let books = await loadBooks();
-}
-
-
-
 //Filter
 async function filterAuthors() {
     let books = await loadBooks();
@@ -475,10 +470,13 @@ async function filterByGenre() {
         container.appendChild(p);
         genreList.appendChild(container);
     }
-    ;
 }
 
 async function allBooksByYear() {
+    if (!currentUser) {
+        console.log("No user yet");
+        return [];
+    }
     let books = await supabaseClient
         .from("books")
         .select("*")
@@ -516,10 +514,6 @@ async function allBooksByYear() {
 
     showBookNumber.innerHTML = html;
 };
-
-const thisYear = new Date().getFullYear();
-allBooksByYear(thisYear);
-
 
 //addEventListeners
 
@@ -826,6 +820,10 @@ sortBtnInMeny.addEventListener("click", function () {
     allSort.classList.toggle("visible")
 });
 
+//Sortering
+async function sortAuthors() {
+    let books = await loadBooks();
+}
 
 
 
@@ -1161,13 +1159,13 @@ async function checkUser() {
         registerButton.style.display = "none";
         loginButton.style.display = "none";
         loadBooks();
+        allBooksByYear();
     }
-}
+};
 
 checkUser();
 
 // async function importBooksFromJSON() {
-//     if (!currentUser) {
 //         alert("You must be logged in!");
 //         return;
 //     }
