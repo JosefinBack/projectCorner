@@ -1,8 +1,6 @@
-
-
 const supabase = window.supabase.createClient(
-    "DIN_SUPABASE_URL",
-    "DIN_ANON_KEY"
+    "https://qciftuisfloydqxgrdrt.supabase.co",
+    "sb_publishable_m1PZazpxmQepEPbktVMzZA_YusPeIWL"
 );
 let currentUser = null;
 
@@ -1457,3 +1455,8 @@ async function importBooksFromJSON() {
     loadBooks();
 }
 
+let importBtn = document.getElementById("importBooks");
+
+importBtn.addEventListener("click", function () {
+    importBooksFromJSON();
+});
