@@ -209,7 +209,9 @@ async function loadBooks() {
     books.sort(function (a, b) {
 
         // Samma serie → sortera på nummer
-        if (a.seriesname && b.seriesname && a.seriesname === b.seriesname) {
+        const sameSeries = a.seriesname === b.seriesname;
+
+        if (sameSeries && a.seriesname) {
             return (a.seriesnumber || 0) - (b.seriesnumber || 0);
         }
 
@@ -652,15 +654,34 @@ searchButtonAuthor.addEventListener("click", async function () {
     let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
 
     choosenBooks.sort((a, b) => {
-        // Först sortera på författarnamn
-        const authorCompare = a.author.localeCompare(b.author);
+        // 1. Sortera på author
+        const authorCompare = (a.author || "").localeCompare(b.author || "");
         if (authorCompare !== 0) {
             return authorCompare;
         }
 
-        // Om samma författare → sortera på titel
-        return a.title.localeCompare(b.title);
+        // 2. Samma author → hantera serie
+        // Om båda har serie
+        if (a.seriesname && b.seriesname) {
+
+            // 2a. Sortera på serienamn
+            const seriesCompare = a.seriesname.localeCompare(b.seriesname);
+            if (seriesCompare !== 0) {
+                return seriesCompare;
+            }
+
+            // 2b. Samma serie → sortera på serienummer
+            return (a.seriesnumber || 0) - (b.seriesnumber || 0);
+        }
+
+        // 3. Om bara en har serie → den med serie först
+        if (a.seriesname && !b.seriesname) return -1;
+        if (!a.seriesname && b.seriesname) return 1;
+
+        // 4. Ingen serie → sortera på titel
+        return (a.title || "").localeCompare(b.title || "");
     });
+
 
     allBooks.innerHTML = "";
     for (let book of choosenBooks) {
@@ -815,14 +836,103 @@ allGenres.addEventListener("click", function (event) {
 //Sortering
 let sortBtnInMeny = document.getElementById("sort");
 let allSort = document.getElementById("allSort");
+let sortSearchButton = document.getElementById("sortSearch");
 
 sortBtnInMeny.addEventListener("click", function () {
-    allSort.classList.toggle("visible")
+    allSort.classList.toggle("visible");
+});
+
+sortSearch.addEventListener("click", function () {
+    let selected = document.querySelector('input[name="sorting"]:checked');
+
+    if (!selected) return;
+
+    if (selected.value === "Author_A_Z") {
+        sortAuthorsAtoZ();
+    } else if (selected.value === "Author_Z_A") {
+        sortAuthorsZtoA();
+    } else if (selected.value === "Title_A_Z") {
+        sortTitleAtoZ();
+    } else if (selected.value === "Title_Z_A") {
+        sortTitleZtoA();
+    }
 });
 
 //Sortering
-async function sortAuthors() {
+async function sortAuthorsAtoZ() {
     let books = await loadBooks();
+    let sortedBooks = books.sort(function (a, b) {
+        return a.author.localeCompare(b.author, "sv");
+    });
+
+    allBooks.innerHTML = "";
+
+    for (let book of sortedBooks) {
+        createDivOfBook(book);
+    }
+    allSort.classList.remove("visible");
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Sort/ Authors A to Z`;
+    filterUsed.style.fontWeight = "bold";
+    reloadBooks.style.visibility = "visible"
+};
+
+async function sortAuthorsZtoA() {
+    let books = await loadBooks();
+    let sortedBooks = books.sort(function (a, b) {
+        return b.author.localeCompare(a.author, "sv");
+    });
+
+    allBooks.innerHTML = "";
+
+    for (let book of sortedBooks) {
+        createDivOfBook(book);
+    };
+    allSort.classList.remove("visible");
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Sort/ Authors Z to A`;
+    filterUsed.style.fontWeight = "bold";
+    reloadBooks.style.visibility = "visible"
+};
+
+async function sortTitleAtoZ() {
+    let books = await loadBooks();
+    let sortedBooks = books.sort(function (a, b) {
+        return a.title.localeCompare(b.title, "sv");
+    });
+
+    allBooks.innerHTML = "";
+
+    for (let book of sortedBooks) {
+        createDivOfBook(book);
+    };
+    allSort.classList.remove("visible");
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Sort/ Title A to Z`;
+    filterUsed.style.fontWeight = "bold";
+    reloadBooks.style.visibility = "visible"
+};
+
+async function sortTitleZtoA() {
+    let books = await loadBooks();
+    let sortedBooks = books.sort(function (a, b) {
+        return b.title.localeCompare(a.title, "sv");
+    });
+
+    allBooks.innerHTML = "";
+
+    for (let book of sortedBooks) {
+        createDivOfBook(book);
+    };
+    allSort.classList.remove("visible");
+    filterUsed.style.visibility = "visible"
+    filterUsed.innerHTML = "";
+    filterUsed.innerHTML = `Sort/ Title Z to A`;
+    filterUsed.style.fontWeight = "bold";
+    reloadBooks.style.visibility = "visible"
 }
 
 

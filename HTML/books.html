@@ -61,18 +61,26 @@
                         <div id="sort" class="bookmenyButton">Sort</div>
                         <div id="allSort">
                             <div>
-                                <input type="checkbox">
+                                <input type="radio" name="sorting" value="Author_A_Z">
                                 <p>Author: A - Ö</p>
                             </div>
                             <div>
-                                <input type="checkbox">
+                                <input type="radio" name="sorting" value="Author_Z_A">
                                 <p>Author: Ö - A</p>
                             </div>
                             <div>
-                                <input type="checkbox">
+                                <input type="radio" name="sorting" value="Title_A_Z">
                                 <p>Title: A - Ö</p>
                             </div>
-                            <button>Search</button>
+                            <div>
+                                <input type="radio" name="sorting" value="Title_Z_A">
+                                <p>Title: Ö - A</p>
+                            </div>
+                            <div>
+                                <input type="radio" name="sorting" value="Completed_A_Z">
+                                <p>Completed, old to new </p>
+                            </div>
+                            <button id="sortSearch">Search</button>
                         </div>
                     </div>
 
@@ -106,7 +114,7 @@
                     </div>
 
                     <div id="reload" class="bookmenyButton">
-                        Remove filter/sort and reload books
+                        Remove filter & reload books
                     </div>
                 </div>
 
