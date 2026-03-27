@@ -1044,19 +1044,14 @@ sortBtnInMeny.addEventListener("click", function () {
 
 //Vy, lista eller kort
 
-
 viewList.addEventListener("click", async function () {
     let books = await loadBooks()();
-
-
     allBooks.innerHTML = "";
     allBooks.classList.add("listView")
-
 
     for (let book of books) {
         let div = document.createElement("div");
         div.classList.add("divInListview")
-
 
         let img = document.createElement("img");
         img.src = book.imgsrc;
@@ -1064,17 +1059,13 @@ viewList.addEventListener("click", async function () {
         img.style.height = "90px";
         img.style.objectFit = "cover";
 
-
         let textWrapper = document.createElement("div");
         textWrapper.classList.add("textWrapper");
-
 
         let title = document.createElement("p");
         title.textContent = book.title;
 
-
         let serie = document.createElement("p");
-
 
         if (book.seriesName === "The Empyrean series") {
             serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}`
@@ -1082,31 +1073,19 @@ viewList.addEventListener("click", async function () {
             serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}- series`
         }
 
-
         let rating = document.createElement("p");
         rating.textContent = `Rating: ${book.ratings.book} / 10`;
-
 
         textWrapper.appendChild(title);
         textWrapper.appendChild(serie);
 
-
         div.appendChild(img);
         div.appendChild(rating)
         div.appendChild(textWrapper);
-
-
         allBooks.appendChild(div);
-
-
     };
-
-
     console.log(books);
 });
-
-
-
 
 viewCard.addEventListener("click", function () {
     allBooks.innerHTML = "";
@@ -1114,12 +1093,6 @@ viewCard.addEventListener("click", function () {
     allBooks.classList.add("gridView")
     loadBooks();
 });
-
-
-
-
-
-
 
 
 //förminskar bilden
@@ -1165,13 +1138,9 @@ addBook.addEventListener("click", function () {
     wipeForm();
 });
 
-
-
-
 closeBook.addEventListener("click", function () {
     closeCreateBook();
 })
-
 
 closeAndSave.addEventListener("click", async function () {
     if (!currentUser) {
@@ -1446,7 +1415,45 @@ async function checkUser() {
 
 checkUser();
 
+async function importBooksFromJSON() {
+    if (!currentUser) {
+        alert("You must be logged in!");
+        return;
+    }
 
-//Kunna se böckerna i listformat
-//två olika knapapr för listvy - en för lista och en för kort
+    let response = await fetch("allBooks.json");
+    let books = await response.json();
+
+    for (let i = 0; i < books.length; i++) {
+        let book = books[i];
+
+        let newBook = {
+            title: book.title,
+            genre: book.genre,
+            author: book.author,
+            pages: book.pages,
+            start: book.start || null,
+            finish: book.finish || null,
+            summary: book.summary,
+            imgsrc: book.imgsrc,
+            ratings: book.ratings,
+            quotes: book.quotes,
+            seriesName: book.seriesName,
+            seriesNumber: book.seriesNumber,
+            type: book.type,
+            user_id: currentUser
+        };
+
+        let { error } = await supabase
+            .from("books")
+            .insert([newBook]);
+
+        if (error) {
+            console.error("Error inserting:", book.title, error);
+        }
+    }
+
+    alert("All books imported!");
+    loadBooks();
+}
 
