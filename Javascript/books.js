@@ -1409,7 +1409,7 @@ async function importBooksFromJSON() {
         return;
     }
 
-    let response = await fetch("allBooks.json");
+    let response = await fetch("../allBooks.json");
     let books = await response.json();
 
     for (let i = 0; i < books.length; i++) {
