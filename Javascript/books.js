@@ -1,4 +1,4 @@
-const supabase = window.supabase.createClient(
+var supabaseClient = window.supabase.createClient(
     "https://qciftuisfloydqxgrdrt.supabase.co",
     "sb_publishable_m1PZazpxmQepEPbktVMzZA_YusPeIWL"
 );
@@ -91,7 +91,7 @@ async function openBookForEdit(bookId) {
 
 
     // Hämta alla böcker och hitta rätt
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
 
     let book = books.find(b => b.id === bookId);
@@ -215,16 +215,16 @@ async function openBookForEdit(bookId) {
 
 // LOAD BOOKS
 async function loadBooks() {
-    if (!currentUser) return;
+    if (!currentUser) return [];
 
-    let { data: books, error } = await supabase
+    let { data: books, error } = await supabaseClient
         .from("books")
         .select("*")
         .eq("user_id", currentUser);
 
     if (error) {
         console.error(error);
-        return;
+        return [];
     }
 
     // sortering
@@ -248,6 +248,7 @@ async function loadBooks() {
     for (let book of books) {
         createDivOfBook(book);
     }
+    return books;
 };
 
 
@@ -424,7 +425,7 @@ function wipeForm() {
 
 //Sortering
 async function sortAuthors() {
-    let books = await loadBooks()();
+    let books = await loadBooks();
 }
 
 
@@ -434,7 +435,7 @@ async function sortAuthors() {
 
 //Filter
 async function filterAuthors() {
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
 
     let allAuthors = [];
@@ -475,7 +476,7 @@ async function filterAuthors() {
 
 
 async function filterByYear() {
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
 
     let allYears = [];
@@ -529,7 +530,7 @@ async function filterByYear() {
 
 
 async function filterByGenre() {
-    let books = await loadBooks()();//ger en array av alla böcker
+    let books = await loadBooks();//ger en array av alla böcker
 
 
     let allGenres = [];
@@ -580,16 +581,12 @@ async function filterByGenre() {
 
 
 async function allBooksByYear() {
-    let books = await loadBooks()();
-
-
+    let books = await loadBooks();
     // Bara böcker som är avslutade
     const finishedBooks = books.filter(book => book.finish);
 
-
     // Totalt antal lästa böcker
     const totalBooks = finishedBooks.length;
-
 
     // Räkna per år
     const booksPerYear = {};
@@ -598,30 +595,23 @@ async function allBooksByYear() {
     for (let book of finishedBooks) {
         const year = book.finish.slice(0, 4); // "2025"
 
-
         if (!booksPerYear[year]) {
             booksPerYear[year] = 0;
         }
-
-
         booksPerYear[year]++;
     }
 
-
     const showBookNumber = document.getElementById("howManyBooks");
     showBookNumber.style.fontSize = "18px";
-
 
     let html = `
        You have read <strong>${totalBooks}</strong> books in total
        <br><br>
    `;
 
-
     for (let year in booksPerYear) {
         html += `<strong>${year}:</strong> ${booksPerYear[year]} books<br>`;
     }
-
 
     showBookNumber.innerHTML = html;
 }
@@ -684,7 +674,7 @@ createButton.addEventListener("click", async function () {
     let password = passwordReg.value;
 
 
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password
     });
@@ -710,7 +700,7 @@ loginBtn.addEventListener("click", async function () {
     let password = passwordLogIn.value;
 
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email,
         password: password
     });
@@ -746,7 +736,7 @@ loginBtn.addEventListener("click", async function () {
 
 // Logga ut
 logoutBtn.addEventListener("click", async function () {
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
 
 
     currentUser = null;
@@ -812,7 +802,7 @@ searchButtonAuthor.addEventListener("click", async function () {
     // console.log(choosenAuthors);
 
 
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
 
     let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
@@ -863,7 +853,7 @@ searchButtonYear.addEventListener("click", async function () {
     }
 
 
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
 
     let yearChecked = books.filter(book => choosenYear.includes(book.finish.slice(0, 4)));
@@ -900,7 +890,7 @@ searchButtonGenre.addEventListener("click", async function () {
     }
 
 
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
 
     let genreChecked = books.filter(book => {
@@ -1043,7 +1033,7 @@ sortBtnInMeny.addEventListener("click", function () {
 //Vy, lista eller kort
 
 viewList.addEventListener("click", async function () {
-    let books = await loadBooks()();
+    let books = await loadBooks();
     allBooks.innerHTML = "";
     allBooks.classList.add("listView")
 
@@ -1234,7 +1224,7 @@ closeAndSave.addEventListener("click", async function () {
         let res, savedBook;
         if (window.currentEditingId) {
             // Uppdatera bok
-            await supabase
+            await supabaseClient
                 .from("books")
                 .update(book)
                 .eq("id", window.currentEditingId)
@@ -1267,7 +1257,7 @@ closeAndSave.addEventListener("click", async function () {
             }
         } else {
             // Skapa ny bok
-            let { data, error } = await supabase
+            let { data, error } = await supabaseClient
                 .from("books")
                 .insert([{
                     ...book,
@@ -1302,7 +1292,7 @@ deleteBook.addEventListener("click", async function () {
     if (!confirm("Are you sure you want to delete this book?")) return;
 
     try {
-        await supabase
+        await supabaseClient
             .from("books")
             .delete()
             .eq("id", bookId)
@@ -1355,7 +1345,7 @@ allBooksByYear(thisYear);
 async function createFileOfAllBooks() {
     if (!currentUser) return;
 
-    let books = await loadBooks()();
+    let books = await loadBooks();
 
     const blob = new Blob(
         [JSON.stringify(books, null, 2)],
@@ -1393,7 +1383,7 @@ bookMenuDropdown.addEventListener("click", function (event) {
 
 
 async function checkUser() {
-    const { data } = await supabase.auth.getUser();
+    const { data } = await supabaseClient.auth.getUser();
 
     if (!data.user) {
         appDiv.style.display = "none";
@@ -1442,7 +1432,7 @@ async function importBooksFromJSON() {
             user_id: currentUser
         };
 
-        let { error } = await supabase
+        let { error } = await supabaseClient
             .from("books")
             .insert([newBook]);
 
