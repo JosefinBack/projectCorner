@@ -1426,8 +1426,8 @@ async function importBooksFromJSON() {
             imgsrc: book.imgsrc,
             ratings: book.ratings,
             quotes: book.quotes,
-            seriesName: book.seriesName,
-            seriesNumber: book.seriesNumber,
+            seriesname: book.seriesName,
+            seriesnumber: book.seriesNumber,
             type: book.type,
             user_id: currentUser
         };
