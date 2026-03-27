@@ -62,8 +62,8 @@ let bookStart = document.getElementById("startdate");
 let bookFinish = document.getElementById("finishdate");
 let bookSummary = document.getElementById("summary");
 let inputIsSeries = document.getElementById("isSeries");
-let inputSeriesName = document.getElementById("seriesName");
-let inputSeriesNumber = document.getElementById("seriesNumber");
+let inputSeriesName = document.getElementById("seriesname");
+let inputSeriesNumber = document.getElementById("seriesnumber");
 
 
 // Bild
@@ -127,14 +127,14 @@ async function openBookForEdit(bookId) {
     setValue("summary", book.summary);
 
 
-    if (book.seriesName) {
+    if (book.seriesname) {
         document.getElementById("isSeries").checked = true;
-        setValue("seriesName", book.seriesName);
-        setValue("seriesNumber", book.seriesNumber);
+        setValue("seriesname", book.seriesname);
+        setValue("seriesnumber", book.seriesnumber);
     } else {
         document.getElementById("isSeries").checked = false;
-        setValue("seriesName", "");
-        setValue("seriesNumber", "");
+        setValue("seriesname", "");
+        setValue("seriesnumber", "");
     }
 
 
@@ -228,22 +228,28 @@ async function loadBooks() {
     }
 
     // sortering
-    books.sort((a, b) => {
-        if (a.seriesName && b.seriesName && a.seriesName === b.seriesName) {
-            return (a.seriesNumber || 0) - (b.seriesNumber || 0);
+    books.sort(function (a, b) {
+
+        // Samma serie → sortera på nummer
+        if (a.seriesname && b.seriesname && a.seriesname === b.seriesname) {
+            return (a.seriesnumber || 0) - (b.seriesnumber || 0);
         }
 
-        if (a.seriesName && b.seriesName) {
-            return a.seriesName.localeCompare(b.seriesName);
+        // Båda har serie → sortera alfabetiskt
+        if (a.seriesname && b.seriesname) {
+            return a.seriesname.localeCompare(b.seriesname);
         }
 
-        if (a.seriesName && !b.seriesName) return -1;
-        if (!a.seriesName && b.seriesName) return 1;
+        // Böcker med serie först
+        if (a.seriesname && !b.seriesname) return -1;
+        if (!a.seriesname && b.seriesname) return 1;
 
-
+        // Annars sortera på titel
         return a.title.localeCompare(b.title);
     });
     allBooks.innerHTML = "";
+    allBooks.classList.remove("listView");
+    allBooks.classList.add("gridView");
 
     for (let book of books) {
         createDivOfBook(book);
@@ -298,7 +304,6 @@ function createDivOfBook(book) {
         divOfBook.appendChild(imgPic);
     }
 
-
     // Lägg till titel
     let text = document.createElement("p");
     let textSerie = document.createElement("p");
@@ -306,8 +311,8 @@ function createDivOfBook(book) {
     text.textContent = book.title;
     divOfBook.appendChild(text);
 
-    if (book.seriesName) {
-        textSerie.textContent = `Series: ${book.seriesName} (Book ${book.seriesNumber})`;
+    if (book.seriesname) {
+        textSerie.textContent = `Series: ${book.seriesname} (Book ${book.seriesnumber})`;
         textSerie.classList.add("book-serie");
         divOfBook.appendChild(textSerie);
     }
@@ -436,7 +441,6 @@ async function sortAuthors() {
 //Filter
 async function filterAuthors() {
     let books = await loadBooks();
-
 
     let allAuthors = [];
     for (let book of books) {
@@ -581,7 +585,12 @@ async function filterByGenre() {
 
 
 async function allBooksByYear() {
-    let books = await loadBooks();
+    let books = await supabaseClient
+        .from("books")
+        .select("*")
+        .eq("user_id", currentUser);
+
+    books = books.data || [];
     // Bara böcker som är avslutade
     const finishedBooks = books.filter(book => book.finish);
 
@@ -613,13 +622,7 @@ async function allBooksByYear() {
     }
 
     showBookNumber.innerHTML = html;
-}
-
-
-allBooksByYear();
-
-
-
+};
 
 //addEventListeners
 
@@ -693,33 +696,24 @@ createButton.addEventListener("click", async function () {
 
 // --- LOGIN ---
 loginBtn.addEventListener("click", async function () {
-
-
     let email = userLogIn.value;
     let password = passwordLogIn.value;
-
 
     const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email,
         password: password
     });
 
-
     if (error) {
         loginMessage.textContent = error.message;
         loginMessage.style.color = "red";
         return;
     }
-
-
-    // 🔥 HÄR ÄR SKILLNADEN
     currentUser = data.user.id;
-
 
     who.textContent = email;
     loginMessage.textContent = "Welcome!";
     loginMessage.style.color = "green";
-
 
     appDiv.style.display = "inline-block";
     loginDiv.style.display = "none";
@@ -727,23 +721,18 @@ loginBtn.addEventListener("click", async function () {
     registerButton.style.display = "none";
     loginButton.style.display = "none";
 
-
     loadBooks();
-    filterAuthors();
+    allBooksByYear();
 });
 
 
 // Logga ut
 logoutBtn.addEventListener("click", async function () {
     await supabaseClient.auth.signOut();
-
-
     currentUser = null;
     who.textContent = "";
     allBooks.innerHTML = "";
     loginMessage.innerHTML = "";
-
-
     appDiv.style.display = "none";
     loginButton.style.display = "block";
     loginBtn.style.display = "block";
@@ -751,14 +740,9 @@ logoutBtn.addEventListener("click", async function () {
 });
 
 
-
-
 //filter
-
-
 let filterUsed = document.getElementById("usedFilter");
 let filterButton = document.getElementById("filtering");
-
 
 let authorDIV = document.getElementById("authorDIV");
 let allAuthorsNames = document.getElementById("authors");
@@ -768,21 +752,17 @@ let authorList = document.getElementById("authorsList");
 let allFilters = document.getElementById("allFilters");
 let searchButtonAuthor = document.getElementById("searchButtonAuthor");
 
-
 let yearDiv = document.getElementById("yearDiv");
 let yearFilter = document.getElementById("allYears");
 yearFilter.classList.add("listInDiv");
 let allYearList = document.getElementById("allYearList");
 let searchButtonYear = document.getElementById("searchButtonYear");
 
-
 let genreDiv = document.getElementById("genreDiv");
 let allGenres = document.getElementById("allGenre");
 allGenres.classList.add("listInDiv");
 let listWithAllGenres = document.getElementById("allGenreList");
 let searchButtonGenre = document.getElementById("searchButtonGenre");
-
-
 
 
 filterButton.addEventListener("click", function () {
@@ -1054,10 +1034,10 @@ viewList.addEventListener("click", async function () {
 
         let serie = document.createElement("p");
 
-        if (book.seriesName === "The Empyrean series") {
-            serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}`
+        if (book.seriesname === "The Empyrean series") {
+            serie.textContent = `Book ${book.seriesnumber} in the ${book.seriesname}`
         } else {
-            serie.textContent = `Book ${book.seriesNumber} in the ${book.seriesName}- series`
+            serie.textContent = `Book ${book.seriesnumber} in the ${book.seriesname}- series`
         }
 
         let rating = document.createElement("p");
@@ -1144,14 +1124,14 @@ closeAndSave.addEventListener("click", async function () {
         }
 
         // Serie-fält
-        let seriesName = null;
-        let seriesNumber = null;
+        let seriesname = null;
+        let seriesnumber = null;
         if (inputIsSeries.checked) {
-            seriesName = inputSeriesName.value.trim();
+            seriesname = inputSeriesName.value.trim();
             let numberValue = inputSeriesNumber.value.trim();
             if (numberValue !== "") {
-                seriesNumber = Number(numberValue);
-                if (isNaN(seriesNumber)) {
+                seriesnumber = Number(numberValue);
+                if (isNaN(seriesnumber)) {
                     alert("Series number must be a valid number.");
                     return;
                 }
@@ -1215,8 +1195,8 @@ closeAndSave.addEventListener("click", async function () {
             quotes: quotes,
             imgsrc: imgUrl,
             summary: bookSummary.value,
-            seriesName: seriesName,
-            seriesNumber: seriesNumber,
+            seriesname: seriesname,
+            seriesnumber: seriesnumber,
         };
 
         // Skicka till servern
@@ -1402,50 +1382,50 @@ async function checkUser() {
 
 checkUser();
 
-// async function importBooksFromJSON() {
-//     if (!currentUser) {
-//         alert("You must be logged in!");
-//         return;
-//     }
+async function importBooksFromJSON() {
+    if (!currentUser) {
+        alert("You must be logged in!");
+        return;
+    }
 
-//     let response = await fetch("../allBooks.json");
-//     let books = await response.json();
+    let response = await fetch("../allBooks.json");
+    let books = await response.json();
 
-//     for (let i = 0; i < books.length; i++) {
-//         let book = books[i];
+    for (let i = 0; i < books.length; i++) {
+        let book = books[i];
 
-//         let newBook = {
-//             title: book.title,
-//             genre: book.genre,
-//             author: book.author,
-//             pages: book.pages,
-//             start: book.start || null,
-//             finish: book.finish || null,
-//             summary: book.summary,
-//             imgsrc: book.imgsrc,
-//             ratings: book.ratings,
-//             quotes: book.quotes,
-//             seriesname: book.seriesName,
-//             seriesnumber: book.seriesNumber,
-//             type: book.type,
-//             user_id: currentUser
-//         };
+        let newBook = {
+            title: book.title,
+            genre: book.genre,
+            author: book.author,
+            pages: book.pages,
+            start: book.start || null,
+            finish: book.finish || null,
+            summary: book.summary,
+            imgsrc: book.imgsrc,
+            ratings: book.ratings,
+            quotes: book.quotes,
+            seriesname: book.seriesname,
+            seriesnumber: book.seriesnumber,
+            type: book.type,
+            user_id: currentUser
+        };
 
-//         let { error } = await supabaseClient
-//             .from("books")
-//             .insert([newBook]);
+        let { error } = await supabaseClient
+            .from("books")
+            .insert([newBook]);
 
-//         if (error) {
-//             console.error("Error inserting:", book.title, error);
-//         }
-//     }
+        if (error) {
+            console.error("Error inserting:", book.title, error);
+        }
+    }
 
-//     alert("All books imported!");
-//     loadBooks();
-// }
+    alert("All books imported!");
+    loadBooks();
+}
 
-// let importBtn = document.getElementById("importBooks");
+let importBtn = document.getElementById("importBooks");
 
-// importBtn.addEventListener("click", function () {
-//     importBooksFromJSON();
-// });
+importBtn.addEventListener("click", function () {
+    importBooksFromJSON();
+});
