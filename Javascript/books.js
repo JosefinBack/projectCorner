@@ -4,10 +4,8 @@ var supabaseClient = window.supabase.createClient(
 );
 let currentUser = null;
 
-
 let allBooks = document.getElementById("allBooks");
 let reloadBooks = document.getElementById("reload");
-
 
 let loginButton = document.getElementById("logInButton");
 let loginDiv = document.getElementById("logInDiv");
@@ -18,10 +16,8 @@ let who = document.getElementById("who");
 let userLogIn = document.getElementById("loginUser");
 let passwordLogIn = document.getElementById("loginPass");
 
-
 let logoutBtn = document.getElementById("logoutBtn");
 let appDiv = document.getElementById("app");
-
 
 let regDiv = document.getElementById("registration");
 let registerButton = document.getElementById("register");
@@ -31,9 +27,7 @@ let regMessage = document.getElementById("registerMessage");
 let userReg = document.getElementById("regUser");
 let passwordReg = document.getElementById("regPass");
 
-
 let addBook = document.getElementById("addBook");
-let closeBook = document.getElementById("close");
 let closeAndSave = document.getElementById("closeAndSave");
 let starContainers = document.getElementsByClassName("stars");
 let createBook = document.getElementById("createBook");
@@ -43,15 +37,10 @@ let picDiv = document.getElementById("pic");
 let ratingBook = document.getElementById("ratingBook");
 let deleteBook = document.getElementById("delete");
 
-
 let currentCover = null;
-
 
 let viewList = document.getElementById("list");
 let viewCard = document.getElementById("ruta");
-
-
-
 
 // Hämta inputfält
 let bookTitle = document.getElementById("bookTitle");
@@ -73,12 +62,10 @@ let imgUrl = null;
 
 //functions
 
-
 function createABook() {
     document.getElementById("overlay").style.display = "block";
     createBook.style.display = "block";
 }
-
 
 function closeCreateBook() {
     document.getElementById("overlay").style.display = "none";
@@ -89,17 +76,13 @@ function closeCreateBook() {
 async function openBookForEdit(bookId) {
     if (!currentUser) return;
 
-
-    // Hämta alla böcker och hitta rätt
     let books = await loadBooks();
-
 
     let book = books.find(b => b.id === bookId);
     if (!book) {
         console.warn("Book not found:", bookId);
         return;
     }
-
 
     // Öppna formuläret
     document.getElementById("overlay").style.display = "block";
@@ -116,7 +99,6 @@ async function openBookForEdit(bookId) {
         }
     }
 
-
     // Fyll i textfält
     setValue("bookTitle", book.title);
     setValue("genre", book.genre);
@@ -125,7 +107,6 @@ async function openBookForEdit(bookId) {
     setValue("startdate", book.start);
     setValue("finishdate", book.finish);
     setValue("summary", book.summary);
-
 
     if (book.seriesname) {
         document.getElementById("isSeries").checked = true;
@@ -137,15 +118,11 @@ async function openBookForEdit(bookId) {
         setValue("seriesnumber", "");
     }
 
-
-
-
     // Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
         radios[i].checked = (book.type && radios[i].value === book.type);
     }
-
 
     // Bild
     picDiv.innerHTML = "";
@@ -156,7 +133,6 @@ async function openBookForEdit(bookId) {
         imgEl.style.height = "350px";
         imgEl.style.display = "block";
         picDiv.appendChild(imgEl);
-
 
         currentCover = book.imgsrc;
     } else {
@@ -209,7 +185,6 @@ async function openBookForEdit(bookId) {
     // Spara att vi redigerar denna bok
     window.currentEditingId = bookId;
 }
-
 
 
 
@@ -277,9 +252,6 @@ async function uploadToCloudinary(file) {
     return data.secure_url; // här får du en https-länk till bilden
 }
 
-
-
-
 function createDivOfBook(book) {
     // Skapa en div i allBooks
     let divOfBook = document.createElement("div");
@@ -338,41 +310,6 @@ function createDivOfBook(book) {
     allBooks.appendChild(divOfBook);
 }
 
-
-//gör om bilden till mindre så servern klarar av att spara dem
-// function resizeImage(file, maxWidth, callback) {
-//     const reader = new FileReader();
-//     reader.onload = function (event) {
-//         const img = new Image();
-
-//         img.onload = function () {
-//             const canvas = document.createElement("canvas");
-//             const ctx = canvas.getContext("2d");
-
-//             // Räkna ut ny storlek (proportionellt)
-//             let scale = maxWidth / img.width;
-//             let newWidth = img.width * scale;
-//             let newHeight = img.height * scale;
-
-//             canvas.width = newWidth;
-//             canvas.height = newHeight;
-
-//             // Rita om bilden på canvas
-//             ctx.drawImage(img, 0, 0, newWidth, newHeight);
-
-//             // Gör om till Base64 (JPEG med kvalitet 0.7)
-//             let resizedBase64 = canvas.toDataURL("image/jpeg", 0.7);
-
-//             // Skicka tillbaka via callback
-//             callback(resizedBase64);
-//         };
-//         img.src = event.target.result;
-//     };
-
-//     reader.readAsDataURL(file);
-// }
-
-
 function wipeForm() {
     // textfält
     bookTitle.value = "";
@@ -385,12 +322,10 @@ function wipeForm() {
     imgInput.value = "";
     bookSummary.value = "";
 
-
     // serie
     inputIsSeries.checked = false;
     inputSeriesName.value = "";
     inputSeriesNumber.value = "";
-
 
     // citat
     let quoteInputs = document.querySelectorAll("#quotes .quote");
@@ -398,13 +333,11 @@ function wipeForm() {
         quoteInputs[i].value = "";
     }
 
-
     // radioknappar
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
         radios[i].checked = false;
     }
-
 
     // rating – bara i formuläret
     let ratingBig = document.querySelector("#ratingBook");
@@ -414,7 +347,6 @@ function wipeForm() {
             spansBig[i].classList.remove("filled");
         }
     }
-
 
     let starGroups = document.querySelectorAll("#ratingBox .stars");
     for (let g = 0; g < starGroups.length; g++) {
@@ -427,14 +359,10 @@ function wipeForm() {
 
 
 
-
 //Sortering
 async function sortAuthors() {
     let books = await loadBooks();
 }
-
-
-
 
 
 
@@ -453,10 +381,8 @@ async function filterAuthors() {
 
 
     for (let author of allAuthors) {
-        // skapa en container (div eller label)
         let container = document.createElement("div");
         container.classList.add("filterPart");
-
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -467,21 +393,17 @@ async function filterAuthors() {
         checkbox.value = author;
         checkbox.name = "authorFilter";
 
-
         let p = document.createElement("p");
         p.textContent = author;
-
 
         container.appendChild(checkbox);
         container.appendChild(p);
         authorList.appendChild(container);
     }
-}
-
+};
 
 async function filterByYear() {
     let books = await loadBooks();
-
 
     let allYears = [];
     for (let book of books) {
@@ -490,17 +412,14 @@ async function filterByYear() {
             allYears.push(year);
         }
     }
+
     let yearList = document.getElementById("allYearList");
     yearList.innerHTML = "";
-
-
     let years = allYears.sort();
-
 
     for (let year of years) {
         let container = document.createElement("div");
         container.classList.add("filterPart");
-
 
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -510,38 +429,22 @@ async function filterByYear() {
         checkbox.value = year;
         checkbox.name = "yearFilter";
 
-
         let p = document.createElement("p");
         p.textContent = year;
         container.appendChild(checkbox);
         container.appendChild(p);
         yearList.appendChild(container);
-
-
     }
-
-
-    // console.log(years); //kan använda denna för att bygga en lista med vilka år som finns att filtrera på
-
-
-    // let booksFrom2024 = books.filter(book => book.finish.slice(0, 4) === "2024");
-
-
-    // console.log(booksFrom2024);
-
-
-}
-
+};
 
 async function filterByGenre() {
-    let books = await loadBooks();//ger en array av alla böcker
+    let books = await loadBooks();
     let allGenres = [];
+
     for (let book of books) {
         if (!book.genre) continue;
-
         // Splitta strängen till en array (Fantasy, Dark romance → ["Fantasy", "Dark romance"])
         let genreParts = book.genre.split(",").map(g => g.trim());
-
 
         // Lägg till varje individuell genre
         for (let g of genreParts) {
@@ -558,7 +461,6 @@ async function filterByGenre() {
         let container = document.createElement("div");
         container.classList.add("filterPart");
 
-
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.style.border = "1px solid black";
@@ -567,15 +469,14 @@ async function filterByGenre() {
         checkbox.value = genre;
         checkbox.name = "genreFilter";
 
-
         let p = document.createElement("p");
         p.textContent = genre;
         container.appendChild(checkbox);
         container.appendChild(p);
         genreList.appendChild(container);
     }
+    ;
 }
-
 
 async function allBooksByYear() {
     let books = await supabaseClient
@@ -594,8 +495,7 @@ async function allBooksByYear() {
     const booksPerYear = {};
 
     for (let book of finishedBooks) {
-        const year = book.finish.slice(0, 4); // "2025"
-
+        const year = book.finish.slice(0, 4);
         if (!booksPerYear[year]) {
             booksPerYear[year] = 0;
         }
@@ -617,8 +517,11 @@ async function allBooksByYear() {
     showBookNumber.innerHTML = html;
 };
 
-//addEventListeners
+const thisYear = new Date().getFullYear();
+allBooksByYear(thisYear);
 
+
+//addEventListeners
 
 //register
 registerButton.addEventListener("click", function () {
@@ -629,16 +532,13 @@ registerButton.addEventListener("click", function () {
     passwordReg.value = "";
 });
 
-
 closeRegButton.addEventListener("click", function () {
     regDiv.style.display = "none";
 });
 
-
 createButton.addEventListener("click", function () {
     regDiv.appendChild(regMessage);
 });
-
 
 //log in
 loginButton.addEventListener("click", function () {
@@ -648,15 +548,9 @@ loginButton.addEventListener("click", function () {
     passwordLogIn.value = "";
 });
 
-
 closeLoginButton.addEventListener("click", function () {
     loginDiv.style.display = "none";
 });
-
-
-
-
-//Register and log in
 
 
 // --- REGISTER ---
@@ -749,28 +643,19 @@ allGenres.classList.add("listInDiv");
 let listWithAllGenres = document.getElementById("allGenreList");
 let searchButtonGenre = document.getElementById("searchButtonGenre");
 
-
 filterButton.addEventListener("click", function () {
     allFilters.classList.toggle("visible");
 });
 
-
 searchButtonAuthor.addEventListener("click", async function () {
     const checkedBoxes = document.querySelectorAll('input[name="authorFilter"]:checked');
-
-
     let choosenAuthors = [];
     for (let authos of checkedBoxes) {
         choosenAuthors.push(authos.value);
     }
-    // console.log(choosenAuthors);
-
 
     let books = await loadBooks();
-
-
     let choosenBooks = books.filter(book => choosenAuthors.includes(book.author));
-
 
     choosenBooks.sort((a, b) => {
         // Först sortera på författarnamn
@@ -779,30 +664,23 @@ searchButtonAuthor.addEventListener("click", async function () {
             return authorCompare;
         }
 
-
         // Om samma författare → sortera på titel
         return a.title.localeCompare(b.title);
     });
-
 
     allBooks.innerHTML = "";
     for (let book of choosenBooks) {
         createDivOfBook(book);
     };
 
-
     let divAuthors = document.getElementById("authors");
     divAuthors.classList.remove("visible");
     allFilters.classList.remove("visible");
-
-
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
     let authorArray = choosenAuthors.join(", ");
     filterUsed.innerHTML = `Filter/ Authors/ ${authorArray}`;
     filterUsed.style.fontWeight = "bold";
-
-
     reloadBooks.style.visibility = "visible"
 });
 
@@ -836,53 +714,36 @@ searchButtonYear.addEventListener("click", async function () {
 
 searchButtonGenre.addEventListener("click", async function () {
     let checkBoxes = document.querySelectorAll('input[name="genreFilter"]:checked');
-
-
     let choosenGenre = [];
     for (let genre of checkBoxes) {
         choosenGenre.push(genre.value);
     }
 
-
     let books = await loadBooks();
-
-
     let genreChecked = books.filter(book => {
         if (!book.genre) return false;
-
 
         let bookGenres = book.genre
             .split(",")
             .map(g => g.trim());
 
-
         return bookGenres.some(g => choosenGenre.includes(g));
     });
-
 
     allBooks.innerHTML = "";
     for (let book of genreChecked) {
         createDivOfBook(book);
     }
 
-
     let divGenre = document.getElementById("allGenre");
     divGenre.classList.remove("visible");
     allFilters.classList.remove("visible");
-
-
     filterUsed.style.visibility = "visible"
     filterUsed.innerHTML = "";
     let genreArray = choosenGenre.join(", ");
     filterUsed.innerHTML = `Filter/ Genre/ ${genreArray}`;
-
-
     reloadBooks.style.visibility = "visible"
 });
-
-
-
-
 
 
 // fyll listan när man klickar
@@ -893,15 +754,11 @@ authorDIV.addEventListener("click", async function (event) {
         await filterAuthors();
         allAuthorsNames.classList.add("visible");
 
-
         //stäng de andra
         yearFilter.classList.remove("visible");
         allGenres.classList.remove("visible");
     }
 });
-
-
-
 
 yearDiv.addEventListener("click", async function (event) {
     event.stopPropagation();
@@ -909,7 +766,6 @@ yearDiv.addEventListener("click", async function (event) {
         allYearList.innerHTML = "";
         await filterByYear();
         yearFilter.classList.add("visible");
-
 
         //Stäng de andra
         allAuthorsNames.classList.remove("visible");
@@ -924,13 +780,10 @@ genreDiv.addEventListener("click", async function (event) {
     await filterByGenre();
     allGenres.classList.add("visible");
 
-
     //Stäng de andra
     allAuthorsNames.classList.remove("visible");
     yearFilter.classList.remove("visible");
 })
-
-
 
 
 //stäng
@@ -960,26 +813,18 @@ yearFilter.addEventListener("click", function (event) {
     event.stopPropagation();
 });
 
-
 allGenres.addEventListener("click", function (event) {
     event.stopPropagation();
 });
 
 
-
-
 //Sortering
-
-
 let sortBtnInMeny = document.getElementById("sort");
 let allSort = document.getElementById("allSort");
-
 
 sortBtnInMeny.addEventListener("click", function () {
     allSort.classList.toggle("visible")
 });
-
-
 
 
 
@@ -1042,31 +887,32 @@ coverInput.addEventListener("change", async function () {
     let file = coverInput.files[0];
     if (!file) return;
 
-    let url = await uploadToCloudinary(file);
+    try {
+        // Visa loading (valfri men nice UX)
+        picDiv.innerHTML = "Uploading image...";
+        let url = await uploadToCloudinary(file);
 
-    // Visa bilden direkt
-    picDiv.innerHTML = "";
-    let img = document.createElement("img");
-    img.src = url;
-    img.style.width = "250px";
-    img.style.height = "350px";
-    picDiv.appendChild(img);
+        // Visa bilden
+        picDiv.innerHTML = "";
+        let img = document.createElement("img");
+        img.src = url;
+        img.style.width = "250px";
+        img.style.height = "350px";
+        picDiv.appendChild(img);
+        currentCover = url;
 
-    imgUrl = url;
-    currentCover = url;
+    } catch (err) {
+        console.error(err);
+        alert("Image upload failed");
+        currentCover = null;
+    }
 });
 
 
 //reload books
 reloadBooks.addEventListener("click", async function () {
     filterUsed.innerHTML = "";
-    await loadBooks(); // vänta tills böckerna laddats om
-
-
-    // const thisYear = new Date().getFullYear();
-    // allBooksThisyear(thisYear);
-
-
+    await loadBooks();
     reloadBooks.style.visibility = "hidden";
 });
 
@@ -1076,10 +922,6 @@ addBook.addEventListener("click", function () {
     createABook();
     wipeForm();
 });
-
-closeBook.addEventListener("click", function () {
-    closeCreateBook();
-})
 
 closeAndSave.addEventListener("click", async function () {
     if (!currentUser) {
@@ -1110,26 +952,11 @@ closeAndSave.addEventListener("click", async function () {
             }
         }
 
-        if (imgInput.files.length > 0) {
-            let file = imgInput.files[0];
-            imgUrl = await uploadToCloudinary(file);
-            currentCover = imgUrl;
-        } else if (window.currentEditingId) {
-            // Behåll gammal bild om vi redigerar
-            let oldDiv = document.querySelector(`[data-id="${window.currentEditingId}"]`);
-            if (oldDiv) {
-                let oldImg = oldDiv.querySelector("img");
-                if (oldImg) {
-                    imgUrl = oldImg.src;
-                }
-            }
-        }
-
         // Rating (från formulärets stjärnor)
         let bookRating = ratingBook.querySelectorAll(".filled").length;
 
         // Validering
-        if (!bookTitle.value.trim() || bookRating === 0 || !imgUrl) {
+        if (!bookTitle.value.trim() || bookRating === 0 || !currentCover) {
             alert("You must enter a title, select a book rating and upload a cover image before you can save.");
             return;
         }
@@ -1166,7 +993,7 @@ closeAndSave.addEventListener("click", async function () {
             type: bookType,
             ratings: ratings,
             quotes: quotes,
-            imgsrc: imgUrl || currentCover,
+            imgsrc: currentCover,
             summary: bookSummary.value,
             seriesname: seriesname,
             seriesnumber: seriesnumber,
@@ -1251,8 +1078,6 @@ deleteBook.addEventListener("click", async function () {
 
         loadBooks();
         await allBooksByYear();
-
-
     } catch (err) {
         console.error("Delete failed:", err);
         alert("Something went wrong when deleting.");
@@ -1268,7 +1093,6 @@ for (let i = 0; i < starContainers.length; i++) {
     let container = starContainers[i];
     let stars = container.getElementsByTagName("span");
 
-
     // gör varje stjärna klickbar
     for (let j = 0; j < stars.length; j++) {
         stars[j].addEventListener("click", function () {
@@ -1283,35 +1107,26 @@ for (let i = 0; i < starContainers.length; i++) {
             }
         });
     }
-}
+};
 
+// async function createFileOfAllBooks() {
+//     if (!currentUser) return;
 
-const thisYear = new Date().getFullYear();
-allBooksByYear(thisYear);
+//     let books = await loadBooks();
 
+//     const blob = new Blob(
+//         [JSON.stringify(books, null, 2)],
+//         { type: "application/json" }
+//     );
 
-//Skapa en json-fil av alla böcker, ifall om servern skulle försvinna så vill jag ha koll på mina böcker.
+//     const url = URL.createObjectURL(blob);
+//     const a = document.createElement("a");
+//     a.href = url;
+//     a.download = `backup-${currentUser}.json`;
+//     a.click();
 
-
-async function createFileOfAllBooks() {
-    if (!currentUser) return;
-
-    let books = await loadBooks();
-
-    const blob = new Blob(
-        [JSON.stringify(books, null, 2)],
-        { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `backup-${currentUser}.json`;
-    a.click();
-
-    URL.revokeObjectURL(url);
-}
+//     URL.revokeObjectURL(url);
+// }
 
 
 // bookmenu i mobilversion
@@ -1325,13 +1140,11 @@ if (bookMenuToggle && bookMenuDropdown) {
     });
 }
 
-
 bookMenuDropdown.addEventListener("click", function (event) {
     if (event.target.tagName === "BUTTON") {
         bookMenuDropdown.classList.remove("show");
     }
 });
-
 
 async function checkUser() {
     const { data } = await supabaseClient.auth.getUser();
@@ -1351,53 +1164,52 @@ async function checkUser() {
     }
 }
 
-
 checkUser();
 
-async function importBooksFromJSON() {
-    if (!currentUser) {
-        alert("You must be logged in!");
-        return;
-    }
+// async function importBooksFromJSON() {
+//     if (!currentUser) {
+//         alert("You must be logged in!");
+//         return;
+//     }
 
-    let response = await fetch("../allBooks.json");
-    let books = await response.json();
+//     let response = await fetch("../allBooks.json");
+//     let books = await response.json();
 
-    for (let i = 0; i < books.length; i++) {
-        let book = books[i];
+//     for (let i = 0; i < books.length; i++) {
+//         let book = books[i];
 
-        let newBook = {
-            title: book.title,
-            genre: book.genre,
-            author: book.author,
-            pages: book.pages,
-            start: book.start || null,
-            finish: book.finish || null,
-            summary: book.summary,
-            imgsrc: book.imgsrc,
-            ratings: book.ratings,
-            quotes: book.quotes,
-            seriesname: book.seriesname,
-            seriesnumber: book.seriesnumber,
-            type: book.type,
-            user_id: currentUser
-        };
+//         let newBook = {
+//             title: book.title,
+//             genre: book.genre,
+//             author: book.author,
+//             pages: book.pages,
+//             start: book.start || null,
+//             finish: book.finish || null,
+//             summary: book.summary,
+//             imgsrc: book.imgsrc,
+//             ratings: book.ratings,
+//             quotes: book.quotes,
+//             seriesname: book.seriesname,
+//             seriesnumber: book.seriesnumber,
+//             type: book.type,
+//             user_id: currentUser
+//         };
 
-        let { error } = await supabaseClient
-            .from("books")
-            .insert([newBook]);
+//         let { error } = await supabaseClient
+//             .from("books")
+//             .insert([newBook]);
 
-        if (error) {
-            console.error("Error inserting:", book.title, error);
-        }
-    }
+//         if (error) {
+//             console.error("Error inserting:", book.title, error);
+//         }
+//     }
 
-    alert("All books imported!");
-    loadBooks();
-}
+//     alert("All books imported!");
+//     loadBooks();
+// }
 
-let importBtn = document.getElementById("importBooks");
+// let importBtn = document.getElementById("importBooks");
 
-importBtn.addEventListener("click", function () {
-    importBooksFromJSON();
-});
+// importBtn.addEventListener("click", function () {
+//     importBooksFromJSON();
+// });
