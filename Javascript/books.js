@@ -591,7 +591,6 @@ async function allBooksByYear() {
     // Räkna per år
     const booksPerYear = {};
 
-
     for (let book of finishedBooks) {
         const year = book.finish.slice(0, 4); // "2025"
 
@@ -1403,50 +1402,50 @@ async function checkUser() {
 
 checkUser();
 
-async function importBooksFromJSON() {
-    if (!currentUser) {
-        alert("You must be logged in!");
-        return;
-    }
+// async function importBooksFromJSON() {
+//     if (!currentUser) {
+//         alert("You must be logged in!");
+//         return;
+//     }
 
-    let response = await fetch("../allBooks.json");
-    let books = await response.json();
+//     let response = await fetch("../allBooks.json");
+//     let books = await response.json();
 
-    for (let i = 0; i < books.length; i++) {
-        let book = books[i];
+//     for (let i = 0; i < books.length; i++) {
+//         let book = books[i];
 
-        let newBook = {
-            title: book.title,
-            genre: book.genre,
-            author: book.author,
-            pages: book.pages,
-            start: book.start || null,
-            finish: book.finish || null,
-            summary: book.summary,
-            imgsrc: book.imgsrc,
-            ratings: book.ratings,
-            quotes: book.quotes,
-            seriesname: book.seriesName,
-            seriesnumber: book.seriesNumber,
-            type: book.type,
-            user_id: currentUser
-        };
+//         let newBook = {
+//             title: book.title,
+//             genre: book.genre,
+//             author: book.author,
+//             pages: book.pages,
+//             start: book.start || null,
+//             finish: book.finish || null,
+//             summary: book.summary,
+//             imgsrc: book.imgsrc,
+//             ratings: book.ratings,
+//             quotes: book.quotes,
+//             seriesname: book.seriesName,
+//             seriesnumber: book.seriesNumber,
+//             type: book.type,
+//             user_id: currentUser
+//         };
 
-        let { error } = await supabaseClient
-            .from("books")
-            .insert([newBook]);
+//         let { error } = await supabaseClient
+//             .from("books")
+//             .insert([newBook]);
 
-        if (error) {
-            console.error("Error inserting:", book.title, error);
-        }
-    }
+//         if (error) {
+//             console.error("Error inserting:", book.title, error);
+//         }
+//     }
 
-    alert("All books imported!");
-    loadBooks();
-}
+//     alert("All books imported!");
+//     loadBooks();
+// }
 
-let importBtn = document.getElementById("importBooks");
+// let importBtn = document.getElementById("importBooks");
 
-importBtn.addEventListener("click", function () {
-    importBooksFromJSON();
-});
+// importBtn.addEventListener("click", function () {
+//     importBooksFromJSON();
+// });
