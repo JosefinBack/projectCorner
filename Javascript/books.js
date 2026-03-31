@@ -1234,7 +1234,10 @@ for (let i = 0; i < starContainers.length; i++) {
 //     a.click();
 
 //     URL.revokeObjectURL(url);
+//     console.log("Json-fil uppdaterad")
 // }
+
+// createFileOfAllBooks();
 
 
 // bookmenu i mobilversion
@@ -1321,3 +1324,6 @@ checkUser();
 // importBtn.addEventListener("click", function () {
 //     importBooksFromJSON();
 // });
+
+
+//input till sql är jag skapar en ny bok
