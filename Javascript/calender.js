@@ -88,6 +88,7 @@ btnNext.addEventListener("click", function () {
         }
         renderCalendar(currentYear, currentMonth);
     }
+    test();
 });
 
 btnPrev.addEventListener("click", function () {
@@ -102,6 +103,7 @@ btnPrev.addEventListener("click", function () {
         }
         renderCalendar(currentYear, currentMonth);
     }
+    test();
 });
 
 
@@ -210,6 +212,6 @@ async function test() {
     }
 }
 
-test()
+test();
 
 //loopa igenom shcema.json och sen göra en loop inuti den där man loopat schemat, och om det finns en match så ska innehållet från objektet skrivas in i rutan. 
