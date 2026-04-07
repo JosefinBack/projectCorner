@@ -1278,6 +1278,11 @@ async function checkUser() {
 
 checkUser();
 
+
+//API för goodreads (eller likande) så man kan skapa en TBR
+
+
+
 // async function importBooksFromJSON() {
 //         alert("You must be logged in!");
 //         return;
@@ -1325,5 +1330,3 @@ checkUser();
 //     importBooksFromJSON();
 // });
 
-
-//input till sql är jag skapar en ny bok

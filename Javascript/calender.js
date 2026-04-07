@@ -76,7 +76,7 @@ function renderCalendar(year, monthIndex) {
 }
 
 
-btnNext.addEventListener("click", () => {
+btnNext.addEventListener("click", function () {
     if (isMobile()) {
         currentDate.setDate(currentDate.getDate() + 7);
         renderWeek(currentDate);
@@ -90,7 +90,7 @@ btnNext.addEventListener("click", () => {
     }
 });
 
-btnPrev.addEventListener("click", () => {
+btnPrev.addEventListener("click", function () {
     if (isMobile()) {
         currentDate.setDate(currentDate.getDate() - 7);
         renderWeek(currentDate);
@@ -142,8 +142,7 @@ function renderWeek(date) {
 
     const weekDates = getWeekDates(date);
 
-    monthName.textContent =
-        `${date.getFullYear()}`;
+    monthName.textContent = `${date.getFullYear()}`;
 
     weekDates.forEach(d => {
         const dayDiv = document.createElement("div");
@@ -169,7 +168,7 @@ let schedule = [];
 
 async function loadSchedule() {
     try {
-        const response = await fetch("../schema.json");
+        const response = await fetch("../schemaVT26.json");
         schedule = await response.json();
         console.log("Schema laddat:", schedule);
     } catch (error) {
@@ -190,11 +189,25 @@ loadSchedule();
 
 async function test() {
 
-    const response = await fetch("../schema.json");
-    schedule = await response.json();
+    const response = await fetch("../schemaVT26.json");
+    let schedule = await response.json();
 
+    let allDayDivs = document.querySelectorAll(".day");
 
+    for (let day of schedule) {
+        // Hämta dagnummer från datum (YYYY-MM-DD)
+        let dayNumber = new Date(day.date).getDate();
 
+        for (let div of allDayDivs) {
+            let divNumber = Number(div.textContent);
+
+            if (dayNumber === divNumber) {
+                let divTime = document.createElement("div");
+                divTime.textContent = day.startTime;
+                div.appendChild(divTime);
+            }
+        }
+    }
 }
 
 test()
