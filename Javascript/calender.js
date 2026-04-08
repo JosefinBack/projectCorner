@@ -194,7 +194,7 @@ async function test() {
     const response = await fetch("../schemaVT26.json");
     let schedule = await response.json();
 
-    let allDayDivs = document.querySelectorAll(".day");
+    let allDayDivs = document.querySelectorAll(".day, rightDay");
 
     for (let day of schedule) {
         // Hämta dagnummer från datum (YYYY-MM-DD)
