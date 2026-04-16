@@ -15,8 +15,10 @@ let loginMessage = document.getElementById("loginMessage");
 let who = document.getElementById("who");
 let userLogIn = document.getElementById("loginUser");
 let passwordLogIn = document.getElementById("loginPass");
+let topDIV = document.getElementById("topDIV");
 
 let logoutBtn = document.getElementById("logoutBtn");
+let welcomeLogedOut = document.getElementById("welcomeLogedOut");
 let appDiv = document.getElementById("app");
 
 let regDiv = document.getElementById("registration");
@@ -595,6 +597,9 @@ loginBtn.addEventListener("click", async function () {
     loginBtn.style.display = "none";
     registerButton.style.display = "none";
     loginButton.style.display = "none";
+    topDIV.style.display = "flex";
+    logoutBtn.style.display = "flex";
+    welcomeLogedOut.style.display = "none";
 
     loadBooks();
     allBooksByYear();
@@ -612,6 +617,7 @@ logoutBtn.addEventListener("click", async function () {
     loginButton.style.display = "block";
     loginBtn.style.display = "block";
     registerButton.style.display = "block";
+    welcomeLogedOut.style.display = "flex";
 });
 
 
@@ -1261,20 +1267,31 @@ async function checkUser() {
     const { data } = await supabaseClient.auth.getUser();
 
     if (!data.user) {
+        currentUser = null;
+
+        // VISA rätt saker när utloggad
+        welcomeLogedOut.style.display = "flex";
+        loginButton.style.display = "block";
+        registerButton.style.display = "block";
+        logoutBtn.style.display = "none";
         appDiv.style.display = "none";
+
+        return;
     }
 
-    if (data.user) {
-        currentUser = data.user.id;
-        who.textContent = data.user.email;
-        appDiv.style.display = "inline-block";
-        loginBtn.style.display = "none";
-        registerButton.style.display = "none";
-        loginButton.style.display = "none";
-        loadBooks();
-        allBooksByYear();
-    }
-};
+    // OM inloggad
+    currentUser = data.user.id;
+    who.textContent = data.user.email;
+
+    welcomeLogedOut.style.display = "none";
+    loginButton.style.display = "none";
+    registerButton.style.display = "none";
+    logoutBtn.style.display = "flex";
+    appDiv.style.display = "inline-block";
+
+    loadBooks();
+    allBooksByYear();
+}
 
 checkUser();
 
