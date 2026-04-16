@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Books</title>
     <link rel="stylesheet" href="../CSS/globalStyle.css">
+    <link rel="stylesheet" href="../CSS/stats.css">
     <link rel="stylesheet" href="../CSS/books.css">
 </head>
 
 <body>
+    <div id="headerFront"></div>
     <main>
         <!-- MOBIL-KNAPP -->
         <div id="bookMenuToggle">Book menu ☰</div>
@@ -17,13 +19,15 @@
         <div id="bookMenuDropdown">
             <div id="bookmeny">
                 <div id="rightmeny" class="bookMeny">
-                    <div class="bookmenyButton" id="backToBooks">Tillbaka till böckerna</div>
+                    <a href="../HTML/books.html" class="bookmenyButton">Tillbaka till böckerna</a>
                 </div>
             </div>
-
+        </div>
+        <div id="drawingSpace"></div>
 
     </main>
 
+    <script src="../Javascript/d3.v7.min.js"></script>
     <script src="../Javascript/header-inside.js" defer></script>
     <script src="../Javascript/stats.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>

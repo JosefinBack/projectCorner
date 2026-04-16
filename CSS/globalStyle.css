@@ -3,6 +3,11 @@
     src: url("../Font/CormorantGaramond-VariableFont_wght.ttf");
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
 body {
     margin: 0px;
     max-width: 1300px;
