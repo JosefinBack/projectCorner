@@ -71,6 +71,8 @@ main {
     width: 100px;
     align-content: center;
     text-align: center;
+    background-color: white;
+    border-radius: 10px;
 }
 
 .bookmenyButton:hover {
@@ -222,7 +224,7 @@ main {
 }
 
 .book-card img {
-    width: 100%;
+    width: 140px;
     height: auto;
     max-height: 250px;
     object-fit: cover;

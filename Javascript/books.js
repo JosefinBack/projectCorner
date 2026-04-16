@@ -278,8 +278,6 @@ function createDivOfBook(book) {
     if (book.imgsrc) {
         let imgPic = document.createElement("img");
         imgPic.src = book.imgsrc;
-        imgPic.style.width = "100px";
-        imgPic.style.height = "150px";
         divOfBook.appendChild(imgPic);
     }
 
