@@ -13,10 +13,12 @@ let monthButton = document.getElementById("monthButton");
 
 
 genreButton.addEventListener("click", function () {
+    drawingSpace.innerHTML = "";
     diagramGenre();
 });
 
 monthButton.addEventListener("click", function () {
+    drawingSpace.innerHTML = "";
     diagramBooksPerMonth();
 });
 
@@ -160,11 +162,11 @@ function diagramBooksPerMonth() {
     drawingSpace.append(divYearsButton);
 
     button2025.addEventListener("click", function () {
-        prepareData(2025);
+        prepareData();
     });
 
     button2026.addEventListener("click", function () {
-        prepareData(2026);
+        prepareData();
     });
 
     async function getBooks() {
@@ -184,22 +186,27 @@ function diagramBooksPerMonth() {
         drawChart(bookArray);
     };
 
-    function drawChart(bookArray, year) {
+    function drawChart(bookArray) {
         const hSvg = 400;
         const wSvg = 800;
         const hPad = 50;
         const wPad = 100;
 
-        let yearFinish = new Date(book.finish).getFullYear();
-
         let books2025 = [];
+        let month2025 = [];
         let books2026 = [];
-        console.log(bookArray)
 
         for (let book of bookArray) {
+            let yearFinish = new Date(book.finish).getFullYear();
 
             if (yearFinish === 2025) {
                 books2025.push(book);
+
+                //kontrollera månader och skapa en array av dem
+
+                let monthFinish = new Date(book.finish).getMonth();
+                console.log(`${monthFinish}` + `${book.title}`)
+
             } else if (yearFinish === 2026) {
                 books2026.push(book);
             }
@@ -207,20 +214,22 @@ function diagramBooksPerMonth() {
 
         let booksInEachMonth = {};
 
-        if (yearFinish === year) {
-            let svg = d3.selectAll("#drawingspace")
+        function makeChart() {
+            let svg = d3.selectAll("#drawingSpace")
                 .append("svg")
                 .attr("height", hSvg)
                 .attr("width", wSvg)
+
+
         }
+        makeChart();
 
 
-        console.log(books2025)
-        console.log(books2026)
+        //console.log(books2025)
+        // console.log(books2026)
     }
 
 
 
 };
-diagramBooksPerMonth()
 
