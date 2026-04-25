@@ -6,6 +6,7 @@ var supabaseClient = window.supabase.createClient(
 let main = document.querySelector("main");
 let backToBooks = document.getElementById("backToBooks");
 let drawingSpace = document.getElementById("drawingSpace");
+let grafHeader = document.getElementById("grafHeader");
 
 let buttonStatsDiv = document.getElementById("ButtonsStats");
 let genreButton = document.getElementById("genreButton");
@@ -26,7 +27,7 @@ monthButton.addEventListener("click", function () {
 //Diagram för genre
 function diagramGenre() {
     let h1 = document.createElement("h1");
-    h1.innerHTML = `Hur många böcker inom varje genre`;
+    h1.innerHTML = `Antal böcker inom varje genre`;
     drawingSpace.append(h1);
 
     async function getBooksAndGenre() {
@@ -148,7 +149,7 @@ function diagramGenre() {
 function diagramBooksPerMonth() {
     let h1 = document.createElement("h1");
     h1.innerHTML = `Avslutade böcker per månad`;
-    drawingSpace.append(h1);
+    grafHeader.append(h1);
 
     let divYearsButton = document.createElement("div");
     let button2025 = document.createElement("button");
@@ -159,14 +160,14 @@ function diagramBooksPerMonth() {
     button2026.textContent = "2026";
     divYearsButton.append(button2026);
 
-    drawingSpace.append(divYearsButton);
+    grafHeader.append(divYearsButton);
 
     button2025.addEventListener("click", function () {
-        prepareData();
+        prepareData(2025);
     });
 
     button2026.addEventListener("click", function () {
-        prepareData();
+        prepareData(2026);
     });
 
     async function getBooks() {
@@ -181,55 +182,111 @@ function diagramBooksPerMonth() {
         return data;
     };
 
-    async function prepareData() {
+    async function prepareData(year) {
         let bookArray = await getBooks();
-        drawChart(bookArray);
+        drawChart(bookArray, year);
     };
 
-    function drawChart(bookArray) {
-        const hSvg = 400;
-        const wSvg = 800;
-        const hPad = 50;
-        const wPad = 100;
 
-        let books2025 = [];
-        let month2025 = [];
-        let books2026 = [];
+    function drawChart(bookArray, selectedYear) {
 
+        const allMonth = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+        let booksInEachMonth = {};
+        let dataset = [];
+
+        // 1. RÄKNA (baserat på valt år)
         for (let book of bookArray) {
             let yearFinish = new Date(book.finish).getFullYear();
 
-            if (yearFinish === 2025) {
-                books2025.push(book);
-
-                //kontrollera månader och skapa en array av dem
-
+            if (yearFinish === selectedYear) {
                 let monthFinish = new Date(book.finish).getMonth();
-                console.log(`${monthFinish}` + `${book.title}`)
+                let monthName = allMonth[monthFinish];
 
-            } else if (yearFinish === 2026) {
-                books2026.push(book);
+                if (!booksInEachMonth[monthName]) {
+                    booksInEachMonth[monthName] = 0;
+                }
+
+                booksInEachMonth[monthName]++;
             }
-        };
-
-        let booksInEachMonth = {};
-
-        function makeChart() {
-            let svg = d3.selectAll("#drawingSpace")
-                .append("svg")
-                .attr("height", hSvg)
-                .attr("width", wSvg)
-
-
         }
-        makeChart();
 
+        // 2. BYGG dataset
+        for (let month of allMonth) {
+            let count = booksInEachMonth[month] || 0;
 
-        //console.log(books2025)
-        // console.log(books2026)
+            if (count > 0) {
+                dataset.push({
+                    month: month,
+                    count: count
+                });
+            }
+        }
+        console.group(dataset)
+        makeChart(dataset);
     }
-
-
-
 };
+
+function makeChart(dataset) {
+    drawingSpace.innerHTML = "";
+
+    const hSvg = 400;
+    const wSvg = 800;
+    const hPad = 50;
+    const wPad = 100;
+
+    let months = dataset.map(d => d.month);
+    let valueDatset = [dataset];
+
+    let svg = d3.select("#drawingSpace")
+        .append("svg")
+        .attr("height", hSvg)
+        .attr("width", wSvg);
+
+    let xScale = d3.scaleBand()
+        .domain(months)
+        .range([wPad, wSvg - wPad])
+
+    let yScale = d3.scaleLinear()
+        .domain([0, 10])
+        .range([hSvg - hPad, hPad])
+
+    let dFunction = d3.line()
+        .x(d => xScale(d.month) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.count))
+
+    svg.append("g")
+        .selectAll("rect")
+        .data(valueDatset)
+        .enter()
+        .append("path")
+        .attr("fill", "none")
+        .attr("stroke", "pink")
+        .attr("stroke-width", 3)
+        .attr("d", dFunction);
+
+    svg.append("g")
+        .selectAll("rect")
+        .data(dataset)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xScale(d.month) + xScale.bandwidth() / 2)
+        .attr("cy", d => yScale(d.count))
+        .attr("r", 3)
+        .attr("fill", "black")
+
+
+
+    let xAxel = d3.axisBottom(xScale);
+    let yAxel = d3.axisLeft(yScale);
+
+    svg.append("g")
+        .call(xAxel)
+        .attr("transform", `translate(0, ${hSvg - hPad})`)
+
+    svg.append("g")
+        .call(yAxel)
+        .attr("transform", `translate(${wPad}, 0)`)
+};
+
 
