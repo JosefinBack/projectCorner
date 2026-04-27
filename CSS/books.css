@@ -224,7 +224,7 @@ main {
 }
 
 .book-card img {
-    width: 130px;
+    width: 120px;
     height: auto;
     max-height: 250px;
     object-fit: cover;
