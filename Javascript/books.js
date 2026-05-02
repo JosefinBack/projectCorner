@@ -20,6 +20,7 @@ let topDIV = document.getElementById("topDIV");
 let logoutBtn = document.getElementById("logoutBtn");
 let welcomeLogedOut = document.getElementById("welcomeLogedOut");
 let appDiv = document.getElementById("app");
+let latestReadBook = document.getElementById("latestReadBook");
 
 let regDiv = document.getElementById("registration");
 let registerButton = document.getElementById("register");
@@ -258,6 +259,88 @@ async function loadBooks() {
     }
     return books;
 }
+
+async function latestBook() {
+    const { data: userData } = await supabaseClient.auth.getUser();
+
+    if (!userData.user) {
+        console.log("No user logged in");
+        return null;
+    }
+    let userId = userData.user.id;
+
+    let { data: books, error } = await supabaseClient
+        .from("books")
+        .select("*")
+        .eq("user_id", userId);
+
+    if (error) {
+        console.error(error);
+        return null;
+    }
+
+    let finished = books.filter(function (book) {
+        return book.finish;
+    });
+
+    finished.sort(function (a, b) {
+        return new Date(b.finish) - new Date(a.finish);
+    });
+
+    let latestBook = finished[0];
+    console.log(latestBook)
+
+    //Skapa en div med info om boken som ska synas i topDIV
+
+    let divBook = document.createElement("div");
+    divBook.classList.add("divBook")
+    let pTitle = document.createElement("h4");
+    pTitle.textContent = latestBook.title;
+    pTitle.style.fontSize = "20px";
+    pTitle.style.margin = "0px";
+
+    let pInfo = null;
+
+    if (latestBook.seriesname) {
+        pInfo = document.createElement("p");
+        pInfo.style.margin = "0px";
+        pInfo.textContent = `${latestBook.seriesname} (${latestBook.seriesnumber})`;
+    }
+
+    let pImg = document.createElement("img");
+    pImg.src = latestBook.imgsrc;
+    pImg.style.height = "150px";
+    pImg.style.width = "100px";
+
+    let pRating = document.createElement("p");
+    pRating.style.margin = "0px";
+    pRating.style.fontSize = "18px";
+    pRating.style.fontWeight = "bold";
+    let text = document.createElement("span");
+    text.textContent = `${latestBook.ratings.book}/10 `;
+
+    let star = document.createElement("span");
+    star.textContent = "★";
+    star.style.color = "gold";
+    pRating.append(text, star);
+
+    latestReadBook.innerHTML = "";
+    divBook.innerHTML = "";
+    divBook.append(pImg);
+    divBook.append(pTitle);
+
+    if (pInfo) {
+        divBook.append(pInfo);
+    }
+
+    divBook.append(pRating);
+    latestReadBook.append(divBook);
+
+};
+latestBook();
+
+
+
 
 
 async function uploadToCloudinary(file) {
@@ -523,18 +606,23 @@ async function allBooksByYear() {
     }
 
     const showBookNumber = document.getElementById("howManyBooks");
-    showBookNumber.style.fontSize = "18px";
 
-    let html = `
+    let pTotal = document.createElement("p");
+    pTotal.innerHTML = `
        You have read <strong>${totalBooks}</strong> books in total
        <br><br>
    `;
 
+    let pBooksYear = document.createElement("p");
+    let html = "";
+
     for (let year in booksPerYear) {
         html += `<strong>${year}:</strong> ${booksPerYear[year]} books<br>`;
     }
+    pBooksYear.innerHTML = html;
 
-    showBookNumber.innerHTML = html;
+    showBookNumber.append(pTotal, pBooksYear);
+
 };
 
 //addEventListeners
@@ -610,7 +698,7 @@ loginBtn.addEventListener("click", async function () {
     loginMessage.textContent = "Welcome!";
     loginMessage.style.color = "green";
 
-    appDiv.style.display = "inline-block";
+    appDiv.style.display = "flex";
     loginDiv.style.display = "none";
     loginBtn.style.display = "none";
     registerButton.style.display = "none";
@@ -1322,7 +1410,7 @@ async function checkUser() {
     loginButton.style.display = "none";
     registerButton.style.display = "none";
     logoutBtn.style.display = "flex";
-    appDiv.style.display = "inline-block";
+    appDiv.style.display = "flex";
 
     loadBooks();
     allBooksByYear();

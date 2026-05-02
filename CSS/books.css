@@ -10,7 +10,7 @@ h2 {
 
 h3 {
     margin: 0px;
-    font-size: 25px;
+    font-size: 35px;
 }
 
 #topDIV {
@@ -18,9 +18,12 @@ h3 {
     height: 100%;
     border-radius: 20px;
     padding: 10px 20px;
+}
+
+#topDivContent {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    gap: 200px;
+    justify-content: center;
 }
 
 /* meny */
@@ -253,6 +256,15 @@ main {
 
 .book-card .stars .filled {
     color: gold;
+}
+
+
+.divBook {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-right: 25px;
 }
 
 .editPic {
@@ -514,6 +526,8 @@ main {
 
 #app {
     display: none;
+    justify-content: center;
+    margin-bottom: 40px;
 }
 
 #logoutBtn {
@@ -562,6 +576,11 @@ main {
     font-weight: bold;
 }
 
+#howManyBooks {
+    margin: 0px 5px;
+    font-size: 22px;
+}
+
 
 
 /* mobilvy  */
@@ -597,9 +616,10 @@ main {
         font-size: 12px;
     }
 
-    #howManyBooks,
-    h3 {
+    #howManyBooks {
         margin: 0px 5px;
+        font-size: 22px;
+        padding-top: 40px;
     }
 
     .bookmenyButton {
