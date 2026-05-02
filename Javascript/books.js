@@ -207,37 +207,57 @@ async function loadBooks() {
         return [];
     }
 
-    // sortering
+    // Hjälpfunktion för datum
+    function getTime(date) {
+        if (date === null || date === undefined || date === "") {
+            return 0;
+        }
+        return new Date(date).getTime();
+    }
+
+    // 1. Skapa latestSeriesDate
+    let latestSeriesDate = {};
+    for (let book of books) {
+        if (book.seriesname) {
+            let time = getTime(book.finish);
+
+            if (!latestSeriesDate[book.seriesname]) {
+                latestSeriesDate[book.seriesname] = time;
+            } else if (time > latestSeriesDate[book.seriesname]) {
+                latestSeriesDate[book.seriesname] = time;
+            }
+        }
+    }
+
+    // 2. Sortering
     books.sort(function (a, b) {
-
-        // Samma serie → sortera på nummer
-        const sameSeries = a.seriesname === b.seriesname;
-
-        if (sameSeries && a.seriesname) {
+        function getGroupTime(book) {
+            if (book.seriesname) {
+                return latestSeriesDate[book.seriesname] || 0;
+            }
+            return getTime(book.finish);
+        }
+        let timeA = getGroupTime(a);
+        let timeB = getGroupTime(b);
+        // 1. Sortera på senaste aktivitet (serie + fristående blandat)
+        if (timeA !== timeB) {
+            return timeB - timeA;
+        }
+        // 2. Samma serie → rätt ordning
+        if (a.seriesname && b.seriesname && a.seriesname === b.seriesname) {
             return (a.seriesnumber || 0) - (b.seriesnumber || 0);
         }
-
-        // Båda har serie → sortera alfabetiskt
-        if (a.seriesname && b.seriesname) {
-            return a.seriesname.localeCompare(b.seriesname);
-        }
-
-        // Böcker med serie först
-        if (a.seriesname && !b.seriesname) return -1;
-        if (!a.seriesname && b.seriesname) return 1;
-
-        // Annars sortera på titel
-        return a.title.localeCompare(b.title);
+        // 3. fallback
+        return (a.title || "").localeCompare(b.title || "", "sv");
     });
-    allBooks.innerHTML = "";
-    allBooks.classList.remove("listView");
-    allBooks.classList.add("gridView");
 
+
+    allBooks.innerHTML = "";
     for (let book of books) {
         createDivOfBook(book);
     }
     return books;
-};
+}
 
 
 async function uploadToCloudinary(file) {
@@ -602,6 +622,23 @@ loginBtn.addEventListener("click", async function () {
     loadBooks();
     allBooksByYear();
 });
+
+
+async function setDisplayName(name) {
+    const { data, error } = await supabaseClient.auth.updateUser({
+        data: {
+            display_name: name
+        }
+    });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+    console.log("Updated user:", data);
+}
+
+setDisplayName("Josefin");
 
 
 // Logga ut
@@ -1279,7 +1316,7 @@ async function checkUser() {
 
     // OM inloggad
     currentUser = data.user.id;
-    who.textContent = data.user.email;
+    who.textContent = data.user.user_metadata.display_name || data.user.email;
 
     welcomeLogedOut.style.display = "none";
     loginButton.style.display = "none";

@@ -194,6 +194,10 @@ main {
     padding: 20px;
     max-width: 1200px;
     margin: 5px auto;
+
+    display: grid;
+    grid-template-columns: repeat(5, 215px);
+    gap: 30px;
 }
 
 #allBooks.gridView {
