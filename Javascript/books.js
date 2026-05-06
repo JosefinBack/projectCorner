@@ -1390,6 +1390,7 @@ async function checkUser() {
     currentUser = data.user.id;
     who.textContent = data.user.user_metadata.display_name || data.user.email;
 
+    console.log(currentUser);
     welcomeLogedOut.style.display = "none";
     loginButton.style.display = "none";
     registerButton.style.display = "none";
@@ -1454,18 +1455,18 @@ checkUser();
 //     importBooksFromJSON();
 // });
 
-async function setDisplayName(name) {
-    const { data, error } = await supabaseClient.auth.updateUser({
-        data: {
-            display_name: name
-        }
-    });
+// async function setDisplayName(name) {
+//     const { data, error } = await supabaseClient.auth.updateUser({
+//         data: {
+//             display_name: name
+//         }
+//     });
 
-    if (error) {
-        console.error(error);
-        return;
-    }
-    console.log("Updated user:", data);
-}
+//     if (error) {
+//         console.error(error);
+//         return;
+//     }
+//     console.log("Updated user:", data);
+// }
 
-setDisplayName("Josefin");
+// setDisplayName("Josefin");
