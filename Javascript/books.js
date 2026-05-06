@@ -712,22 +712,6 @@ loginBtn.addEventListener("click", async function () {
 });
 
 
-async function setDisplayName(name) {
-    const { data, error } = await supabaseClient.auth.updateUser({
-        data: {
-            display_name: name
-        }
-    });
-
-    if (error) {
-        console.error(error);
-        return;
-    }
-    console.log("Updated user:", data);
-}
-
-setDisplayName("Moa");
-
 
 // Logga ut
 logoutBtn.addEventListener("click", async function () {
@@ -1470,3 +1454,18 @@ checkUser();
 //     importBooksFromJSON();
 // });
 
+async function setDisplayName(name) {
+    const { data, error } = await supabaseClient.auth.updateUser({
+        data: {
+            display_name: name
+        }
+    });
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+    console.log("Updated user:", data);
+}
+
+setDisplayName("Josefin");
