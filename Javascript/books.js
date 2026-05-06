@@ -726,7 +726,7 @@ async function setDisplayName(name) {
     console.log("Updated user:", data);
 }
 
-setDisplayName("Josefin");
+setDisplayName("Moa");
 
 
 // Logga ut
