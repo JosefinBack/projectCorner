@@ -384,17 +384,21 @@ function createDivOfBook(book) {
         divOfBook.appendChild(imgPic);
     }
 
+    //Div för titel, serie, rating
+    let bottomDiv = document.createElement("div");
+    let titleAndSerie = document.createElement("div");
+
     // Lägg till titel
     let text = document.createElement("p");
     let textSerie = document.createElement("p");
     text.classList.add("book-title")
     text.textContent = book.title;
-    divOfBook.appendChild(text);
+    titleAndSerie.appendChild(text);
 
     if (book.seriesname) {
         textSerie.textContent = `Series: ${book.seriesname} (Book ${book.seriesnumber})`;
         textSerie.classList.add("book-serie");
-        divOfBook.appendChild(textSerie);
+        titleAndSerie.appendChild(textSerie);
     }
 
     //Lägg till rating
@@ -414,8 +418,11 @@ function createDivOfBook(book) {
         }
         ratingDiv.appendChild(star);
     }
-    divOfBook.appendChild(ratingDiv);
-    allBooks.appendChild(divOfBook);
+
+    bottomDiv.append(titleAndSerie);
+    bottomDiv.append(ratingDiv);
+    divOfBook.append(bottomDiv);
+    allBooks.append(divOfBook);
 }
 
 function wipeForm() {
