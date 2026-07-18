@@ -344,6 +344,7 @@ latestBook();
 
 
 async function uploadToCloudinary(file) {
+    //inlogg med google (ny)
     const CLOUD_NAME = "dhnlbcj9b";
     const UPLOAD_PRESET = "unsigned_books";
 
