@@ -288,7 +288,7 @@ async function latestBook() {
     });
 
     let latestBook = finished[0];
-    console.log(latestBook)
+    // console.log(latestBook)
 
     //Skapa en div med info om boken som ska synas i topDIV
 
@@ -1398,7 +1398,7 @@ async function checkUser() {
     currentUser = data.user.id;
     who.textContent = data.user.user_metadata.display_name || data.user.email;
 
-    console.log(currentUser);
+    // console.log(currentUser);
     welcomeLogedOut.style.display = "none";
     loginButton.style.display = "none";
     registerButton.style.display = "none";
