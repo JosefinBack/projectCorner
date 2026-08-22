@@ -397,7 +397,7 @@ function createDivOfBook(book) {
     titleAndSerie.appendChild(text);
 
     if (book.seriesname) {
-        textSerie.textContent = `Series: ${book.seriesname} (Book ${book.seriesnumber})`;
+        textSerie.textContent = `${book.seriesname} # ${book.seriesnumber}`;
         textSerie.classList.add("book-serie");
         titleAndSerie.appendChild(textSerie);
     }
