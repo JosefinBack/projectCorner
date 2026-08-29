@@ -56,24 +56,28 @@ function renderCalendar(year, monthIndex) {
         calender.appendChild(empty);
     }
 
-    let today = new Date().getDate();
+    let todayDate = new Date();
+
+    let today = todayDate.getDate();
+    let todayMonth = todayDate.getMonth();
+    let todayYear = todayDate.getFullYear();
+
     allDays = document.querySelectorAll(".day");
     allDaysArray = Array.from(allDays);
 
-    todayMonth = new Date().getMonth() + 1
+    dateOfToday.innerHTML = `Dagens datum: ${todayYear} - ${todayMonth + 1} - ${today}`;
 
-    dateOfToday.innerHTML = `
-    Dagens datum: ${currentYear} - ${todayMonth} - ${today}`
-    dateOfToday.style.fontSize = "20px"
+    dateOfToday.style.fontSize = "20px";
 
-    for (let i = 1; i < daysInMonth; i++) {
-        if (i == today) {
-            rightDay = allDaysArray.find(D => D.textContent == i);
-            rightDay.classList.remove("day")
-            rightDay.classList.add("rightDay")
-        }
+    if (monthIndex === todayMonth && year === todayYear) {
+
+        rightDay = allDaysArray.find(D => D.textContent == today);
+
+        rightDay.classList.remove("day");
+        rightDay.classList.add("rightDay");
     }
 }
+
 
 
 btnNext.addEventListener("click", function () {
@@ -159,7 +163,7 @@ function renderWeek(date) {
     });
 }
 
-window.addEventListener("resize", renderCorrectView);
+
 renderCorrectView();
 
 
@@ -170,7 +174,7 @@ let schedule = [];
 
 async function loadSchedule() {
     try {
-        const response = await fetch("../schemaVT26.json");
+        const response = await fetch("../schemaHT26.json");
         schedule = await response.json();
         console.log("Schema laddat:", schedule);
     } catch (error) {
@@ -190,27 +194,50 @@ loadSchedule();
 
 
 async function test() {
-    const response = await fetch("../schemaVT26.json");
+    const response = await fetch("../schemaHT26.json");
     let schedule = await response.json();
 
     let allDayDivs = document.querySelectorAll(".day, .rightDay");
 
     for (let day of schedule) {
-        // Hämta dagnummer från datum (YYYY-MM-DD)
-        let dayNumber = new Date(day.date).getDate();
 
-        for (let div of allDayDivs) {
-            let divNumber = Number(div.textContent);
+        let eventDate = new Date(day.date);
 
-            if (dayNumber === divNumber) {
-                let divTime = document.createElement("div");
-                divTime.textContent = day.startTime;
-                div.appendChild(divTime);
+        let dayNumber = eventDate.getDate();
+        let monthNumber = eventDate.getMonth();
+        let yearNumber = eventDate.getFullYear();
+
+        if (monthNumber === currentMonth && yearNumber === currentYear) {
+
+            for (let div of allDayDivs) {
+                let divNumber = Number(div.textContent);
+
+                if (dayNumber === divNumber) {
+
+                    if (day.startTime !== undefined && day.endTime !== undefined) {
+                        let time = document.createElement("p");
+                        time.innerHTML = `${day.startTime} - ${day.endTime}`;
+                        div.appendChild(time);
+                    }
+
+                    let course = document.createElement("p");
+                    course.style.fontWeight = "bold";
+                    course.innerHTML = `Kurs: ${day.course}`;
+
+                    let moment = document.createElement("p");
+                    moment.innerHTML = `${day.moment}`;
+
+                    if (day.type) {
+                        moment.style.color = "red";
+                    }
+
+                    div.appendChild(course);
+                    div.appendChild(moment);
+                }
             }
         }
     }
 }
-
 test();
 
 //loopa igenom shcema.json och sen göra en loop inuti den där man loopat schemat, och om det finns en match så ska innehållet från objektet skrivas in i rutan. 

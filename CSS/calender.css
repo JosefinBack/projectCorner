@@ -22,8 +22,8 @@ main {
 
 .day {
     border: 1px solid black;
-    padding: 10px;
-    font-size: 20px;
+    padding: 5px;
+    overflow: scroll;
 }
 
 .day:hover {
@@ -31,12 +31,16 @@ main {
     box-shadow: 3px 3px 3px grey;
 }
 
+.day p,
+.rightDay p {
+    margin: 1px;
+    font-size: 14px;
+}
+
 .rightDay {
     border: 2px solid green;
     padding: 10px;
-    font-weight: bold;
-    text-decoration: underline;
-    font-size: 25px;
+    overflow: scroll;
 }
 
 .week {
