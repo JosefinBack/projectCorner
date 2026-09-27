@@ -200,8 +200,8 @@ async function loadBooks() {
 
     let { data: books, error } = await supabaseClient
         .from("books")
-        .select("*")
-        .eq("user_id", currentUser);
+        .select("*");
+    //.eq("user_id", currentUser);
 
     if (error) {
         console.error(error);
@@ -1264,13 +1264,13 @@ closeAndSave.addEventListener("click", async function () {
             }
         } else {
             // Skapa ny bok
+            console.log("Boken som skickas till Supabase:", book);
+
             let { data, error } = await supabaseClient
                 .from("books")
-                .insert([{
-                    ...book
-                    //user_id: currentUser
-                }])
+                .insert([book])
                 .select();
+
             if (error) {
                 console.error(error);
                 alert("Save failed");
