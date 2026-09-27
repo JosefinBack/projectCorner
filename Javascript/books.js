@@ -1267,8 +1267,8 @@ closeAndSave.addEventListener("click", async function () {
             let { data, error } = await supabaseClient
                 .from("books")
                 .insert([{
-                    ...book,
-                    user_id: currentUser
+                    ...book
+                    //user_id: currentUser
                 }])
                 .select();
             if (error) {
