@@ -124,7 +124,11 @@ async function openBookForEdit(bookId) {
     // Boktyp (radio)
     let radios = document.querySelectorAll('input[name="booktype"]');
     for (let i = 0; i < radios.length; i++) {
-        radios[i].checked = (book.book_format && radios[i].value === book.book_format);
+        if (book.book_format && book.book_format.includes(radios[i].value)) {
+            radios[i].checked = true;
+        } else {
+            radios[i].checked = false;
+        }
     }
 
     // Bild
@@ -1219,7 +1223,7 @@ closeAndSave.addEventListener("click", async function () {
             pages: bookPages.value,
             start: bookStart.value,
             finish: bookFinish.value,
-            book_format: bookType,
+            book_format: bookType ? [bookType] : [],
             ratings: ratings,
             quotes: quotes,
             imgsrc: currentCover,
