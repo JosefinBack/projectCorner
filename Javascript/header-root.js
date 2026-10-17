@@ -13,7 +13,7 @@ document.getElementById("headerFront").innerHTML = `
           <a href="HTML/memory.html">Memory</a>
         </div>
       </div>
-
+      <a class="menyButton" href="#">Mallar</a>
       <a class="menyButton" href="HTML/about.html">Om mig</a>
     </nav>
   </header>
